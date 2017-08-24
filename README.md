@@ -1,6 +1,6 @@
 # quizzy-backend
 
-One Paragraph of project description goes here
+Backend repository for the Quizzy Project. PIS 2017 Facultad de Ingeniería, UdelaR.
 
 ## Getting Started
 Clone the repo:
@@ -11,6 +11,8 @@ Access folder:
 ```
 cd quizzy-backend
 ```
+### Installing
+
 Install dependencies:
 ```
 npm install
@@ -20,27 +22,33 @@ Populate the database (mongoDB must be running):
 npm run populate
 ```
 This will keep running, Ctrl+C to shut it down.
+
 Run the server:
 ```
 npm run start
 ```
-### Installing
-
-A step by step series of examples that tell you have to get a development env running
-
-Say what the step will be
-
+Access http://localhost:3000/users. It should return this:
 ```
-Give the example
+{
+   "users": [
+      {
+         "id": "599f03008a83764ba03a8bbe",
+         "email": "ga@pis.com",
+         "pass": "12345678"
+      },
+      {
+         "id": "599f03008a83764ba03a8bc0",
+         "email": "bg@pis.com",
+         "pass": "12345678"
+      },
+      {
+         "id": "599f03008a83764ba03a8bbf",
+         "email": "mi@pis.com",
+         "pass": "12345678"
+      }
+   ]
+}
 ```
-
-And repeat
-
-```
-until finished
-```
-
-End with an example of getting some data out of the system or using it for a little demo
 
 ## Running the tests
 
