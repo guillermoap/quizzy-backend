@@ -14,8 +14,8 @@ gameSchema = new Schema({
   "image" : String	
 })
 
-class GameClass() {}
+class GameClass {}
 
-gameSchema.loadClass(UserClass);
+gameSchema.loadClass(GameClass);
 
 export default mongoose.model('Game', gameSchema);
