@@ -18,7 +18,7 @@ var matchSchema = new Schema ({
         creator : String,
         questions : Array,
         tags : [String],
-        ranking : [(String,Number)],
+        ranking : [(String, Number)],
         creationDate : Date,
         image : String
     },
