@@ -12,7 +12,7 @@ gameSchema = new Schema({
   tags : [String],
   ranking : [{
   	user: String,
-  	ranking: Number
+  	points: Number
   }],
   creationDate : Date,
   image : String
