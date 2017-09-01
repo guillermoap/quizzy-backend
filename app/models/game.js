@@ -1,5 +1,5 @@
 import mongoose, { Schema } from 'mongoose';
-import questionSchema from question;
+import questionSchema from './question';
 
 gameSchema = new Schema({
   id : { type: Number, index: true },
@@ -13,9 +13,9 @@ gameSchema = new Schema({
   ranking : [{
   	user: String,
   	ranking: Number
-  }]
+  }],
   creationDate : Date,
-  image : String	
+  image : String
 })
 
 class GameClass {}
