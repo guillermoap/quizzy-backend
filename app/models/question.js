@@ -5,7 +5,7 @@ questionSchema = new Schema({
   text : String,
   difficulty : String,
   answers : [String],
-  correctAnswer : Number,
+  correctAnswer : Number
 })
 
 module.exports = questionSchema;
