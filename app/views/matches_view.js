@@ -1,8 +1,10 @@
 function matchIndex(matches) {
-    matches: matches.map((match) => gameShow(match))    
+    return {
+        matches: matches.map((match) => matchShow(match))  
+    }
 }
   
-function matchShow(matches) {
+function matchShow(match) {
     return {
         id: match._id,
         isRealTime: match.isRealTime,
