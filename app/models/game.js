@@ -1,8 +1,11 @@
 import mongoose, { Schema } from 'mongoose';
 import questionSchema from './question';
 
-gameSchema = new Schema({
-  id : { type: Number, index: true },
+const gameSchema = new Schema({
+  id : {
+      type: Number,
+      index: true
+  },
   name : String,
   description : String,
   rating : Number,
@@ -12,11 +15,11 @@ gameSchema = new Schema({
   tags : [String],
   ranking : [{
   	user: String,
-  	ranking: Number
+  	score: Number
   }],
   creationDate : Date,
   image : String
-})
+});
 
 class GameClass {}
 
