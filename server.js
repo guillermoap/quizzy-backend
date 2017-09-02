@@ -1,9 +1,12 @@
 import express from 'express';
 import morgan from 'morgan';
 import mongoose from 'mongoose';
+import games from './config/routes/games';
 import users from './config/routes/users.js';
 import configuration from './config/config.js';
-import games from './config/routes/games';
+
+var env = process.env.NODE_ENV || 'development';
+var config = configuration[env];
 
 var env = process.env.NODE_ENV || 'development';
 var config = configuration[env];
