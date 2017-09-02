@@ -17,14 +17,14 @@ const app = express();
 app.set('json spaces', 3);
 
 // Logger that outputs all requests into the console
-if (env != 'test') {
+if ((env != 'test') && (env != 'prodTest')) {
   app.use(morgan('combined'));
 }
 
 //Middleware to set the general routing
 app.use('/users', users);
 
-const server = app.listen(config.server.port, () => {
+const server = app.listen(config.server.port, config.server.host, () => {
   const { address, port } = server.address();
   console.log(`Listening at http://${address}:${port}`);
 });
