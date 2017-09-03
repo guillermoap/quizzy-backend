@@ -6,28 +6,26 @@ var matchSchema = new Schema ({
     owner: String,
     endingDate: Date,
     game: {
-        id : {
-            type: Number,
-            index: true
-        },
-        name: String,
-        description: String,
-        rating: Number,
-        timesPlayed: Number,
-        creator: String,
-        questions: [{
-            id: Number,
-            difficulty: String,
-            answers: Array,
-            correctAnswer: Number
+        id : { type: Number, index: true },
+        name : String,
+        description : String,
+        rating : Number,
+        timesPlayed : Number,
+        creator : String,
+        questions : [{
+            id : { type: Number, index: true },
+            text : String,
+            difficulty : String,
+            answers : [String],
+            correctAnswer : Number
         }],
-        tags: [String],
+        tags : [String],
         ranking : [{
-            nick: String,
+            user: String,
             points: Number
         }],
-        creationDate: Date,
-        image: String
+        creationDate : Date,
+        image : String
     },
     result: [Number]
 })
