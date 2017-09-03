@@ -1,7 +1,7 @@
 import mongoose, { Schema } from 'mongoose';
 import questionSchema from './question';
 
-gameSchema = new Schema({
+var gameSchema = new Schema({
   id : { type: Number, index: true },
   name : String,
   description : String,
