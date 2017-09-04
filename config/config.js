@@ -31,17 +31,6 @@ var configuration = {
       host: '172.31.25.108',
       port: '3000'
     }
-  },
-  prodTest: {
-    database: {
-      host: '184.73.135.125',
-      port: '27017',
-      db: 'quizzy-backend-test'
-    },
-    server: {
-      host: 'localhost',
-      port: '3000'
-    }
   }
 };
 
