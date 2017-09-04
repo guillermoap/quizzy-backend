@@ -1,4 +1,4 @@
-    import Game from '../models/game';
+import Game from '../models/game';
 import { gameIndex, gameShow } from '../views/games_view';
 
 export const index = (req, res, next) => {
