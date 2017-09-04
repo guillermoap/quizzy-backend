@@ -38,7 +38,7 @@ describe('GameController', () => {
 		it('returns the right json object', (done) => {
 			request(app).get('/games')
 			.end((err, res) => {
-				expect(res.body.games[0]).to.have.keys('name', 'description', 'rating', 'timesPlayed', 'creator',
+				expect(res.body.games[0].game).to.have.keys('id', 'name', 'description', 'rating', 'timesPlayed', 'creator',
 					'creationDate','image', 'questions', 'ranking', 'tags');
 				done();
 			});
@@ -54,13 +54,14 @@ describe('GameController', () => {
 			});
 		});
 	});
-/*    it('returns the right json object', (done) => {
+    it('returns the right json object', (done) => {
       request(app).get(`/games/${game.id}`)
         .end((err, res) => {
-          expect(res.body.user).to.have.keys('email', 'pass', 'id');
+          expect(res.body.game).to.have.keys('id', 'name', 'description', 'rating', 'timesPlayed', 'creator',
+                    'creationDate','image', 'questions', 'ranking', 'tags');
           done();
         });
-    });*/
+    });
 
 
     describe('create', () => {
