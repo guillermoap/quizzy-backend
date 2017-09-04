@@ -3,7 +3,6 @@ import chaiHttp from 'chai-http';
 import factory from '../factories/factory.js';
 import app from '../../server.js';
 import mongoose from 'mongoose';
-import User from '../../app/models/user';
 import Match from '../../app/models/match';
 
 chai.use(chaiHttp);
@@ -97,7 +96,7 @@ describe('MatchesController', () => {
       });
 
       it('creates a match', (done) => {
-        User.count({}).exec((err, count) => {
+        Match.count({}).exec((err, count) => {
           request(app).post('/matches')
             .send(params)
             .end((err, res) => {
@@ -116,7 +115,6 @@ describe('MatchesController', () => {
         })
 
       it('returns 400', (done) => {    
-        console.log(match);    
         request(app).post('/matches')
           .send(params)
           .end((err, res) => {
@@ -126,7 +124,7 @@ describe('MatchesController', () => {
       });
 
       it('does not create a match', (done) => {
-        User.count({}).exec((err, count) => {
+        Match.count({}).exec((err, count) => {
           request(app).post('/matches')
             .send(params)
             .end((err, res) => {
@@ -159,7 +157,6 @@ describe('MatchesController', () => {
         request(app).put(`/matches/${match.id}`)
           .send(params)
           .end((err, res) => {
-            console.log("RESSSSS", res.body)
             Match.findById(match.id).lean().exec((err, match) => {
               expect(match.url).to.eq('updatedURL');
               done();
@@ -198,10 +195,24 @@ describe('MatchesController', () => {
   });
   
   
+  describe('destroy', () => {
+    it('returns 200', (done) => {
+      request(app).delete(`/matches/${match.id}`)
+        .end((err, res) => {
+          expect(res).to.have.status(200);
+          done();
+        });
+    });
 
-
-
-
-
+    it('deletes the right match', (done) => {
+      request(app).delete(`/matches/${match.id}`)
+        .end((err, res) => {
+          Match.findById(match.id).lean().exec((err, match) => {
+            expect(match).to.eq(null);
+            done();
+          });
+        });
+    });
+  })
 
 });
