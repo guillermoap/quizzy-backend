@@ -54,7 +54,7 @@ describe('MatchesController', () => {
 
   describe('show', () => {
     it('returns 200', (done) => {
-      request(app).get(`/matches/${match.id}`)
+      request(app).get(`/matches/${match.url}`)
         .end((err, res) => {      
           expect(res).to.have.status(200);
           done();
@@ -62,7 +62,7 @@ describe('MatchesController', () => {
     });
 
     it('returns the right json object', (done) => {
-      request(app).get(`/matches/${match.id}`)
+      request(app).get(`/matches/${match.url}`)
         .end((err, res) => {
           expect(res.body.match).to.have.keys(
             'id',
