@@ -1,7 +1,7 @@
 import mongoose, { Schema } from 'mongoose';
 
 var matchSchema = new Schema ({
-	id: {
+	url: {
     type: String,
     unique: true
   },
@@ -10,7 +10,7 @@ var matchSchema = new Schema ({
 	owner: String,
 	endingDate: Date,
 	game: {
-			id : { type: Number, index: true },
+			url : { type: Number, index: true },
 			name : String,
 			description : String,
 			rating : Number,

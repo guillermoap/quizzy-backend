@@ -28,28 +28,61 @@ describe('MatchesController', () => {
   });
 
   describe('index', () => {
-      it('returns 200', (done) => {
-        request(app).get('/matches')
-          .end((err, res) => {
-            expect(res).to.have.status(200);
-            done();
-          });
-      });
-  
-      it('returns the right json object', (done) => {
-        request(app).get('/matches')
-          .end((err, res) => {
-            expect(res.body.matches[0]).to.have.keys(
-              'id',
-              'isRealTime',
-              'players',
-              'owner',
-              'endingDate',
-              'game',
-              'result');
-            done();
-          });
-      });
+    it('returns 200', (done) => {
+      request(app).get('/matches')
+        .end((err, res) => {
+          expect(res).to.have.status(200);
+          done();
+        });
     });
-});
 
+    it('returns the right json object', (done) => {
+      request(app).get('/matches')
+        .end((err, res) => {
+          expect(res.body.matches[0]).to.have.keys(
+            'id',
+            'url',
+            'isRealTime',
+            'players',
+            'owner',
+            'endingDate',
+            'game',
+            'result');
+          done();
+        });
+    });
+  });
+
+  describe('show', () => {
+    it('returns 200', (done) => {
+      request(app).get(`/matches/${match.id}`)
+        .end((err, res) => {      
+          expect(res).to.have.status(200);
+          done();
+        });
+    });
+
+    it('returns the right json object', (done) => {
+      request(app).get(`/matches/${match.id}`)
+        .end((err, res) => {
+          expect(res.body.match).to.have.keys(
+            'id',
+            'url',            
+            'isRealTime',
+            'players',
+            'owner',
+            'endingDate',
+            'game',
+            'result');
+          done();
+        });
+    });
+  });
+
+
+
+
+
+
+
+});
