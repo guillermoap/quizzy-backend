@@ -1,9 +1,8 @@
 import mongoose, { Schema } from 'mongoose';
 import questionSchema from './question';
 
-var gameSchema = new Schema({
-  id : { type: Number, index: true },
-  name : String,
+const gameSchema = new Schema({
+  name : {type: String, unique: true},
   description : String,
   rating : Number,
   timesPlayed : Number,
