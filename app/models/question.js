@@ -1,6 +1,6 @@
 import mongoose, { Schema } from 'mongoose';
 
-var questionSchema = new Schema({
+const questionSchema = new Schema({
   id : { type: Number, index: true },
   text : String,
   difficulty : String,
