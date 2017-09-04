@@ -137,6 +137,65 @@ describe('MatchesController', () => {
       });
     })
   });
+
+  describe('update', () => {
+    context('with valid params', () => {
+      let params;
+      factory.attrs('match', { url: 'updatedURL' })
+        .then(attrs => {
+          params = { match: attrs };
+        })
+
+      it('returns 200', (done) => {
+        request(app).put(`/matches/${match.id}`)
+          .send(params)
+          .end((err, res) => {
+            expect(res).to.have.status(200);
+            done();
+          });
+      });
+
+      it('updates a match', (done) => {
+        request(app).put(`/matches/${match.id}`)
+          .send(params)
+          .end((err, res) => {
+            console.log("RESSSSS", res.body)
+            Match.findById(match.id).lean().exec((err, match) => {
+              expect(match.url).to.eq('updatedURL');
+              done();
+            });
+          });
+      });
+    });
+
+    context('with invalid params', () => {
+      let params;
+      factory.attrs('match', { url: 'testURL_2' })
+        .then(attrs => {
+          params = { match: attrs };
+        })
+
+      it('returns 400', (done) => {
+        request(app).put(`/matches/${match.id}`)
+          .send(params)
+          .end((err, res) => {
+            expect(res).to.have.status(400);
+            done();
+          });
+      });
+
+      it('does not update a match', (done) => {
+        request(app).put(`/match/${match.id}`)
+          .send(params)
+          .end((err, res) => {
+            Match.findById(match.id).lean().exec((err, match) => {
+              expect(match.url).to.eq('testURL');
+              done();
+            });
+          });
+      });
+    });
+  });
   
   
 
