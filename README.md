@@ -1,4 +1,5 @@
 # quizzy-backend
+[![Build Status](https://travis-ci.org/guillermoap/quizzy-backend.svg?branch=master)](https://travis-ci.org/guillermoap/quizzy-backend)
 
 Backend repository for the Quizzy Project. PIS 2017 Facultad de Ingeniería, UdelaR.
 
