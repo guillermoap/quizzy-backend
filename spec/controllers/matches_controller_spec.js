@@ -13,7 +13,7 @@ describe('MatchesController', () => {
   var match2;
 
   beforeEach(function(done){
-    factory.createMany('match', 2, [{}])
+    factory.createMany('match', 2, [{ url: 'testURL' }, { url: 'testURL_2'}])
       .then(matchArray => {
         match = matchArray[0];
         match2 = matchArray[1];
@@ -79,6 +79,66 @@ describe('MatchesController', () => {
     });
   });
 
+  describe('create', () => {
+    context('with valid params', () => {
+      let params;
+      factory.attrs('match')
+        .then(attrs => {
+          params = { match: attrs };
+        })
+
+      it('returns 200', (done) => {
+        request(app).post('/matches')
+          .send(params)
+          .end((err, res) => {
+            expect(res).to.have.status(200);
+            done();
+          });
+      });
+
+      it('creates a match', (done) => {
+        User.count({}).exec((err, count) => {
+          request(app).post('/matches')
+            .send(params)
+            .end((err, res) => {
+              expect(count).to.eq(count++);
+              done();
+            });
+        });
+      });
+    });
+
+    context('with invalid params', () => {
+      let params;
+      factory.attrs('match', { url: 'testURL' })
+      .then(attrs => {
+          params = { match: attrs };
+        })
+
+      it('returns 400', (done) => {    
+        console.log(match);    
+        request(app).post('/matches')
+          .send(params)
+          .end((err, res) => {
+            expect(res).to.have.status(400);
+            done();
+          });
+      });
+
+      it('does not create a match', (done) => {
+        User.count({}).exec((err, count) => {
+          request(app).post('/matches')
+            .send(params)
+            .end((err, res) => {
+              expect(count).to.eq(count);
+              done();
+            });
+        });
+      });
+    })
+  });
+  
+  
 
 
 

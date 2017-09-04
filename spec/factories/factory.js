@@ -74,7 +74,12 @@ function fakeQuestions() {
 			// id: { type: () => faker.random.number() },
 			text: () => faker.lorem.sentence(),
 			difficulty: () => faker.random.arrayElement(["low", "medium", "high"]),
-			answers: ['resp1', 'resp2', 'resp3', 'resp4'],
+			answers: [
+				faker.lorem.sentence(),
+				faker.lorem.sentence(),
+				faker.lorem.sentence(),
+				faker.lorem.sentence()
+			],
 			correctAnswer: () => faker.random.number({ min:1, max:4 })
 		}
 		questionSet.push(question);
