@@ -1,7 +1,9 @@
 language: node_js
+services:
+  - mongodb
 node_js:
   - "6.11.2"
 install:
   - npm install
 script:
-  - npm run prod-test
+  - npm run test
