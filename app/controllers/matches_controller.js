@@ -12,12 +12,17 @@ export const index = (req, res, next) => {
 };
 
 export const show = (req, res, next) => {
-  Match.findById(req.params.id).lean().exec((err, match) => {
+  Match.findOne({ 'url': req.params.id }).lean().exec((err, match) => {
     if (err) {
-      return res.status(400)
+      return res.status(404)
         .json({ error: err.errmsg });
     } else {
-      res.json(matchShow(match));
+      if ( match == null) {
+          return res.status(404)
+          .json({});
+      } else {
+        res.json(matchShow(match));
+      }
     }
   });
 }
