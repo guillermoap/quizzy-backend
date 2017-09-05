@@ -1,7 +1,15 @@
-import express, { Router } from 'express';
+import express, {
+  Router
+} from 'express';
 import bodyParser from 'body-parser';
 
-import { index, show, create, update, destroy } from '../../app/controllers/users_controller';
+import {
+  index,
+  show,
+  create,
+  update,
+  destroy
+} from '../../app/controllers/users_controller';
 
 const router = Router();
 

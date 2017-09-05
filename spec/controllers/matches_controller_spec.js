@@ -1,4 +1,7 @@
-import chai, { expect, request } from 'chai';
+import chai, {
+  expect,
+  request
+} from 'chai';
 import chaiHttp from 'chai-http';
 import factory from '../factories/factory.js';
 import app from '../../server.js';
@@ -11,8 +14,12 @@ describe('MatchesController', () => {
   var match;
   var match2;
 
-  beforeEach(function(done){
-    factory.createMany('match', 2, [{ url: 'testURL' }, { url: 'testURL_2'}])
+  beforeEach(function(done) {
+    factory.createMany('match', 2, [{
+        url: 'testURL'
+      }, {
+        url: 'testURL_2'
+      }])
       .then(matchArray => {
         match = matchArray[0];
         match2 = matchArray[1];
@@ -20,7 +27,7 @@ describe('MatchesController', () => {
       })
   });
 
-  afterEach(function(done){
+  afterEach(function(done) {
     Match.remove({}, function() {
       done();
     });
@@ -39,8 +46,8 @@ describe('MatchesController', () => {
       request(app).get('/matches')
         .end((err, res) => {
           expect(res.body.matches[0])
-          .to.have.keys('id', 'url', 'isRealTime', 'players',
-           'owner', 'endingDate', 'game', 'result');
+            .to.have.keys('id', 'url', 'isRealTime', 'players',
+              'owner', 'endingDate', 'game', 'result');
           done();
         });
     });
@@ -49,7 +56,7 @@ describe('MatchesController', () => {
   describe('show', () => {
     it('returns 200', (done) => {
       request(app).get(`/matches/${match.url}`)
-        .end((err, res) => {      
+        .end((err, res) => {
           expect(res).to.have.status(200);
           done();
         });
@@ -60,7 +67,7 @@ describe('MatchesController', () => {
         .end((err, res) => {
           expect(res.body.match)
             .to.have.keys('id', 'url', 'isRealTime', 'players',
-             'owner', 'endingDate', 'game', 'result');
+              'owner', 'endingDate', 'game', 'result');
           done();
         });
     });
@@ -71,7 +78,9 @@ describe('MatchesController', () => {
       let params;
       factory.attrs('match')
         .then(attrs => {
-          params = { match: attrs };
+          params = {
+            match: attrs
+          };
         })
 
       it('returns 200', (done) => {
@@ -97,12 +106,16 @@ describe('MatchesController', () => {
 
     context('with invalid params', () => {
       let params;
-      factory.attrs('match', { url: 'testURL' })
-      .then(attrs => {
-          params = { match: attrs };
+      factory.attrs('match', {
+          url: 'testURL'
+        })
+        .then(attrs => {
+          params = {
+            match: attrs
+          };
         })
 
-      it('returns 400', (done) => {    
+      it('returns 400', (done) => {
         request(app).post('/matches')
           .send(params)
           .end((err, res) => {
@@ -127,9 +140,13 @@ describe('MatchesController', () => {
   describe('update', () => {
     context('with valid params', () => {
       let params;
-      factory.attrs('match', { url: 'updatedURL' })
+      factory.attrs('match', {
+          url: 'updatedURL'
+        })
         .then(attrs => {
-          params = { match: attrs };
+          params = {
+            match: attrs
+          };
         })
 
       it('returns 200', (done) => {
@@ -155,9 +172,13 @@ describe('MatchesController', () => {
 
     context('with invalid params', () => {
       let params;
-      factory.attrs('match', { url: 'testURL_2' })
+      factory.attrs('match', {
+          url: 'testURL_2'
+        })
         .then(attrs => {
-          params = { match: attrs };
+          params = {
+            match: attrs
+          };
         })
 
       it('returns 400', (done) => {
@@ -181,8 +202,8 @@ describe('MatchesController', () => {
       });
     });
   });
-  
-  
+
+
   describe('destroy', () => {
     it('returns 200', (done) => {
       request(app).delete(`/matches/${match.id}`)

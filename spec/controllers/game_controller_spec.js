@@ -60,7 +60,7 @@ describe('GameController', () => {
           done();
         });
     });
-  
+
     it('returns the right json object', (done) => {
       request(app).get(`/games/${game.id}`)
         .end((err, res) => {
