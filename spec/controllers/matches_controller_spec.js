@@ -6,36 +6,36 @@ import chaiHttp from 'chai-http';
 import factory from '../factories/factory.js';
 import app from '../../server.js';
 import mongoose from 'mongoose';
-import Game from '../../app/models/game';
+import Match from '../../app/models/match';
 
 chai.use(chaiHttp);
 
-describe('GameController', () => {
-  var game;
-  var game2;
+describe('MatchesController', () => {
+  var match;
+  var match2;
 
   beforeEach(function(done) {
-    factory.createMany('game', 2, [{
-        name: 'Futbol'
+    factory.createMany('match', 2, [{
+        url: 'testURL'
       }, {
-        name: 'Basket'
+        url: 'testURL_2'
       }])
-      .then(gameArray => {
-        game = gameArray[0];
-        game2 = gameArray[1];
+      .then(matchArray => {
+        match = matchArray[0];
+        match2 = matchArray[1];
         done();
-      });
+      })
   });
 
   afterEach(function(done) {
-    Game.remove({}, function() {
+    Match.remove({}, function() {
       done();
     });
   });
 
   describe('index', () => {
     it('returns 200', (done) => {
-      request(app).get('/games')
+      request(app).get('/matches')
         .end((err, res) => {
           expect(res).to.have.status(200);
           done();
@@ -43,10 +43,11 @@ describe('GameController', () => {
     });
 
     it('returns the right json object', (done) => {
-      request(app).get('/games')
+      request(app).get('/matches')
         .end((err, res) => {
-          expect(res.body.games[0].game).to.have.keys('id', 'name', 'description', 'rating', 'timesPlayed', 'creator',
-            'creationDate', 'image', 'questions', 'ranking', 'tags');
+          expect(res.body.matches[0])
+            .to.have.keys('id', 'url', 'isRealTime', 'players',
+              'owner', 'endingDate', 'game', 'result');
           done();
         });
     });
@@ -54,7 +55,7 @@ describe('GameController', () => {
 
   describe('show', () => {
     it('returns 200', (done) => {
-      request(app).get(`/games/${game.id}`)
+      request(app).get(`/matches/${match.url}`)
         .end((err, res) => {
           expect(res).to.have.status(200);
           done();
@@ -62,10 +63,11 @@ describe('GameController', () => {
     });
 
     it('returns the right json object', (done) => {
-      request(app).get(`/games/${game.id}`)
+      request(app).get(`/matches/${match.url}`)
         .end((err, res) => {
-          expect(res.body.game).to.have.keys('id', 'name', 'description', 'rating', 'timesPlayed', 'creator',
-            'creationDate', 'image', 'questions', 'ranking', 'tags');
+          expect(res.body.match)
+            .to.have.keys('id', 'url', 'isRealTime', 'players',
+              'owner', 'endingDate', 'game', 'result');
           done();
         });
     });
@@ -74,15 +76,15 @@ describe('GameController', () => {
   describe('create', () => {
     context('with valid params', () => {
       let params;
-      factory.attrs('game')
+      factory.attrs('match')
         .then(attrs => {
           params = {
-            game: attrs
+            match: attrs
           };
         })
 
       it('returns 200', (done) => {
-        request(app).post('/games')
+        request(app).post('/matches')
           .send(params)
           .end((err, res) => {
             expect(res).to.have.status(200);
@@ -90,9 +92,9 @@ describe('GameController', () => {
           });
       });
 
-      it('creates a game', (done) => {
-        Game.count({}).exec((err, count) => {
-          request(app).post('/games')
+      it('creates a match', (done) => {
+        Match.count({}).exec((err, count) => {
+          request(app).post('/matches')
             .send(params)
             .end((err, res) => {
               expect(count).to.eq(count++);
@@ -104,17 +106,17 @@ describe('GameController', () => {
 
     context('with invalid params', () => {
       let params;
-      factory.attrs('game', {
-          name: 'Futbol'
+      factory.attrs('match', {
+          url: 'testURL'
         })
         .then(attrs => {
           params = {
-            game: attrs
+            match: attrs
           };
         })
 
       it('returns 400', (done) => {
-        request(app).post('/games')
+        request(app).post('/matches')
           .send(params)
           .end((err, res) => {
             expect(res).to.have.status(400);
@@ -122,9 +124,9 @@ describe('GameController', () => {
           });
       });
 
-      it('does not create a game', (done) => {
-        Game.count({}).exec((err, count) => {
-          request(app).post('/games')
+      it('does not create a match', (done) => {
+        Match.count({}).exec((err, count) => {
+          request(app).post('/matches')
             .send(params)
             .end((err, res) => {
               expect(count).to.eq(count);
@@ -138,17 +140,17 @@ describe('GameController', () => {
   describe('update', () => {
     context('with valid params', () => {
       let params;
-      factory.attrs('game', {
-          name: 'Golf'
+      factory.attrs('match', {
+          url: 'updatedURL'
         })
         .then(attrs => {
           params = {
-            game: attrs
+            match: attrs
           };
         })
 
       it('returns 200', (done) => {
-        request(app).put(`/games/${game.id}`)
+        request(app).put(`/matches/${match.id}`)
           .send(params)
           .end((err, res) => {
             expect(res).to.have.status(200);
@@ -156,12 +158,12 @@ describe('GameController', () => {
           });
       });
 
-      it('updates a game', (done) => {
-        request(app).put(`/games/${game.id}`)
+      it('updates a match', (done) => {
+        request(app).put(`/matches/${match.id}`)
           .send(params)
           .end((err, res) => {
-            Game.findById(game.id).lean().exec((err, game) => {
-              expect(game.name).to.eq('Golf');
+            Match.findById(match.id).lean().exec((err, match) => {
+              expect(match.url).to.eq('updatedURL');
               done();
             });
           });
@@ -170,17 +172,17 @@ describe('GameController', () => {
 
     context('with invalid params', () => {
       let params;
-      factory.attrs('game', {
-          name: 'Basket'
+      factory.attrs('match', {
+          url: 'testURL_2'
         })
         .then(attrs => {
           params = {
-            game: attrs
+            match: attrs
           };
         })
 
       it('returns 400', (done) => {
-        request(app).put(`/games/${game.id}`)
+        request(app).put(`/matches/${match.id}`)
           .send(params)
           .end((err, res) => {
             expect(res).to.have.status(400);
@@ -188,12 +190,12 @@ describe('GameController', () => {
           });
       });
 
-      it('does not update a game', (done) => {
-        request(app).put(`/games/${game.id}`)
+      it('does not update a match', (done) => {
+        request(app).put(`/match/${match.id}`)
           .send(params)
           .end((err, res) => {
-            Game.findById(game.id).lean().exec((err, game) => {
-              expect(game.name).to.eq('Futbol');
+            Match.findById(match.id).lean().exec((err, match) => {
+              expect(match.url).to.eq('testURL');
               done();
             });
           });
@@ -201,23 +203,25 @@ describe('GameController', () => {
     });
   });
 
+
   describe('destroy', () => {
     it('returns 200', (done) => {
-      request(app).delete(`/games/${game.id}`)
+      request(app).delete(`/matches/${match.id}`)
         .end((err, res) => {
           expect(res).to.have.status(200);
           done();
         });
     });
 
-    it('deletes the right game', (done) => {
-      request(app).delete(`/games/${game.id}`)
+    it('deletes the right match', (done) => {
+      request(app).delete(`/matches/${match.id}`)
         .end((err, res) => {
-          Game.findById(game.id).lean().exec((err, game) => {
-            expect(game).to.eq(null);
+          Match.findById(match.id).lean().exec((err, match) => {
+            expect(match).to.eq(null);
             done();
           });
         });
     });
-  });
+  })
+
 });

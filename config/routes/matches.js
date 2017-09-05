@@ -9,7 +9,7 @@ import {
   create,
   update,
   destroy
-} from '../../app/controllers/users_controller';
+} from '../../app/controllers/matches_controller';
 
 const router = Router();
 

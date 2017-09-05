@@ -21,7 +21,8 @@
     "factory-girl": "^4.3.0",
     "moment": "^2.18.1",
     "mongoose": "^4.11.7",
-    "morgan": "^1.8.2"
+    "morgan": "^1.8.2",
+    "universal-cors": "^0.2.8"
   },
   "devDependencies": {
     "babel": "^6.23.0",
