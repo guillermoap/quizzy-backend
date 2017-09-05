@@ -6,6 +6,7 @@
   "scripts": {
     "test": "NODE_ENV=test nyc mocha --reporter dot --timeout 120000 --compilers js:babel-core/register ./spec/controllers/*.js ./spec/models/*.js",
     "coverage": "nyc report --reporter=text-lcov | coveralls",
+    "check-coverage": "nyc check-coverage --statements 90 --functions 90 --lines 90",
     "build": "node_modules/babel-cli/bin/babel.js ./ --source-maps --out-dir dist",
     "start": "node_modules/nodemon/bin/nodemon.js -- node_modules/babel-cli/bin/babel-node.js server.js",
     "populate": "node_modules/babel-cli/bin/babel-node.js config/db/userPopulate.js"

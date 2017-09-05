@@ -1,6 +1,6 @@
 # quizzy-backend
 [![Build Status](https://travis-ci.org/guillermoap/quizzy-backend.svg?branch=master)](https://travis-ci.org/guillermoap/quizzy-backend)
-
+[![Coverage Status](https://coveralls.io/repos/github/guillermoap/quizzy-backend/badge.svg?branch=add_coverage)](https://coveralls.io/github/guillermoap/quizzy-backend?branch=add_coverage)
 Backend repository for the Quizzy Project. PIS 2017 Facultad de Ingeniería, UdelaR.
 
 ## Getting Started
