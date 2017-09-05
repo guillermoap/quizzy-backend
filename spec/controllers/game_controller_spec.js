@@ -60,16 +60,16 @@ describe('GameController', () => {
           done();
         });
     });
+  
+    it('returns the right json object', (done) => {
+      request(app).get(`/games/${game.id}`)
+        .end((err, res) => {
+          expect(res.body.game).to.have.keys('id', 'name', 'description', 'rating', 'timesPlayed', 'creator',
+            'creationDate', 'image', 'questions', 'ranking', 'tags');
+          done();
+        });
+    });
   });
-  it('returns the right json object', (done) => {
-    request(app).get(`/games/${game.id}`)
-      .end((err, res) => {
-        expect(res.body.game).to.have.keys('id', 'name', 'description', 'rating', 'timesPlayed', 'creator',
-          'creationDate', 'image', 'questions', 'ranking', 'tags');
-        done();
-      });
-  });
-
 
   describe('create', () => {
     context('with valid params', () => {
@@ -102,7 +102,6 @@ describe('GameController', () => {
       });
     });
 
-    //ya existe juego con el mismo nombre
     context('with invalid params', () => {
       let params;
       factory.attrs('game', {
@@ -169,7 +168,6 @@ describe('GameController', () => {
       });
     });
 
-    //ya existe juego con el mismo nombre
     context('with invalid params', () => {
       let params;
       factory.attrs('game', {
