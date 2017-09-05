@@ -5,6 +5,7 @@ import configuration from './config/config.js';
 import games from './config/routes/games';
 import users from './config/routes/users.js';
 import matches from './config/routes/matches.js';
+import cors, { origins } from 'universal-cors';
 
 var env = process.env.NODE_ENV || 'development';
 var config = configuration[env];
@@ -22,6 +23,9 @@ app.set('json spaces', 3);
 if ((env != 'test') && (env != 'prodTest')) {
   app.use(morgan('combined'));
 }
+
+// cors middleware to accept any pattern matching example.com subdomains
+app.use(cors({ patterns: [ /^.*/ ]}));
 
 //Middleware to set the general routing
 app.use('/users', users);
