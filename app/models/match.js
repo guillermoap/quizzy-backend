@@ -1,8 +1,9 @@
 import mongoose, {
   Schema
 } from 'mongoose';
+import gameSchema from './schemas/game.schema';
 
-var matchSchema = new Schema({
+const matchSchema = new Schema({
   url: {
     type: String,
     unique: true
@@ -11,34 +12,7 @@ var matchSchema = new Schema({
   players: [String],
   owner: String,
   endingDate: Date,
-  game: {
-    url: {
-      type: Number,
-      index: true
-    },
-    name: String,
-    description: String,
-    rating: Number,
-    timesPlayed: Number,
-    creator: String,
-    questions: [{
-      id: {
-        type: Number,
-        index: true
-      },
-      text: String,
-      difficulty: String,
-      answers: [String],
-      correctAnswer: Number
-    }],
-    tags: [String],
-    ranking: [{
-      user: String,
-      points: Number
-    }],
-    creationDate: Date,
-    image: String
-  },
+  game: gameSchema,
   result: [Number]
 })
 

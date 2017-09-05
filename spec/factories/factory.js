@@ -43,7 +43,6 @@ factory.define('match', Match, {
   owner: () => faker.fake('{{name.firstName}} {{name.lastName}}'),
   endingDate: () => faker.date.future(),
   game: {
-    // id: { type: () => faker.random.number },
     name: () => faker.fake('{{name.firstName}} {{name.lastName}}'),
     description: () => faker.lorem.sentence(),
     rating: () => faker.random.number(),
@@ -71,7 +70,6 @@ function fakeQuestions() {
   let question, questionSet = [];
   for (let i = 0; i < 4; i++) {
     question = {
-      // id: { type: () => faker.random.number() },
       text: () => faker.lorem.sentence(),
       difficulty: () => faker.random.arrayElement(["low", "medium", "high"]),
       answers: [
