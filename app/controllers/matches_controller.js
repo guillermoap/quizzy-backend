@@ -7,9 +7,10 @@ import {
 export const index = (req, res, next) => {
   Match.find().lean().exec((err, matches) => {
     if (err) {
-      return res.json({
-        error: err.errmsg
-      });
+      return res.status(400)
+        .json({
+          error: err.errmsg
+        });
     } else {
       res.json(matchIndex(matches));
     }
