@@ -9,9 +9,6 @@ import matches from './config/routes/matches.js';
 var env = process.env.NODE_ENV || 'development';
 var config = configuration[env];
 
-var env = process.env.NODE_ENV || 'development';
-var config = configuration[env];
-
 // Connect to MongoDB
 mongoose.connect(`mongodb://${config.database.host}/${config.database.db}`);
 
@@ -30,7 +27,6 @@ if ((env != 'test') && (env != 'prodTest')) {
 app.use('/users', users);
 app.use('/games',games);
 app.use('/matches', matches);
-
 
 const server = app.listen(config.server.port, config.server.host, () => {
   const { address, port } = server.address();
