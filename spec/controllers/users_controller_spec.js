@@ -1,4 +1,7 @@
-import chai, { expect, request } from 'chai';
+import chai, {
+  expect,
+  request
+} from 'chai';
 import chaiHttp from 'chai-http';
 import factory from '../factories/factory.js';
 import app from '../../server.js';
@@ -11,8 +14,12 @@ describe('UsersController', () => {
   var user;
   var user2;
 
-  beforeEach(function(done){
-    factory.createMany('user', 2, [{ email: 'spec@spec.com' }, { email: 'spec2@spec.com' }])
+  beforeEach(function(done) {
+    factory.createMany('user', 2, [{
+        email: 'spec@spec.com'
+      }, {
+        email: 'spec2@spec.com'
+      }])
       .then(userArray => {
         user = userArray[0];
         user2 = userArray[1];
@@ -20,7 +27,7 @@ describe('UsersController', () => {
       });
   });
 
-  afterEach(function(done){
+  afterEach(function(done) {
     User.remove({}, function() {
       done();
     });
@@ -67,7 +74,9 @@ describe('UsersController', () => {
       let params;
       factory.attrs('user')
         .then(attrs => {
-          params = { user: attrs };
+          params = {
+            user: attrs
+          };
         })
 
       it('returns 200', (done) => {
@@ -93,9 +102,13 @@ describe('UsersController', () => {
 
     context('with invalid params', () => {
       let params;
-      factory.attrs('user', { email: 'spec@spec.com' })
+      factory.attrs('user', {
+          email: 'spec@spec.com'
+        })
         .then(attrs => {
-          params = { user: attrs };
+          params = {
+            user: attrs
+          };
         })
 
       it('returns 400', (done) => {
@@ -123,9 +136,13 @@ describe('UsersController', () => {
   describe('update', () => {
     context('with valid params', () => {
       let params;
-      factory.attrs('user', { email: 'new@spec.com' })
+      factory.attrs('user', {
+          email: 'new@spec.com'
+        })
         .then(attrs => {
-          params = { user: attrs };
+          params = {
+            user: attrs
+          };
         })
 
       it('returns 200', (done) => {
@@ -151,9 +168,13 @@ describe('UsersController', () => {
 
     context('with invalid params', () => {
       let params;
-      factory.attrs('user', { email: 'spec2@spec.com' })
+      factory.attrs('user', {
+          email: 'spec2@spec.com'
+        })
         .then(attrs => {
-          params = { user: attrs };
+          params = {
+            user: attrs
+          };
         })
 
       it('returns 400', (done) => {
