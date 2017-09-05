@@ -1,5 +1,5 @@
 import mongoose, { Schema } from 'mongoose';
-
+  
 var matchSchema = new Schema ({
 	url: {
     type: String,

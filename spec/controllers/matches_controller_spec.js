@@ -38,15 +38,9 @@ describe('MatchesController', () => {
     it('returns the right json object', (done) => {
       request(app).get('/matches')
         .end((err, res) => {
-          expect(res.body.matches[0]).to.have.keys(
-            'id',
-            'url',
-            'isRealTime',
-            'players',
-            'owner',
-            'endingDate',
-            'game',
-            'result');
+          expect(res.body.matches[0])
+          .to.have.keys('id', 'url', 'isRealTime', 'players',
+           'owner', 'endingDate', 'game', 'result');
           done();
         });
     });
@@ -64,15 +58,9 @@ describe('MatchesController', () => {
     it('returns the right json object', (done) => {
       request(app).get(`/matches/${match.url}`)
         .end((err, res) => {
-          expect(res.body.match).to.have.keys(
-            'id',
-            'url',            
-            'isRealTime',
-            'players',
-            'owner',
-            'endingDate',
-            'game',
-            'result');
+          expect(res.body.match)
+            .to.have.keys('id', 'url', 'isRealTime', 'players',
+             'owner', 'endingDate', 'game', 'result');
           done();
         });
     });
