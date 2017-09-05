@@ -6,36 +6,36 @@ import chaiHttp from 'chai-http';
 import factory from '../factories/factory.js';
 import app from '../../server.js';
 import mongoose from 'mongoose';
-import User from '../../app/models/user';
+import Game from '../../app/models/game';
 
 chai.use(chaiHttp);
 
-describe('UsersController', () => {
-  var user;
-  var user2;
+describe('GameController', () => {
+  var game;
+  var game2;
 
   beforeEach(function(done) {
-    factory.createMany('user', 2, [{
-        email: 'spec@spec.com'
+    factory.createMany('game', 2, [{
+        name: 'Futbol'
       }, {
-        email: 'spec2@spec.com'
+        name: 'Basket'
       }])
-      .then(userArray => {
-        user = userArray[0];
-        user2 = userArray[1];
+      .then(gameArray => {
+        game = gameArray[0];
+        game2 = gameArray[1];
         done();
       });
   });
 
   afterEach(function(done) {
-    User.remove({}, function() {
+    Game.remove({}, function() {
       done();
     });
   });
 
   describe('index', () => {
     it('returns 200', (done) => {
-      request(app).get('/users')
+      request(app).get('/games')
         .end((err, res) => {
           expect(res).to.have.status(200);
           done();
@@ -43,9 +43,10 @@ describe('UsersController', () => {
     });
 
     it('returns the right json object', (done) => {
-      request(app).get('/users')
+      request(app).get('/games')
         .end((err, res) => {
-          expect(res.body.users[0]).to.have.keys('email', 'pass', 'id');
+          expect(res.body.games[0].game).to.have.keys('id', 'name', 'description', 'rating', 'timesPlayed', 'creator',
+            'creationDate', 'image', 'questions', 'ranking', 'tags');
           done();
         });
     });
@@ -53,17 +54,18 @@ describe('UsersController', () => {
 
   describe('show', () => {
     it('returns 200', (done) => {
-      request(app).get(`/users/${user.id}`)
+      request(app).get(`/games/${game.id}`)
         .end((err, res) => {
           expect(res).to.have.status(200);
           done();
         });
     });
-
+  
     it('returns the right json object', (done) => {
-      request(app).get(`/users/${user.id}`)
+      request(app).get(`/games/${game.id}`)
         .end((err, res) => {
-          expect(res.body.user).to.have.keys('email', 'pass', 'id');
+          expect(res.body.game).to.have.keys('id', 'name', 'description', 'rating', 'timesPlayed', 'creator',
+            'creationDate', 'image', 'questions', 'ranking', 'tags');
           done();
         });
     });
@@ -72,15 +74,15 @@ describe('UsersController', () => {
   describe('create', () => {
     context('with valid params', () => {
       let params;
-      factory.attrs('user')
+      factory.attrs('game')
         .then(attrs => {
           params = {
-            user: attrs
+            game: attrs
           };
         })
 
       it('returns 200', (done) => {
-        request(app).post('/users')
+        request(app).post('/games')
           .send(params)
           .end((err, res) => {
             expect(res).to.have.status(200);
@@ -88,9 +90,9 @@ describe('UsersController', () => {
           });
       });
 
-      it('creates a user', (done) => {
-        User.count({}).exec((err, count) => {
-          request(app).post('/users')
+      it('creates a game', (done) => {
+        Game.count({}).exec((err, count) => {
+          request(app).post('/games')
             .send(params)
             .end((err, res) => {
               expect(count).to.eq(count++);
@@ -102,17 +104,17 @@ describe('UsersController', () => {
 
     context('with invalid params', () => {
       let params;
-      factory.attrs('user', {
-          email: 'spec@spec.com'
+      factory.attrs('game', {
+          name: 'Futbol'
         })
         .then(attrs => {
           params = {
-            user: attrs
+            game: attrs
           };
         })
 
       it('returns 400', (done) => {
-        request(app).post('/users')
+        request(app).post('/games')
           .send(params)
           .end((err, res) => {
             expect(res).to.have.status(400);
@@ -120,9 +122,9 @@ describe('UsersController', () => {
           });
       });
 
-      it('does not create a user', (done) => {
-        User.count({}).exec((err, count) => {
-          request(app).post('/users')
+      it('does not create a game', (done) => {
+        Game.count({}).exec((err, count) => {
+          request(app).post('/games')
             .send(params)
             .end((err, res) => {
               expect(count).to.eq(count);
@@ -136,17 +138,17 @@ describe('UsersController', () => {
   describe('update', () => {
     context('with valid params', () => {
       let params;
-      factory.attrs('user', {
-          email: 'new@spec.com'
+      factory.attrs('game', {
+          name: 'Golf'
         })
         .then(attrs => {
           params = {
-            user: attrs
+            game: attrs
           };
         })
 
       it('returns 200', (done) => {
-        request(app).put(`/users/${user.id}`)
+        request(app).put(`/games/${game.id}`)
           .send(params)
           .end((err, res) => {
             expect(res).to.have.status(200);
@@ -154,12 +156,12 @@ describe('UsersController', () => {
           });
       });
 
-      it('updates a user', (done) => {
-        request(app).put(`/users/${user.id}`)
+      it('updates a game', (done) => {
+        request(app).put(`/games/${game.id}`)
           .send(params)
           .end((err, res) => {
-            User.findById(user.id).lean().exec((err, user) => {
-              expect(user.email).to.eq('new@spec.com');
+            Game.findById(game.id).lean().exec((err, game) => {
+              expect(game.name).to.eq('Golf');
               done();
             });
           });
@@ -168,17 +170,17 @@ describe('UsersController', () => {
 
     context('with invalid params', () => {
       let params;
-      factory.attrs('user', {
-          email: 'spec2@spec.com'
+      factory.attrs('game', {
+          name: 'Basket'
         })
         .then(attrs => {
           params = {
-            user: attrs
+            game: attrs
           };
         })
 
       it('returns 400', (done) => {
-        request(app).put(`/users/${user.id}`)
+        request(app).put(`/games/${game.id}`)
           .send(params)
           .end((err, res) => {
             expect(res).to.have.status(400);
@@ -186,12 +188,12 @@ describe('UsersController', () => {
           });
       });
 
-      it('does not update a user', (done) => {
-        request(app).put(`/users/${user.id}`)
+      it('does not update a game', (done) => {
+        request(app).put(`/games/${game.id}`)
           .send(params)
           .end((err, res) => {
-            User.findById(user.id).lean().exec((err, user) => {
-              expect(user.email).to.eq('spec@spec.com');
+            Game.findById(game.id).lean().exec((err, game) => {
+              expect(game.name).to.eq('Futbol');
               done();
             });
           });
@@ -201,21 +203,21 @@ describe('UsersController', () => {
 
   describe('destroy', () => {
     it('returns 200', (done) => {
-      request(app).delete(`/users/${user.id}`)
+      request(app).delete(`/games/${game.id}`)
         .end((err, res) => {
           expect(res).to.have.status(200);
           done();
         });
     });
 
-    it('deletes the right user', (done) => {
-      request(app).delete(`/users/${user.id}`)
+    it('deletes the right game', (done) => {
+      request(app).delete(`/games/${game.id}`)
         .end((err, res) => {
-          User.findById(user.id).lean().exec((err, user) => {
-            expect(user).to.eq(null);
+          Game.findById(game.id).lean().exec((err, game) => {
+            expect(game).to.eq(null);
             done();
           });
         });
     });
-  })
+  });
 });

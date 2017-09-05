@@ -1,8 +1,12 @@
 import express from 'express';
 import morgan from 'morgan';
 import mongoose from 'mongoose';
-import users from './config/routes/users.js';
 import configuration from './config/config.js';
+import games from './config/routes/games';
+import users from './config/routes/users.js';
+
+var env = process.env.NODE_ENV || 'development';
+var config = configuration[env];
 
 var env = process.env.NODE_ENV || 'development';
 var config = configuration[env];
@@ -23,6 +27,7 @@ if ((env != 'test') && (env != 'prodTest')) {
 
 //Middleware to set the general routing
 app.use('/users', users);
+app.use('/games',games);
 
 const server = app.listen(config.server.port, config.server.host, () => {
   const { address, port } = server.address();
