@@ -31,7 +31,7 @@ var configuration = {
       host: '172.31.25.108',
       port: '3000'
     }
-  },
+  }
 };
 
 export default configuration;
