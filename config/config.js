@@ -23,7 +23,7 @@ var configuration = {
   },
   production: {
     database: {
-      host: '172.31.29.19',
+      host: '172.31.58.67',
       port: '27017',
       db: 'quizzy-backend'
     },
