@@ -10,7 +10,7 @@
     "build": "node_modules/babel-cli/bin/babel.js ./ --source-maps --out-dir dist",
     "start": "node_modules/nodemon/bin/nodemon.js -- node_modules/babel-cli/bin/babel-node.js server.js",
     "populate": "node_modules/babel-cli/bin/babel-node.js config/db/userPopulate.js",
-    "prod": "NODE_ENV=production"
+    "prod": "NODE_ENV=production npm run start"
   },
   "author": "",
   "license": "ISC",
