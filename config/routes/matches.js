@@ -19,8 +19,10 @@ router.route('/')
   .get(index)
   .post(create)
 
-router.route('/:id')
+router.route('/:url')
   .get(show)
+
+router.route('/:id')
   .put(update)
   .delete(destroy)
 
