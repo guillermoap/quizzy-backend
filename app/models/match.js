@@ -4,41 +4,28 @@ import gameSchema from './schemas/game.schema';
 var matchSchema = new Schema ({
 	url: {
     type: String,
-    unique: true
+    unique: true, 
+    required: [true, 'you must enter a url'],
+    validate: {validator: function(name){ return !/\W/.test(name);},
+               message: 'invalid url'          
+    }
   },
 	isRealTime: Boolean,
 	players: {
     type : [String],
-    required : true
+    required : [true, 'there must be at least one player'],
+    validate : {validator: function(players){
+      return players.len > 0;
+    }, messager: 'there must be at least one player'
+  }
   },
 	owner: {
     type : String,
-    required : true
+    required : [true, 'must have a owner']
   },
 	endingDate: Date,
-	game: gameSchema,
-	/*{
-			url : { type: Number, index: true },
-			name : String,
-			description : String,
-			rating : Number,
-			timesPlayed : Number,
-			creator : String,
-			questions : [{
-					id : { type: Number, index: true },
-					text : String,
-					difficulty : String,
-					answers : [String],
-					correctAnswer : Number
-			}],
-			tags : [String],
-			ranking : [{
-					user: String,
-					points: Number
-			}],
-			creationDate : Date,
-			image : String
-	},*/
+	game: { type: gameSchema,
+          required: [true, 'there must be a game']},
 	result: [Number]
 })
 

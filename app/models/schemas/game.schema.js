@@ -5,9 +5,9 @@ const gameSchema = new Schema({
   name : {
     type: String, 
     unique: true, 
-    required: true,
+    required: [true, 'you must enter a name'],
     validate: {validator: function(name){ return !/\W/.test(name);},
-               message: 'invalid url'          
+               message: 'invalid name'          
     }
   },
   description : String,
@@ -23,7 +23,8 @@ const gameSchema = new Schema({
     type: String, 
     required: [true, 'must have a creator']
   },
-  questions : [questionSchema],
+  questions : {type: [questionSchema],
+         required: [true, 'there must be at least one question']},
   tags : [String],
   ranking : [{
   	user: String,
