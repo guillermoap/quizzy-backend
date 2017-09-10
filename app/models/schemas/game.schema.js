@@ -4,10 +4,11 @@ import questionSchema from './question.schema';
 const gameSchema = new Schema({
   name : {
     type: String, 
-    unique: true, 
+    unique: [true, 'this name already exists'],
     required: [true, 'you must enter a name'],
-    validate: {validator: function(name){ return !/\W/.test(name);},
-               message: 'invalid name'          
+    validate: {
+      validator: function(name){ return !/\W/.test(name);},
+      message: 'invalid name'          
     }
   },
   description : String,
@@ -23,15 +24,16 @@ const gameSchema = new Schema({
     type: String, 
     required: [true, 'must have a creator']
   },
-  questions : {type: [questionSchema],
-         required: [true, 'there must be at least one question']},
+  questions : {
+    type: [questionSchema],
+    required: [true, 'there must be at least one question']},
   tags : [String],
   ranking : [{
-  	user: String,
-  	points: Number
+    user: String,
+    points: Number
   }],
   creationDate : Date,
   image : String
 })
-
+	
 module.exports = gameSchema;

@@ -8,19 +8,26 @@ const questionSchema = new Schema({
   text : {
     type : String,
     required : [true, 'you must write the question'],
+    validate : {
+      validator:function(name){ return /\w/.test(name);},
+      messager: 'you must write the question'
+    }
   },
   difficulty : {
     type : String,
-    enum : [['Easy', 'Medium', 'Hard'], 'difficulty can only be Easy, Medium or Hard'],
+    enum : ['Easy', 'Medium', 'Hard'],/* 'difficulty can only be Easy, Medium or Hard'],*/
   },
   answers : {
     type : [String],
-    validate : {validator: function(answer){
-      return v.len = 4;
-    }, messager: 'There must be 4 possible answers'
-  }},
+    required: [true, 'you must write the answers'],
+    validate : {
+      validator: function(answers){return answers.length == 4;},
+      messager: 'There must be 4 possible answers'
+    }
+  },
   correctAnswer : {
     type : Number,
+    required : [true, 'you must select correct answer'],
     min: [1, 'there must be a correct answer'],
     max: [4, 'there must be a correct answer'],
   }

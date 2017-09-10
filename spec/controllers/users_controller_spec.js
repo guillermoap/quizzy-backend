@@ -45,7 +45,7 @@ describe('UsersController', () => {
     it('returns the right json object', (done) => {
       request(app).get('/users')
         .end((err, res) => {
-          expect(res.body.users[0]).to.have.keys('email', 'pass', 'id');
+          expect(res.body.users[0]).to.have.keys('nickname', 'email', 'pass', 'id');
           done();
         });
     });
@@ -63,7 +63,7 @@ describe('UsersController', () => {
     it('returns the right json object', (done) => {
       request(app).get(`/users/${user.id}`)
         .end((err, res) => {
-          expect(res.body.user).to.have.keys('email', 'pass', 'id');
+          expect(res.body.user).to.have.keys('nickname', 'email', 'pass', 'id');
           done();
         });
     });

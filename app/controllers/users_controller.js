@@ -15,7 +15,7 @@ export const show = (req, res, next) => {
     if (err) {
       return res.status(400)
         .json({
-          error: err.errmsg
+          error: err.message
         });
     } else {
       res.json(userShow(user));
@@ -28,7 +28,7 @@ export const create = (req, res, next) => {
     if (err) {
       return res.status(400)
         .json({
-          error: err.errmsg
+          error: err.message
         });
     } else {
       return res.json({});
@@ -45,7 +45,7 @@ export const update = (req, res, next) => {
     if (err) {
       return res.status(400)
         .json({
-          error: err.errmsg
+          error: err.message
         });
     } else {
       return res.json(userShow(user));
@@ -58,7 +58,7 @@ export const destroy = (req, res, next) => {
     if (err) {
       return res.status(400)
         .json({
-          error: err.errmsg
+          error: err.message
         });
     } else {
       return res.json({});

@@ -2,31 +2,34 @@ import mongoose, { Schema } from 'mongoose';
 import gameSchema from './schemas/game.schema';
 
 var matchSchema = new Schema ({
-	url: {
+  url: {
     type: String,
-    unique: true, 
+    unique: [true, 'this url already exists'],
     required: [true, 'you must enter a url'],
-    validate: {validator: function(name){ return !/\W/.test(name);},
-               message: 'invalid url'          
+    validate: {
+      validator: function(name){return !/\W/.test(name);},
+      message: 'invalid url'          
     }
   },
-	isRealTime: Boolean,
-	players: {
+  isRealTime: Boolean,
+  players: {
     type : [String],
     required : [true, 'there must be at least one player'],
-    validate : {validator: function(players){
-      return players.len > 0;
-    }, messager: 'there must be at least one player'
-  }
+    validate : {
+      validator: function(players){return players.length > 0;},
+      messager: 'there must be at least one player'
+    }
   },
-	owner: {
+  owner: {
     type : String,
     required : [true, 'must have a owner']
   },
-	endingDate: Date,
-	game: { type: gameSchema,
-          required: [true, 'there must be a game']},
-	result: [Number]
+  endingDate: Date,
+  game: { 
+    type: gameSchema,
+    required: [true, 'there must be a game']
+  },
+  result: [Number]
 })
 
 class MatchClass {}
