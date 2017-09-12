@@ -1,10 +1,10 @@
 import mongoose, { Schema } from 'mongoose';
 
 var userSchema = new Schema({
-  nickname : {
+  nickname: {
     type : String,
-    unique: [true, 'this nickname already exists'],
-    required : [true, 'you must enter a nickName'],
+    required: true,
+    unique: true,
     validate: {
       validator: function(nickname){ return !/\W/.test(nickname);},
       message: 'invalid nickname'          
@@ -12,7 +12,7 @@ var userSchema = new Schema({
   },
   email: {
     type : String,
-    unique: [true, 'this email already exists'],
+    index: {unique: [true, 'this email already exists']},
     required : [true, 'you must enter a email'],
     validate: {
       validator: function(email){ return /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,4})+$/.test(email);},
@@ -26,6 +26,8 @@ var userSchema = new Schema({
 });
 
 class UserClass {}
+
+userSchema.index({ nickname: 1, type: -1 },{unique: true});
 
 userSchema.loadClass(UserClass);
 

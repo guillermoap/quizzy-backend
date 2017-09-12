@@ -5,7 +5,7 @@ import Game from '../../app/models/game';
 import Match from '../../app/models/match';
 
 factory.define('user', User, {
-  nickname: () => faker.random.number(100),
+  nickname: () => faker.random.number(1000),
   email: () => faker.internet.email(),
   password: () => faker.internet.password()
 });

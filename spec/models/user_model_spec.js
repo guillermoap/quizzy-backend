@@ -1,4 +1,4 @@
-/*import chai, {
+import chai, {
   expect,
   request
 } from 'chai';
@@ -21,34 +21,11 @@ describe('UsersController', () => {
   var userDuplicatedEmail;
 
   beforeEach(function(done) {
-    factory.createMany('user', 8, [{
-        email: 'pis@spec.com', nickname: 'sebas17'
-      }, {
-        nickname: null
-      }, {
-        email: null
-      }, {
-        password: null
-      }, {
-        nickname: '$$$$$'
-      }, {
-        email: '$$$$$'
-      }, {
-        email: 'pis@spec.com'
-      }, {
-        nickname: 'sebas'
+    factory.createMany('user', 1, [{
+        email: 'jose2017@spec.com', nickname: 'jose2017'
       }])
       .then(userArray => {
         userOk = userArray[0];
-        console.log(userOk);
-        userWithoutnickname = userArray[1];
-        console.log(userWithoutnickname);
-        userWithoutemail = userArray[2];
-        userWithoutpassword = userArray[3];
-        userWithErrorNickname = userArray[4];
-        userWithErrorEmail = userArray[5];
-        userDuplicatedNickname = userArray[6];
-        userDuplicatedEmail = userArray[7];
         done();
       });
   });
@@ -62,7 +39,7 @@ describe('UsersController', () => {
   describe('create', () => {
     context('with valid params', () => {
       let params;
-      factory.attrs('userOk')
+      factory.attrs('user')
         .then(attrs => {
           params = {
             user: attrs
@@ -70,7 +47,6 @@ describe('UsersController', () => {
         })
 
       it('returns 200', (done) => {
-        console.log(params),
         request(app).post('/users')
           .send(params)
           .end((err, res) => {
@@ -91,10 +67,10 @@ describe('UsersController', () => {
       });
     });
 
-    context('with invalid params', () => {
+    context('same email', () => {
       let params;
       factory.attrs('user', {
-          email: 'spec@spec.com'
+          email: 'jose2017@spec.com'
         })
         .then(attrs => {
           params = {
@@ -121,6 +97,200 @@ describe('UsersController', () => {
             });
         });
       });
-    })
+    });
+
+    context('Invalid email', () => {
+      let params;
+      factory.attrs('user', {
+          email: 'jose2017   @spec.com'
+        })
+        .then(attrs => {
+          params = {
+            user: attrs
+          };
+        })
+
+      it('returns 400', (done) => {
+        request(app).post('/users')
+          .send(params)
+          .end((err, res) => {
+            expect(res).to.have.status(400);
+            done();
+          });
+      });
+
+      it('does not create a user', (done) => {
+        User.count({}).exec((err, count) => {
+          request(app).post('/users')
+            .send(params)
+            .end((err, res) => {
+              expect(count).to.eq(count);
+              done();
+            });
+        });
+      });
+    });
+    context('Without email', () => {
+      let params;
+      factory.attrs('user', {
+          email: null
+        })
+        .then(attrs => {
+          params = {
+            user: attrs
+          };
+        })
+
+      it('returns 400', (done) => {
+        request(app).post('/users')
+          .send(params)
+          .end((err, res) => {
+            expect(res).to.have.status(400);
+            done();
+          });
+      });
+
+      it('does not create a user', (done) => {
+        User.count({}).exec((err, count) => {
+          request(app).post('/users')
+            .send(params)
+            .end((err, res) => {
+              expect(count).to.eq(count);
+              done();
+            });
+        });
+      });
+    });
+    context('Without nickname', () => {
+      let params;
+      factory.attrs('user', {
+          nickname: null
+        })
+        .then(attrs => {
+          params = {
+            user: attrs
+          };
+        })
+
+      it('returns 400', (done) => {
+        request(app).post('/users')
+          .send(params)
+          .end((err, res) => {
+            expect(res).to.have.status(400);
+            done();
+          });
+      });
+
+      it('does not create a user', (done) => {
+        User.count({}).exec((err, count) => {
+          request(app).post('/users')
+            .send(params)
+            .end((err, res) => {
+              expect(count).to.eq(count);
+              done();
+            });
+        });
+      });
+    });
+    
+    context('Same nickname', () => {
+      let params;
+      factory.attrs('user', {
+          nickname: 'jose2017'
+        })
+        .then(attrs => {
+          params = {
+            user: attrs
+          };
+        })
+
+      it('returns 400', (done) => {
+        request(app).post('/users')
+          .send(params)
+          .end((err, res) => {
+            expect(res).to.have.status(400);
+            console.log(res.error.text);
+            done();
+          });
+      });
+
+      it('does not create a user', (done) => {
+        User.count({}).exec((err, count) => {
+          request(app).post('/users')
+            .send(params)
+            .end((err, res) => {
+              expect(count).to.eq(count);
+              done();
+            });
+        });
+      });
+    });
+
+    context('Invalid nickname', () => {
+      let params;
+      factory.attrs('user', {
+          nickname: '$$hola'
+        })
+        .then(attrs => {
+          params = {
+            user: attrs
+          };
+        })
+
+      it('returns 400', (done) => {
+        request(app).post('/users')
+          .send(params)
+          .end((err, res) => {
+            expect(res).to.have.status(400);
+            done();
+          });
+      });
+
+
+
+      it('does not create a user', (done) => {
+        User.count({}).exec((err, count) => {
+          request(app).post('/users')
+            .send(params)
+            .end((err, res) => {
+              expect(count).to.eq(count);
+              done();
+            });
+        });
+      });
+    });
+    context('Without pasword', () => {
+      let params;
+      factory.attrs('user', {
+          password: null
+        })
+        .then(attrs => {
+          params = {
+            user: attrs
+          };
+        })
+
+      it('returns 400', (done) => {
+        request(app).post('/users')
+          .send(params)
+          .end((err, res) => {
+            expect(res).to.have.status(400);
+            done();
+          });
+      });
+
+      it('does not create a user', (done) => {
+        User.count({}).exec((err, count) => {
+          request(app).post('/users')
+            .send(params)
+            .end((err, res) => {
+              expect(count).to.eq(count);
+              done();
+            });
+        });
+      });
+    });
+
+
   })
-});*/
+});
