@@ -6,14 +6,7 @@ import {
 
 export const index = (req, res, next) => {
   Match.find().lean().exec((err, matches) => {
-    if (err) {
-      return res.status(400)
-        .json({
-          error: err.message
-        });
-    } else {
-      res.json(matchIndex(matches));
-    }
+    res.json(matchIndex(matches));
   });
 };
 
