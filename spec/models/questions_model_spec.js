@@ -10,7 +10,7 @@ import User from '../../app/models/game';
 
 chai.use(chaiHttp);
 
-describe('GamesModel', () => {
+describe('QuestionsModel', () => {
   var gameOk;
 
   beforeEach(function(done) {
@@ -60,7 +60,7 @@ describe('GamesModel', () => {
       });
     });
 
-    context('without text', () => {
+    context('question without text', () => {
       let params;
       factory.attrs('game', {
           questions:[{text: null}] 
@@ -92,7 +92,8 @@ describe('GamesModel', () => {
         });
       });
     });
-    context('invalid dificulty', () => {
+
+    context('question with invalid dificulty', () => {
       let params;
       factory.attrs('game', {
           questions:[{difficulty: "facil"}] 
@@ -124,7 +125,8 @@ describe('GamesModel', () => {
         });
       });
     });
-    context('without answers', () => {
+
+    context('question without answers', () => {
       let params;
       factory.attrs('game', {
           questions:[{answers: null}] 
@@ -156,7 +158,8 @@ describe('GamesModel', () => {
         });
       });
     });
-    context('less answers', () => {
+
+    context('question with less answers', () => {
       let params;
       factory.attrs('game', {
           questions:[{answers: ["ans1", "ans2", "ans3"]}] 
@@ -172,7 +175,7 @@ describe('GamesModel', () => {
           .send(params)
           .end((err, res) => {
             expect(res).to.have.status(400);
-            expect(res.error.text).to.match(/Validator failed for path `answers`/);
+            expect(res.error.text).to.match(/there must be 4 possible answers/);
             done();
           });
       });
@@ -188,7 +191,8 @@ describe('GamesModel', () => {
         });
       });
     });
-    context('more answers', () => {
+
+    context('question with more answers', () => {
       let params;
       factory.attrs('game', {
           questions:[{answers: ["ans1", "ans2", "ans3", "ans4", "ans5"]}] 
@@ -204,7 +208,7 @@ describe('GamesModel', () => {
           .send(params)
           .end((err, res) => {
             expect(res).to.have.status(400);
-            expect(res.error.text).to.match(/Validator failed for path `answers`/);
+            expect(res.error.text).to.match(/there must be 4 possible answers/);
             done();
           });
       });
@@ -220,7 +224,8 @@ describe('GamesModel', () => {
         });
       });
     });
-    context('invalid correctAnswer (0)', () => {
+
+    context('question with invalid correctAnswer (0)', () => {
       let params;
       factory.attrs('game', {
           questions:[{correctAnswer: 0}] 
@@ -252,7 +257,8 @@ describe('GamesModel', () => {
         });
       });
     });
-    context('invalid correctAnswer(5)', () => {
+
+    context('question with invalid correctAnswer(5)', () => {
       let params;
       factory.attrs('game', {
           questions:[{correctAnswer: 5}] 
@@ -284,7 +290,8 @@ describe('GamesModel', () => {
         });
       });
     });
-    context('without correctAnswer', () => {
+
+    context('question without correctAnswer', () => {
       let params;
       factory.attrs('game', {
           questions:[{correctAnswer: null}] 

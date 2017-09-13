@@ -11,21 +11,21 @@ const questionSchema = new Schema({
   },
   difficulty : {
     type : String,
-    enum : ['Easy', 'Medium', 'Hard'],
+    enum : ['Easy', 'Medium', 'Hard']
   },
   answers : {
     type : [String],
     required: [true, 'you must write the answers'],
     validate : {
-      validator: function(answers){return answers.length == 4;},
-      messager: 'there must be 4 possible answers'
+      validator: function(answers) {return answers.length == 4;},
+      message: 'there must be 4 possible answers'
     }
   },
   correctAnswer : {
     type : Number,
     required : [true, 'you must select correct answer'],
     min: [1, 'there must be a correct answer'],
-    max: [4, 'there must be a correct answer'],
+    max: [4, 'there must be a correct answer']
   }
 })
 

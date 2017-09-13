@@ -92,6 +92,7 @@ describe('GamesModel', () => {
         });
       });
     });
+
     context('without name', () => {
       let params;
       factory.attrs('game', {
@@ -124,6 +125,7 @@ describe('GamesModel', () => {
         });
       });
     });
+
     context('invalid name', () => {
       let params;
       factory.attrs('game', {
@@ -156,6 +158,7 @@ describe('GamesModel', () => {
         });
       });
     });
+
     context('negative rating', () => {
       let params;
       factory.attrs('game', {
@@ -188,6 +191,7 @@ describe('GamesModel', () => {
         });
       });
     });
+
     context('invalid rating', () => {
       let params;
       factory.attrs('game', {
@@ -220,6 +224,7 @@ describe('GamesModel', () => {
         });
       });
     });
+
     context('invalid timesPlayed', () => {
       let params;
       factory.attrs('game', {
@@ -252,6 +257,7 @@ describe('GamesModel', () => {
         });
       });
     });
+
     context('whitout creator', () => {
       let params;
       factory.attrs('game', {
@@ -284,6 +290,7 @@ describe('GamesModel', () => {
         });
       });
     });
+
     context('whitout questions', () => {
       let params;
       factory.attrs('game', {
@@ -316,6 +323,7 @@ describe('GamesModel', () => {
         });
       });
     });
+
     context('ranking whitout points', () => {
       let params;
       factory.attrs('game', {
@@ -348,6 +356,7 @@ describe('GamesModel', () => {
         });
       });
     });
+
     context('ranking whitout user', () => {
       let params;
       factory.attrs('game', {
@@ -380,6 +389,7 @@ describe('GamesModel', () => {
         });
       });
     });
+    
     context('invalid creationDate', () => {
       let params;
       factory.attrs('game', {

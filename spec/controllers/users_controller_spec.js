@@ -68,10 +68,10 @@ describe('UsersController', () => {
         });
     });
     //find user who does not exist
-    it('returns 400', (done) => {
+    it('returns 404', (done) => {
       request(app).get(`/users/0000000`)
         .end((err, res) => {
-          expect(res).to.have.status(400);
+          expect(res).to.have.status(404);
           done();
         });
     });

@@ -125,6 +125,7 @@ describe('UsersModel', () => {
         });
       });
     });
+
     context('Without email', () => {
       let params;
       factory.attrs('user', {
@@ -157,6 +158,7 @@ describe('UsersModel', () => {
         });
       });
     });
+
     context('Without nickname', () => {
       let params;
       factory.attrs('user', {
@@ -243,8 +245,6 @@ describe('UsersModel', () => {
           });
       });
 
-
-
       it('does not create a user', (done) => {
         User.count({}).exec((err, count) => {
           request(app).post('/users')
@@ -257,6 +257,7 @@ describe('UsersModel', () => {
         });
       });
     });
+
     context('Without pasword', () => {
       let params;
       factory.attrs('user', {
@@ -289,7 +290,5 @@ describe('UsersModel', () => {
         });
       });
     });
-
-
   })
 });

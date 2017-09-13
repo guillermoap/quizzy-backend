@@ -92,6 +92,7 @@ describe('MatchesModel', () => {
         });
       });
     });
+
     context('same url', () => {
       let params;
       factory.attrs('match', {
@@ -124,6 +125,7 @@ describe('MatchesModel', () => {
         });
       });
     });
+
     context('invalid url', () => {
       let params;
       factory.attrs('match', {
@@ -156,6 +158,7 @@ describe('MatchesModel', () => {
         });
       });
     });
+
     context('without players', () => {
       let params;
       factory.attrs('match', {
@@ -188,6 +191,7 @@ describe('MatchesModel', () => {
         });
       });
     });
+
     context('without owner', () => {
       let params;
       factory.attrs('match', {
@@ -220,6 +224,7 @@ describe('MatchesModel', () => {
         });
       });
     });
+
     context('invalid endingDate', () => {
       let params;
       factory.attrs('match', {
@@ -252,6 +257,7 @@ describe('MatchesModel', () => {
         });
       });
     });
+    
     context('without game', () => {
       let params;
       factory.attrs('match', {

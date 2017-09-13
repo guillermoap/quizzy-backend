@@ -6,16 +6,16 @@ var userSchema = new Schema({
     required: [true, 'you must enter a nickname'],
     unique: true,
     validate: {
-      validator: function(nickname){ return !/\W/.test(nickname);},
+      validator: function(nickname) { return !/\W/.test(nickname);},
       message: 'invalid nickname'          
     }
   },
   email: {
     type : String,
-    index: {unique: [true, 'this email already exists']},
+    index: { unique: [true, 'this email already exists'] },
     required : [true, 'you must enter a email'],
     validate: {
-      validator: function(email){ return /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,4})+$/.test(email);},
+      validator: function(email) { return /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,4})+$/.test(email);},
       message: 'invalid email'          
     }
   },
@@ -27,7 +27,7 @@ var userSchema = new Schema({
 
 class UserClass {}
 
-userSchema.index({ nickname: 1, type: -1 },{unique: true});
+userSchema.index({ nickname: 1, type: -1 }, {unique: true});
 
 userSchema.loadClass(UserClass);
 

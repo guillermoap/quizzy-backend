@@ -20,7 +20,7 @@ export const index = (req, res, next) => {
 export const show = (req, res, next) => {
   Game.findById(req.params.id).lean().exec((err, game) => {
     if (err) {
-      return res.status(400)
+      return res.status(404)
         .json({
           error: err.message
         });

@@ -70,10 +70,10 @@ describe('GameController', () => {
         });
     });
     //find game that does not exist
-    it('returns 400', (done) => {
+    it('returns 404', (done) => {
       request(app).get(`/games/000000`)
         .end((err, res) => {
-          expect(res).to.have.status(400);
+          expect(res).to.have.status(404);
           done();
         });
     });
