@@ -9,7 +9,7 @@ export const index = (req, res, next) => {
     if (err) {
       return res.status(400)
         .json({
-          error: err.errmsg
+          error: err.message
         });
     } else {
       res.json(gameIndex(games));
@@ -20,9 +20,9 @@ export const index = (req, res, next) => {
 export const show = (req, res, next) => {
   Game.findById(req.params.id).lean().exec((err, game) => {
     if (err) {
-      return res.status(400)
+      return res.status(404)
         .json({
-          error: err.errmsg
+          error: err.message
         });
     } else {
       res.json(gameShow(game));
@@ -35,7 +35,7 @@ export const create = (req, res, next) => {
     if (err) {
       return res.status(400)
         .json({
-          error: err.errmsg
+          error: err.message
         });
     } else {
       return res.json({});
@@ -52,7 +52,7 @@ export const update = (req, res, next) => {
     if (err) {
       return res.status(400)
         .json({
-          error: err.errmsg
+          error: err.message
         });
     } else {
       return res.json(gameShow(game));
@@ -65,7 +65,7 @@ export const destroy = (req, res, next) => {
     if (err) {
       return res.status(400)
         .json({
-          error: err.errmsg
+          error: err.message
         });
     } else {
       return res.json({});

@@ -1,18 +1,34 @@
-import mongoose, {
-  Schema
-} from 'mongoose';
+import mongoose, { Schema } from 'mongoose';
 import gameSchema from './schemas/game.schema';
 
-const matchSchema = new Schema({
+var matchSchema = new Schema ({
   url: {
-    type: String,
-    unique: true
+    type : String,
+    required: [true, 'you must enter a url'],
+    unique: true,
+    validate: {
+      validator: function(url) { return !/\W/.test(url);},
+      message: 'invalid url'          
+    }
   },
   isRealTime: Boolean,
-  players: [String],
-  owner: String,
+  players: {
+    type : [String],
+    required : [true, 'there must be at least one player'],
+    validate : {
+      validator: function(players) {return players.length > 0;},
+      message: 'there must be at least one player'
+    }
+  },
+  owner: {
+    type : String,
+    required : [true, 'must have a owner']
+  },
   endingDate: Date,
-  game: gameSchema,
+  game: { 
+    type: gameSchema,
+    required: [true, 'there must be a game']
+  },
   result: [Number]
 })
 
