@@ -3,7 +3,7 @@ import mongoose, { Schema } from 'mongoose';
 var userSchema = new Schema({
   nickname: {
     type : String,
-    required: true,
+    required: [true, 'you must enter a nickname'],
     unique: true,
     validate: {
       validator: function(nickname){ return !/\W/.test(nickname);},

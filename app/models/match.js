@@ -3,11 +3,11 @@ import gameSchema from './schemas/game.schema';
 
 var matchSchema = new Schema ({
   url: {
-    type: String,
-    unique: [true, 'this url already exists'],
+    type : String,
     required: [true, 'you must enter a url'],
+    unique: true,
     validate: {
-      validator: function(name){return !/\W/.test(name);},
+      validator: function(url){ return !/\W/.test(url);},
       message: 'invalid url'          
     }
   },

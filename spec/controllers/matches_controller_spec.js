@@ -71,6 +71,14 @@ describe('MatchesController', () => {
           done();
         });
     });
+    //find match that does not exist
+    it('returns 200', (done) => {
+      request(app).get(`/matches/0000000`)
+        .end((err, res) => {
+          expect(res).to.have.status(404);
+          done();
+        });
+    });
   });
 
   describe('create', () => {
@@ -220,6 +228,14 @@ describe('MatchesController', () => {
             expect(match).to.eq(null);
             done();
           });
+        });
+    });
+    //destroy match that does not exist
+    it('returns 400', (done) => {
+      request(app).delete(`/matches/000000`)
+        .end((err, res) => {
+          expect(res).to.have.status(400);
+          done();
         });
     });
   })

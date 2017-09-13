@@ -6,19 +6,19 @@ import chaiHttp from 'chai-http';
 import factory from '../factories/factory.js';
 import app from '../../server.js';
 import mongoose from 'mongoose';
-import User from '../../app/models/user';
+import User from '../../app/models/match';
 
 chai.use(chaiHttp);
 
-describe('UsersModel', () => {
-  var userOk;
+describe('MatchesModel', () => {
+  var matchOk;
 
   beforeEach(function(done) {
-    factory.createMany('user', 1, [{
-        email: 'jose2017@spec.com', nickname: 'jose2017'
+    factory.createMany('match', 1, [{
+        url: 'Match2017'
       }])
-      .then(userArray => {
-        userOk = userArray[0];
+      .then(matchArray => {
+        matchOk = matchArray[0];
         done();
       });
   });
@@ -32,15 +32,15 @@ describe('UsersModel', () => {
   describe('create', () => {
     context('with valid params', () => {
       let params;
-      factory.attrs('user')
+      factory.attrs('match')
         .then(attrs => {
           params = {
-            user: attrs
+            match: attrs
           };
         })
 
       it('returns 200', (done) => {
-        request(app).post('/users')
+        request(app).post('/matches')
           .send(params)
           .end((err, res) => {
             expect(res).to.have.status(200);
@@ -48,9 +48,9 @@ describe('UsersModel', () => {
           });
       });
 
-      it('creates a user', (done) => {
+      it('creates a match', (done) => {
         User.count({}).exec((err, count) => {
-          request(app).post('/users')
+          request(app).post('/match')
             .send(params)
             .end((err, res) => {
               expect(count).to.eq(count++);
@@ -60,30 +60,30 @@ describe('UsersModel', () => {
       });
     });
 
-    context('same email', () => {
+    context('without url', () => {
       let params;
-      factory.attrs('user', {
-          email: 'jose2017@spec.com'
+      factory.attrs('match', {
+          url:null 
         })
         .then(attrs => {
           params = {
-            user: attrs
+            match: attrs
           };
         })
 
       it('returns 400', (done) => {
-        request(app).post('/users')
+        request(app).post('/matches')
           .send(params)
           .end((err, res) => {
             expect(res).to.have.status(400);
-            expect(res.error.text).to.match(/E11000 duplicate key error collection: quizzy-backend-test.users index: email_1/);
+            expect(res.error.text).to.match(/you must enter a url/);
             done();
           });
       });
 
-      it('does not create a user', (done) => {
+      it('does not create a match', (done) => {
         User.count({}).exec((err, count) => {
-          request(app).post('/users')
+          request(app).post('/matches')
             .send(params)
             .end((err, res) => {
               expect(count).to.eq(count);
@@ -92,31 +92,30 @@ describe('UsersModel', () => {
         });
       });
     });
-
-    context('Invalid email', () => {
+    context('same url', () => {
       let params;
-      factory.attrs('user', {
-          email: 'jose2017   @spec.com'
+      factory.attrs('match', {
+          url: "Match2017"
         })
         .then(attrs => {
           params = {
-            user: attrs
+            match: attrs
           };
         })
 
       it('returns 400', (done) => {
-        request(app).post('/users')
+        request(app).post('/matches')
           .send(params)
           .end((err, res) => {
             expect(res).to.have.status(400);
-            expect(res.error.text).to.match(/invalid email/);
+            expect(res.error.text).to.match(/E11000 duplicate key error collection: quizzy-backend-test.matches index: url_1/);
             done();
           });
       });
 
-      it('does not create a user', (done) => {
+      it('does not create a match', (done) => {
         User.count({}).exec((err, count) => {
-          request(app).post('/users')
+          request(app).post('/matches')
             .send(params)
             .end((err, res) => {
               expect(count).to.eq(count);
@@ -125,30 +124,30 @@ describe('UsersModel', () => {
         });
       });
     });
-    context('Without email', () => {
+    context('invalid url', () => {
       let params;
-      factory.attrs('user', {
-          email: null
+      factory.attrs('match', {
+          url: "match&&"
         })
         .then(attrs => {
           params = {
-            user: attrs
+            match: attrs
           };
         })
 
       it('returns 400', (done) => {
-        request(app).post('/users')
+        request(app).post('/matches')
           .send(params)
           .end((err, res) => {
             expect(res).to.have.status(400);
-            expect(res.error.text).to.match(/you must enter a email/);
+            expect(res.error.text).to.match(/invalid url/);
             done();
           });
       });
 
-      it('does not create a user', (done) => {
+      it('does not create a match', (done) => {
         User.count({}).exec((err, count) => {
-          request(app).post('/users')
+          request(app).post('/matches')
             .send(params)
             .end((err, res) => {
               expect(count).to.eq(count);
@@ -157,30 +156,30 @@ describe('UsersModel', () => {
         });
       });
     });
-    context('Without nickname', () => {
+    context('without players', () => {
       let params;
-      factory.attrs('user', {
-          nickname: null
+      factory.attrs('match', {
+          players: null 
         })
         .then(attrs => {
           params = {
-            user: attrs
+            match: attrs
           };
         })
 
       it('returns 400', (done) => {
-        request(app).post('/users')
+        request(app).post('/matches')
           .send(params)
           .end((err, res) => {
             expect(res).to.have.status(400);
-            expect(res.error.text).to.match(/you must enter a nickname/);
+            expect(res.error.text).to.match(/there must be at least one player/);
             done();
           });
       });
 
-      it('does not create a user', (done) => {
+      it('does not create a match', (done) => {
         User.count({}).exec((err, count) => {
-          request(app).post('/users')
+          request(app).post('/matches')
             .send(params)
             .end((err, res) => {
               expect(count).to.eq(count);
@@ -189,31 +188,30 @@ describe('UsersModel', () => {
         });
       });
     });
-    
-    context('Same nickname', () => {
+    context('without owner', () => {
       let params;
-      factory.attrs('user', {
-          nickname: 'jose2017'
+      factory.attrs('match', {
+          owner: null 
         })
         .then(attrs => {
           params = {
-            user: attrs
+            match: attrs
           };
         })
 
       it('returns 400', (done) => {
-        request(app).post('/users')
+        request(app).post('/matches')
           .send(params)
           .end((err, res) => {
             expect(res).to.have.status(400);
-            expect(res.error.text).to.match(/E11000 duplicate key error collection: quizzy-backend-test.users index: nickname_1/);
+            expect(res.error.text).to.match(/must have a owner/);
             done();
           });
       });
 
-      it('does not create a user', (done) => {
+      it('does not create a match', (done) => {
         User.count({}).exec((err, count) => {
-          request(app).post('/users')
+          request(app).post('/matches')
             .send(params)
             .end((err, res) => {
               expect(count).to.eq(count);
@@ -222,74 +220,69 @@ describe('UsersModel', () => {
         });
       });
     });
-
-    context('Invalid nickname', () => {
+    context('invalid endingDate', () => {
       let params;
-      factory.attrs('user', {
-          nickname: '$$hola'
+      factory.attrs('match', {
+          endingDate: "4 de Julio"
         })
         .then(attrs => {
           params = {
-            user: attrs
+            match: attrs
           };
         })
 
       it('returns 400', (done) => {
-        request(app).post('/users')
+        request(app).post('/matches')
           .send(params)
           .end((err, res) => {
             expect(res).to.have.status(400);
+            expect(res.error.text).to.match(/Cast to Date failed/);
             done();
           });
       });
 
-
-
-      it('does not create a user', (done) => {
+      it('does not create a match', (done) => {
         User.count({}).exec((err, count) => {
-          request(app).post('/users')
+          request(app).post('/matches')
             .send(params)
             .end((err, res) => {
               expect(count).to.eq(count);
-              expect(res.error.text).to.match(/invalid nickname/);
               done();
             });
         });
       });
     });
-    context('Without pasword', () => {
+    context('without game', () => {
       let params;
-      factory.attrs('user', {
-          password: null
+      factory.attrs('match', {
+          game: null
         })
         .then(attrs => {
           params = {
-            user: attrs
+            match: attrs
           };
         })
 
       it('returns 400', (done) => {
-        request(app).post('/users')
+        request(app).post('/matches')
           .send(params)
           .end((err, res) => {
             expect(res).to.have.status(400);
+            expect(res.error.text).to.match(/there must be a game/);
             done();
           });
       });
 
-      it('does not create a user', (done) => {
+      it('does not create a match', (done) => {
         User.count({}).exec((err, count) => {
-          request(app).post('/users')
+          request(app).post('/matches')
             .send(params)
             .end((err, res) => {
               expect(count).to.eq(count);
-              expect(res.error.text).to.match(/you must enter a password/);
               done();
             });
         });
       });
     });
-
-
   })
 });

@@ -67,6 +67,14 @@ describe('UsersController', () => {
           done();
         });
     });
+    //find user who does not exist
+    it('returns 400', (done) => {
+      request(app).get(`/users/0000000`)
+        .end((err, res) => {
+          expect(res).to.have.status(400);
+          done();
+        });
+    });
   });
 
   describe('create', () => {
@@ -215,6 +223,14 @@ describe('UsersController', () => {
             expect(user).to.eq(null);
             done();
           });
+        });
+    });
+    //destroy user who does not exist
+    it('returns 400', (done) => {
+      request(app).delete(`/users/000000`)
+        .end((err, res) => {
+          expect(res).to.have.status(400);
+          done();
         });
     });
   })

@@ -9,7 +9,7 @@ export const index = (req, res, next) => {
     if (err) {
       return res.status(400)
         .json({
-          error: err.errmsg
+          error: err.message
         });
     } else {
       res.json(matchIndex(matches));
@@ -24,7 +24,7 @@ export const show = (req, res, next) => {
     if (err) {
       return res.status(404)
         .json({
-          error: err.errmsg
+          error: err.message
         });
     } else {
       if (match == null) {
@@ -42,7 +42,7 @@ export const create = (req, res, next) => {
     if (err) {
       return res.status(400)
         .json({
-          error: err.errmsg
+          error: err.message
         });
     } else {
       return res.json({});
@@ -59,7 +59,7 @@ export const update = (req, res, next) => {
     if (err) {
       return res.status(400)
         .json({
-          error: err.errmsg
+          error: err.message
         });
     } else {
       return res.json(matchShow(match));
@@ -72,7 +72,7 @@ export const destroy = (req, res, next) => {
     if (err) {
       return res.status(400)
         .json({
-          error: err.errmsg
+          error: err.message
         });
     } else {
       return res.json({});

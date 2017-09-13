@@ -13,7 +13,7 @@ factory.define('user', User, {
 factory.define('game', Game, {
   name: faker.random.number(),
   description: "Great game",
-  rating: () => faker.random.number(100),
+  rating: () => faker.random.number(5),
   timesPlayed: () => faker.random.number(20),
   creator: () => faker.name.findName(),
   "questions": [{
@@ -49,7 +49,7 @@ factory.define('match', Match, {
   game: {
     name: () => faker.random.number(),
     description: () => faker.lorem.sentence(),
-    rating: () => faker.random.number(),
+    rating: () => faker.random.number(5),
     timesPlayed: () => faker.random.number(),
     creator: () => faker.fake('{{name.firstName}} {{name.lastName}}'),
     questions: fakeQuestions(),

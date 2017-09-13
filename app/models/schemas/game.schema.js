@@ -14,7 +14,8 @@ const gameSchema = new Schema({
   description : String,
   rating : {
     type : Number,
-    min: [0, 'rating must be positive']
+    min: [0, 'there must be a correct rating'],
+    max: [5, 'there must be a correct rating']
   },
   timesPlayed : {
     type : Number,
@@ -29,8 +30,12 @@ const gameSchema = new Schema({
     required: [true, 'there must be at least one question']},
   tags : [String],
   ranking : [{
-    user: String,
-    points: Number
+    user: {
+      type:String,
+      required: true},
+    points : {
+      type: Number,
+      required: true}
   }],
   creationDate : Date,
   image : String
