@@ -18,7 +18,7 @@ describe('MatchesController', () => {
     factory.createMany('match', 2, [{
         url: 'testURL'
       }, {
-        url: 'testURL_2'
+        url: 'testURL2'
       }])
       .then(matchArray => {
         match = matchArray[0];
@@ -181,7 +181,7 @@ describe('MatchesController', () => {
     context('with invalid params', () => {
       let params;
       factory.attrs('match', {
-          url: 'testURL_2'
+          url: 'testURL2'
         })
         .then(attrs => {
           params = {

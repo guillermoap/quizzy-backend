@@ -6,421 +6,307 @@ import chaiHttp from 'chai-http';
 import factory from '../factories/factory.js';
 import app from '../../server.js';
 import mongoose from 'mongoose';
-import User from '../../app/models/game';
+import Game from '../../app/models/game';
 
 chai.use(chaiHttp);
 
 describe('GamesModel', () => {
-  var gameOk;
+  var game;
+  var game2;
+  var game3;
+  var game4;
+  var gameWithoutName;
+  var gameDupName;
+  var gameInvalidName;
+  var gameNegativeRating;
+  var gameInvalidRating;
+  var gameNegativeTimesPlayed;
+  var gameWithoutCreator;
+  var gameWithoutQuestions;
+  var gameRankingWithoutUser;
+  var gameRankingWithoutPoints;
+  var gameInvalidDate;
 
   beforeEach(function(done) {
-    factory.createMany('game', 1, [{
-        name: 'Game2017'
-      }])
-      .then(gameArray => {
-        gameOk = gameArray[0];
-        done();
-      });
-  });
-
-  afterEach(function(done) {
-    User.remove({}, function() {
+    factory.createMany('game', 2, [{
+      name: 'quizzy'
+    }, {
+      name: 'Futbol'
+    }])
+    .then(gameArray => {
+      game = gameArray[0];
+      game2 = gameArray[1];
       done();
     });
   });
 
-  describe('create', () => {
-    context('with valid params', () => {
-      let params;
-      factory.attrs('game')
-        .then(attrs => {
-          params = {
-            game: attrs
-          };
-        })
-
-      it('returns 200', (done) => {
-        request(app).post('/games')
-          .send(params)
-          .end((err, res) => {
-            expect(res).to.have.status(200);
-            done();
-          });
-      });
-
-      it('creates a game', (done) => {
-        User.count({}).exec((err, count) => {
-          request(app).post('/games')
-            .send(params)
-            .end((err, res) => {
-              expect(count).to.eq(count++);
-              done();
-            });
-        });
-      });
+  afterEach(function(done) {
+    Game.remove({}, function() {
+      done();
     });
-
-    context('same name', () => {
-      let params;
-      factory.attrs('game', {
-          name: 'Game2017'
-        })
-        .then(attrs => {
-          params = {
-            game: attrs
-          };
-        })
-
-      it('returns 400', (done) => {
-        request(app).post('/games')
-          .send(params)
-          .end((err, res) => {
-            expect(res).to.have.status(400);
-            expect(res.error.text).to.match(/E11000 duplicate key error collection: quizzy-backend-test.games index: name_1/);
-            done();
-          });
-      });
-
-      it('does not create a game', (done) => {
-        User.count({}).exec((err, count) => {
-          request(app).post('/games')
-            .send(params)
-            .end((err, res) => {
-              expect(count).to.eq(count);
-              done();
-            });
-        });
-      });
-    });
-
-    context('without name', () => {
-      let params;
-      factory.attrs('game', {
-          name: null
-        })
-        .then(attrs => {
-          params = {
-            game: attrs
-          };
-        })
-
-      it('returns 400', (done) => {
-        request(app).post('/games')
-          .send(params)
-          .end((err, res) => {
-            expect(res).to.have.status(400);
-            expect(res.error.text).to.match(/you must enter a name/);
-            done();
-          });
-      });
-
-      it('does not create a game', (done) => {
-        User.count({}).exec((err, count) => {
-          request(app).post('/games')
-            .send(params)
-            .end((err, res) => {
-              expect(count).to.eq(count);
-              done();
-            });
-        });
-      });
-    });
-
-    context('invalid name', () => {
-      let params;
-      factory.attrs('game', {
-          name: 'Game--2017'
-        })
-        .then(attrs => {
-          params = {
-            game: attrs
-          };
-        })
-
-      it('returns 400', (done) => {
-        request(app).post('/games')
-          .send(params)
-          .end((err, res) => {
-            expect(res).to.have.status(400);
-            expect(res.error.text).to.match(/invalid name/);
-            done();
-          });
-      });
-
-      it('does not create a game', (done) => {
-        User.count({}).exec((err, count) => {
-          request(app).post('/games')
-            .send(params)
-            .end((err, res) => {
-              expect(count).to.eq(count);
-              done();
-            });
-        });
-      });
-    });
-
-    context('negative rating', () => {
-      let params;
-      factory.attrs('game', {
-          rating: -4
-        })
-        .then(attrs => {
-          params = {
-            game: attrs
-          };
-        })
-
-      it('returns 400', (done) => {
-        request(app).post('/games')
-          .send(params)
-          .end((err, res) => {
-            expect(res).to.have.status(400);
-            expect(res.error.text).to.match(/there must be a correct rating/);
-            done();
-          });
-      });
-
-      it('does not create a game', (done) => {
-        User.count({}).exec((err, count) => {
-          request(app).post('/games')
-            .send(params)
-            .end((err, res) => {
-              expect(count).to.eq(count);
-              done();
-            });
-        });
-      });
-    });
-
-    context('invalid rating', () => {
-      let params;
-      factory.attrs('game', {
-          rating: 8 
-        })
-        .then(attrs => {
-          params = {
-            game: attrs
-          };
-        })
-
-      it('returns 400', (done) => {
-        request(app).post('/games')
-          .send(params)
-          .end((err, res) => {
-            expect(res).to.have.status(400);
-            expect(res.error.text).to.match(/there must be a correct rating/);
-            done();
-          });
-      });
-
-      it('does not create a game', (done) => {
-        User.count({}).exec((err, count) => {
-          request(app).post('/games')
-            .send(params)
-            .end((err, res) => {
-              expect(count).to.eq(count);
-              done();
-            });
-        });
-      });
-    });
-
-    context('invalid timesPlayed', () => {
-      let params;
-      factory.attrs('game', {
-          timesPlayed: -10
-        })
-        .then(attrs => {
-          params = {
-            game: attrs
-          };
-        })
-
-      it('returns 400', (done) => {
-        request(app).post('/games')
-          .send(params)
-          .end((err, res) => {
-            expect(res).to.have.status(400);
-            expect(res.error.text).to.match(/timesPlayed must be positive/);
-            done();
-          });
-      });
-
-      it('does not create a game', (done) => {
-        User.count({}).exec((err, count) => {
-          request(app).post('/games')
-            .send(params)
-            .end((err, res) => {
-              expect(count).to.eq(count);
-              done();
-            });
-        });
-      });
-    });
-
-    context('whitout creator', () => {
-      let params;
-      factory.attrs('game', {
-          creator: null
-        })
-        .then(attrs => {
-          params = {
-            game: attrs
-          };
-        })
-
-      it('returns 400', (done) => {
-        request(app).post('/games')
-          .send(params)
-          .end((err, res) => {
-            expect(res).to.have.status(400);
-            expect(res.error.text).to.match(/must have a creator/);
-            done();
-          });
-      });
-
-      it('does not create a game', (done) => {
-        User.count({}).exec((err, count) => {
-          request(app).post('/games')
-            .send(params)
-            .end((err, res) => {
-              expect(count).to.eq(count);
-              done();
-            });
-        });
-      });
-    });
-
-    context('whitout questions', () => {
-      let params;
-      factory.attrs('game', {
-          questions: null
-        })
-        .then(attrs => {
-          params = {
-            game: attrs
-          };
-        })
-
-      it('returns 400', (done) => {
-        request(app).post('/games')
-          .send(params)
-          .end((err, res) => {
-            expect(res).to.have.status(400);
-            expect(res.error.text).to.match(/there must be at least one question/);
-            done();
-          });
-      });
-
-      it('does not create a game', (done) => {
-        User.count({}).exec((err, count) => {
-          request(app).post('/games')
-            .send(params)
-            .end((err, res) => {
-              expect(count).to.eq(count);
-              done();
-            });
-        });
-      });
-    });
-
-    context('ranking whitout points', () => {
-      let params;
-      factory.attrs('game', {
-          ranking: [{user: "sebas"}]
-        })
-        .then(attrs => {
-          params = {
-            game: attrs
-          };
-        })
-
-      it('returns 400', (done) => {
-        request(app).post('/games')
-          .send(params)
-          .end((err, res) => {
-            expect(res).to.have.status(400);
-            expect(res.error.text).to.match(/Path `points` is required/);
-            done();
-          });
-      });
-
-      it('does not create a game', (done) => {
-        User.count({}).exec((err, count) => {
-          request(app).post('/games')
-            .send(params)
-            .end((err, res) => {
-              expect(count).to.eq(count);
-              done();
-            });
-        });
-      });
-    });
-
-    context('ranking whitout user', () => {
-      let params;
-      factory.attrs('game', {
-          ranking: [{points: 123}]
-        })
-        .then(attrs => {
-          params = {
-            game: attrs
-          };
-        })
-
-      it('returns 400', (done) => {
-        request(app).post('/games')
-          .send(params)
-          .end((err, res) => {
-            expect(res).to.have.status(400);
-            expect(res.error.text).to.match(/Path `user` is required/);
-            done();
-          });
-      });
-
-      it('does not create a game', (done) => {
-        User.count({}).exec((err, count) => {
-          request(app).post('/games')
-            .send(params)
-            .end((err, res) => {
-              expect(count).to.eq(count);
-              done();
-            });
-        });
-      });
-    });
-    
-    context('invalid creationDate', () => {
-      let params;
-      factory.attrs('game', {
-          creationDate: "hola"
-        })
-        .then(attrs => {
-          params = {
-            game: attrs
-          };
-        })
-
-      it('returns 400', (done) => {
-        request(app).post('/games')
-          .send(params)
-          .end((err, res) => {
-            expect(res).to.have.status(400);
-            expect(res.error.text).to.match(/Cast to Date failed/);
-            done();
-          });
-      });
-
-      it('does not create a game', (done) => {
-        User.count({}).exec((err, count) => {
-          request(app).post('/games')
-            .send(params)
-            .end((err, res) => {
-              expect(count).to.eq(count);
-              done();
-            });
-        });
-      });
-    });
+  });
+   
+  factory.attrsMany('game', 13, [{
+    name: null
+  }, {
+    name: 'quizzy'
+  }, {
+    name: 'tennis-2010'
+  }, {
+    rating: -2
+  }, {
+    rating: 8
+  }, {
+    timesPlayed: -1
+  }, {
+    creator: null
+  }, {
+    questions: null 
+  }, {
+    ranking: [{points: 8}]
+  }, {
+    ranking: [{user: 'sebas'}]
+  }, {
+    creationDate: 'Lunes 20 de Julio de 1999'
+  }, {
+    name: 'Juego_Aleatorio' 
+  }, {
+    name: '1324'
+  }])
+  .then(gameAttrsArray => {
+    gameWithoutName = gameAttrsArray[0];
+    gameDupName = gameAttrsArray[1];
+    gameInvalidName = gameAttrsArray[2];
+    gameNegativeRating = gameAttrsArray[3];
+    gameInvalidRating = gameAttrsArray[4];
+    gameNegativeTimesPlayed = gameAttrsArray[5];
+    gameWithoutCreator = gameAttrsArray[6];
+    gameWithoutQuestions = gameAttrsArray[7];
+    gameRankingWithoutUser = gameAttrsArray[8];
+    gameRankingWithoutPoints = gameAttrsArray[9];
+    gameInvalidDate = gameAttrsArray[10];
+    game3 = gameAttrsArray[11];
+    game4 = gameAttrsArray[12];
   })
+
+  describe('Without name', () => {
+    it('return correct error', (done) => {
+      Game.create(gameWithoutName, (err, game) => {
+        expect(err).to.match(/you must enter a name/);
+        done();
+      });
+    });
+    it('dose not create a game', (done) => {
+      Game.count({}).exec((err, count) => {
+        Game.create(gameWithoutName, (err, game) => {
+          expect(count).to.eq(count);
+          done();
+        });
+      });
+    });
+  });
+
+  describe('Same name', () => {
+    it('return correct error', (done) => {
+      Game.create(gameDupName, (err, game) => {
+        expect(err).to.match(/E11000 duplicate key error collection: quizzy-backend-test.games index: name_1/);
+        done();
+      });
+    });
+    it('dose not create a game', (done) => {
+      Game.count({}).exec((err, count) => {
+        Game.create(gameDupName, (err, game) => {
+          expect(count).to.eq(count);
+          done();
+        });
+      });
+    });
+  });
+
+  describe('Invalid name', () => {
+    it('return correct error', (done) => {
+      Game.create(gameInvalidName, (err, game) => {
+        expect(err).to.match(/invalid name/);
+        done();
+      });
+    });
+    it('dose not create a game', (done) => {
+      Game.count({}).exec((err, count) => {
+        Game.create(gameInvalidName, (err, game) => {
+          expect(count).to.eq(count);
+          done();
+        });
+      });
+    });
+  });
+
+  describe('Negative Rating', () => {
+    it('return correct error', (done) => {
+      Game.create(gameNegativeRating, (err, game) => {
+        expect(err).to.match(/there must be a correct rating/);
+        done();
+      });
+    });
+    it('dose not create a game', (done) => {
+      Game.count({}).exec((err, count) => {
+        Game.create(gameNegativeRating, (err, game) => {
+          expect(count).to.eq(count);
+          done();
+        });
+      });
+    });
+  });
+
+  describe('Rating out of range', () => {
+    it('return correct error', (done) => {
+      Game.create(gameInvalidRating, (err, game) => {
+        expect(err).to.match(/there must be a correct rating/);
+        done();
+      });
+    });
+    it('dose not create a game', (done) => {
+      Game.count({}).exec((err, count) => {
+        Game.create(gameInvalidRating, (err, game) => {
+          expect(count).to.eq(count);
+          done();
+        });
+      });
+    });
+  });
+
+  describe('Negative timesPlayed', () => {
+    it('return correct error', (done) => {
+      Game.create(gameNegativeTimesPlayed, (err, game) => {
+        expect(err).to.match(/timesPlayed must be positive/);
+        done();
+      });
+    });
+    it('dose not create a game', (done) => {
+      Game.count({}).exec((err, count) => {
+        Game.create(gameNegativeTimesPlayed, (err, game) => {
+          expect(count).to.eq(count);
+          done();
+        });
+      });
+    });
+  });
+  
+  describe('Without creator', () => {
+    it('return correct error', (done) => {
+      Game.create(gameWithoutCreator, (err, game) => {
+        expect(err).to.match(/must have a creator/);
+        done();
+      });
+    });
+    it('dose not create a game', (done) => {
+      Game.count({}).exec((err, count) => {
+        Game.create(gameWithoutCreator, (err, game) => {
+          expect(count).to.eq(count);
+          done();
+        });
+      });
+    });
+  });
+
+  describe('Without questions', () => {
+    it('return correct error', (done) => {
+      Game.create(gameWithoutQuestions, (err, game) => {
+        expect(err).to.match(/there must be at least one question/);
+        done();
+      });
+    });
+    it('dose not create a game', (done) => {
+      Game.count({}).exec((err, count) => {
+        Game.create(gameWithoutQuestions, (err, game) => {
+          expect(count).to.eq(count);
+          done();
+        });
+      });
+    });
+  });
+
+  describe('Ranking without user', () => {
+    it('return correct error', (done) => {
+      Game.create(gameRankingWithoutUser, (err, game) => {
+        expect(err).to.match(/ranking must have a user/);
+        done();
+      });
+    });
+    it('dose not create a game', (done) => {
+      Game.count({}).exec((err, count) => {
+        Game.create(gameRankingWithoutUser, (err, game) => {
+          expect(count).to.eq(count);
+          done();
+        });
+      });
+    });
+  });
+
+  describe('Ranking without points', () => {
+    it('return correct error', (done) => {
+      Game.create(gameRankingWithoutPoints, (err, game) => {
+        expect(err).to.match(/ranking must have a points/);
+        done();
+      });
+    });
+    it('dose not create a game', (done) => {
+      Game.count({}).exec((err, count) => {
+        Game.create(gameRankingWithoutPoints, (err, game) => {
+          expect(count).to.eq(count);
+          done();
+        });
+      });
+    });
+  });
+
+  describe('Invalid date', () => {
+    it('return correct error', (done) => {
+      Game.create(gameInvalidDate, (err, game) => {
+        expect(err).to.match(/Cast to Date failed/);
+        done();
+      });
+    });
+    it('dose not create a game', (done) => {
+      Game.count({}).exec((err, count) => {
+        Game.create(gameInvalidDate, (err, game) => {
+          expect(count).to.eq(count);
+          done();
+        });
+      });
+    });
+  });
+
+  describe('Name with only numbers', () => {
+    it('does not return error', (done) => {
+      Game.create(game3, (err, game) => {
+        expect(err).to.eq(null);
+        done();
+      });
+    });
+    it('creates a game', (done) => {
+      Game.count({}).exec((err, count) => {
+        Game.create(game3, (err, game) => {
+          expect(count).to.eq(count++);
+          done();
+        });
+      });
+    });
+  });
+
+  describe('Name with "_"', () => {
+    it('does not return error', (done) => {
+      Game.create(game4, (err, game) => {
+        expect(err).to.eq(null);
+        done();
+      });
+    });
+    it('creates a game', (done) => {
+      Game.count({}).exec((err, count) => {
+        Game.create(game4, (err, game) => {
+          expect(count).to.eq(count++);
+          done();
+        });
+      });
+    });
+  });
 });

@@ -7,7 +7,7 @@ var matchSchema = new Schema ({
     required: [true, 'you must enter a url'],
     unique: true,
     validate: {
-      validator: function(url) { return !/\W/.test(url);},
+      validator: function(url) { return !/\W/.test(url)},
       message: 'invalid url'          
     }
   },
@@ -16,7 +16,7 @@ var matchSchema = new Schema ({
     type : [String],
     required : [true, 'there must be at least one player'],
     validate : {
-      validator: function(players) {return players.length > 0;},
+      validator: function(players) { return players.length > 0 },
       message: 'there must be at least one player'
     }
   },
@@ -24,7 +24,10 @@ var matchSchema = new Schema ({
     type : String,
     required : [true, 'must have a owner']
   },
-  endingDate: Date,
+  endingDate: { 
+    type: Date,
+    message: 'invalid date'
+  },
   game: { 
     type: gameSchema,
     required: [true, 'there must be a game']

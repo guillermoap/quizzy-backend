@@ -17,8 +17,8 @@ const questionSchema = new Schema({
     type : [String],
     required: [true, 'you must write the answers'],
     validate : {
-      validator: function(answers) {return answers.length == 4;},
-      message: 'there must be 4 possible answers'
+      validator: function(answers) { return answers.length == 4 },
+      message: 'there must be 4 possibles answers'
     }
   },
   correctAnswer : {

@@ -7,7 +7,7 @@ const gameSchema = new Schema({
     unique: [true, 'this name already exists'],
     required: [true, 'you must enter a name'],
     validate: {
-      validator: function(name) { return !/\W/.test(name);},
+      validator: function(name) { return !/\W/.test(name) },
       message: 'invalid name'          
     }
   },
@@ -33,11 +33,11 @@ const gameSchema = new Schema({
   ranking : [{
     user: {
       type:String,
-      required: true
+      required: [true, 'ranking must have a user']
     },
     points : {
       type: Number,
-      required: true
+      required: [true, 'ranking must have a points']
     }
   }],
   creationDate : Date,
