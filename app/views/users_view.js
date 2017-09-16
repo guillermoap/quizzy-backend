@@ -1,6 +1,7 @@
 function userIndex(users) {
   return {
     users: users.map(user => ({
+      nickname: user.nickname,
       id: user._id,
       email: user.email,
       pass: user.password
@@ -11,6 +12,7 @@ function userIndex(users) {
 function userShow(user) {
   return {
     user: {
+      nickname: user.nickname, 
       id: user._id,
       email: user.email,
       pass: user.password

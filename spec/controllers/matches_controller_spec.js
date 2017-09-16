@@ -18,7 +18,7 @@ describe('MatchesController', () => {
     factory.createMany('match', 2, [{
         url: 'testURL'
       }, {
-        url: 'testURL_2'
+        url: 'testURL2'
       }])
       .then(matchArray => {
         match = matchArray[0];
@@ -68,6 +68,14 @@ describe('MatchesController', () => {
           expect(res.body.match)
             .to.have.keys('id', 'url', 'isRealTime', 'players',
               'owner', 'endingDate', 'game', 'result');
+          done();
+        });
+    });
+    //find match that does not exist
+    it('returns 404', (done) => {
+      request(app).get(`/matches/0000000`)
+        .end((err, res) => {
+          expect(res).to.have.status(404);
           done();
         });
     });
@@ -173,7 +181,7 @@ describe('MatchesController', () => {
     context('with invalid params', () => {
       let params;
       factory.attrs('match', {
-          url: 'testURL_2'
+          url: 'testURL2'
         })
         .then(attrs => {
           params = {
@@ -203,7 +211,6 @@ describe('MatchesController', () => {
     });
   });
 
-
   describe('destroy', () => {
     it('returns 200', (done) => {
       request(app).delete(`/matches/${match.id}`)
@@ -222,6 +229,13 @@ describe('MatchesController', () => {
           });
         });
     });
+    //destroy match that does not exist
+    it('returns 400', (done) => {
+      request(app).delete(`/matches/000000`)
+        .end((err, res) => {
+          expect(res).to.have.status(400);
+          done();
+        });
+    });
   })
-
 });
