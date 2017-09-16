@@ -5,22 +5,26 @@ import Game from '../../app/models/game';
 import Match from '../../app/models/match';
 
 factory.define('user', User, {
+  nickname: () => faker.name.firstName(),
   email: () => faker.internet.email(),
   password: () => faker.internet.password()
 });
 
 factory.define('game', Game, {
-  name: faker.name.findName(),
+  name: faker.name.firstName(),
   description: "Great game",
-  rating: () => faker.random.number(100),
+  rating: () => faker.random.number(5),
   timesPlayed: () => faker.random.number(20),
   creator: () => faker.name.findName(),
   "questions": [{
     "text": "Who is the best?",
-    "difficulty": "easy",
-    "correctAnswer": 0,
+    "difficulty": "Easy",
+    "correctAnswer": 1,
     "_id": "59a9c900b8f51d245cbf034e",
     "answers": [
+      () => faker.name.findName(),
+      () => faker.name.findName(),
+      () => faker.name.findName(),
       () => faker.name.findName()
     ]
   }],
@@ -34,7 +38,7 @@ factory.define('game', Game, {
 });
 
 factory.define('match', Match, {
-  url: () => faker.random.number(),
+  url: () => faker.name.firstName(),
   isRealTime: () => faker.random.boolean(),
   players: [
     () => faker.internet.userName(),
@@ -43,9 +47,9 @@ factory.define('match', Match, {
   owner: () => faker.fake('{{name.firstName}} {{name.lastName}}'),
   endingDate: () => faker.date.future(),
   game: {
-    name: () => faker.fake('{{name.firstName}} {{name.lastName}}'),
+    name: () => faker.name.firstName(),
     description: () => faker.lorem.sentence(),
-    rating: () => faker.random.number(),
+    rating: () => faker.random.number(5),
     timesPlayed: () => faker.random.number(),
     creator: () => faker.fake('{{name.firstName}} {{name.lastName}}'),
     questions: fakeQuestions(),
@@ -71,7 +75,7 @@ function fakeQuestions() {
   for (let i = 0; i < 4; i++) {
     question = {
       text: () => faker.lorem.sentence(),
-      difficulty: () => faker.random.arrayElement(["low", "medium", "high"]),
+      difficulty: () => faker.random.arrayElement(["Easy", "Medium", "Hard"]),
       answers: [
         faker.lorem.sentence(),
         faker.lorem.sentence(),
