@@ -38,12 +38,6 @@ describe('UsersModel', () => {
       done();
     });
   });
-
-  afterEach(function(done) {
-    User.remove({}, function() {
-      done();
-    });
-  });
    
   factory.attrsMany('user', 11, [{
     nickname: null
@@ -80,16 +74,22 @@ describe('UsersModel', () => {
     user4 = userAttrsArray [8];
     user5 = userAttrsArray [9];
     user6 = userAttrsArray [10];
-  })
+  });
+
+  afterEach(function(done) {
+    User.remove({}, function() {
+      done();
+    });
+  });
 
   describe('Without nickname', () => {
-    it('return correct error', (done) => {
+    it('returns correct error', (done) => {
       User.create(userWithoutNick, (err, user) => {
         expect(err).to.match(/you must enter a nickname/);
         done();
       });
     });
-    it('dose not create a user', (done) => {
+    it('does not create a user', (done) => {
       User.count({}).exec((err, count) => {
         countBefore = count;
       });
@@ -102,13 +102,13 @@ describe('UsersModel', () => {
   });
 
   describe('Same nickname', () => {
-    it('return correct error', (done) => {
+    it('returns correct error', (done) => {
       User.create(userDupNick, (err, user) => {
         expect(err).to.match(/E11000 duplicate key error collection: quizzy-backend-test.users index: nickname_1/);
         done();
       });
     });
-    it('dose not create a user', (done) => {
+    it('does not create a user', (done) => {
       User.count({}).exec((err, count) => {
         countBefore = count;
       });
@@ -121,13 +121,13 @@ describe('UsersModel', () => {
   });
 
   describe('Invalid nickname', () => {
-    it('return correct error', (done) => {
+    it('returns correct error', (done) => {
       User.create(userInvalidNick, (err, user) => {
         expect(err).to.match(/invalid nickname/);
         done();
       });
     });
-    it('dose not create a user', (done) => {
+    it('does not create a user', (done) => {
       User.count({}).exec((err, count) => {
         countBefore = count;
       });
@@ -140,13 +140,13 @@ describe('UsersModel', () => {
   });
   
   describe('Without email', () => {
-    it('return correct error', (done) => {
+    it('returns correct error', (done) => {
       User.create(userWithoutEmail, (err, user) => {
         expect(err).to.match(/you must enter a email/);
         done();
       });
     });
-    it('dose not create a user', (done) => {
+    it('does not create a user', (done) => {
       User.count({}).exec((err, count) => {
         countBefore = count;
       });
@@ -159,13 +159,13 @@ describe('UsersModel', () => {
   });
 
   describe('Same email', () => {
-    it('return correct error', (done) => {
+    it('returns correct error', (done) => {
       User.create(userDupEmail, (err, user) => {
         expect(err).to.match(/E11000 duplicate key error collection: quizzy-backend-test.users index: email_1/);
         done();
       });
     });
-    it('dose not create a user', (done) => {
+    it('does not create a user', (done) => {
       User.count({}).exec((err, count) => {
         countBefore = count;
       });
@@ -178,13 +178,13 @@ describe('UsersModel', () => {
   });
 
   describe('Invalid email', () => {
-    it('return correct error', (done) => {
+    it('returns correct error', (done) => {
       User.create(userInvalidEmail, (err, user) => {
         expect(err).to.match(/invalid email/);
         done();
       });
     });
-    it('dose not create a user', (done) => {
+    it('does not create a user', (done) => {
       User.count({}).exec((err, count) => {
         countBefore = count;
       });
@@ -197,13 +197,13 @@ describe('UsersModel', () => {
   });
   
   describe('Without password', () => {
-    it('return correct error', (done) => {
+    it('returns correct error', (done) => {
       User.create(userWithoutPass, (err, user) => {
         expect(err).to.match(/you must enter a password/);
         done();
       });
     });
-    it('dose not create a user', (done) => {
+    it('does not create a user', (done) => {
       User.count({}).exec((err, count) => {
         countBefore = count;
       });
@@ -216,7 +216,7 @@ describe('UsersModel', () => {
   });
 
   describe('Nickname wiht "_"', () => {
-    it('does not return error', (done) => {
+    it('does not returns error', (done) => {
       User.create(user3, (err, user) => {
         expect(err).to.eq(null);
         done();
@@ -235,7 +235,7 @@ describe('UsersModel', () => {
   });
 
   describe('Nickname with only letters', () => {
-    it('does not return error', (done) => {
+    it('does not returns error', (done) => {
       User.create(user4, (err, user) => {
         expect(err).to.eq(null);
         done();
@@ -254,7 +254,7 @@ describe('UsersModel', () => {
   });
 
   describe('Nickname with only numbers', () => {
-    it('does not return error', (done) => {
+    it('does not returns error', (done) => {
       User.create(user5, (err, user) => {
         expect(err).to.eq(null);
         done();
@@ -273,7 +273,7 @@ describe('UsersModel', () => {
   });
 
   describe('Email with only numbers', () => {
-    it('does not return error', (done) => {
+    it('does not returns error', (done) => {
       User.create(user6, (err, user) => {
         expect(err).to.eq(null);
         done();

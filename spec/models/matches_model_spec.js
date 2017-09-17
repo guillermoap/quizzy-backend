@@ -79,13 +79,13 @@ describe('MatchesModel', () => {
   })
 
   describe('Without url', () => {
-    it('return correct error', (done) => {
+    it('returns correct error', (done) => {
       Match.create(matchWithoutUrl, (err, match) => {
         expect(err).to.match(/you must enter a url/);
         done();
       });
     });
-    it('dose not create a match', (done) => {
+    it('does not create a match', (done) => {
       Match.count({}).exec((err, count) => {
         countBefore = count;
       });
@@ -98,13 +98,13 @@ describe('MatchesModel', () => {
   });
 
   describe('Same url', () => {
-    it('return correct error', (done) => {
+    it('returns correct error', (done) => {
       Match.create(matchDupUrl, (err, match) => {
         expect(err).to.match(/ /);
         done();
       });
     });
-    it('dose not create a match', (done) => {
+    it('does not create a match', (done) => {
       Match.count({}).exec((err, count) => {
         countBefore = count;
       });
@@ -117,13 +117,13 @@ describe('MatchesModel', () => {
   });
 
   describe('Invalid url', () => {
-    it('return correct error', (done) => {
+    it('returns correct error', (done) => {
       Match.create(matchInvalidUrl, (err, match) => {
         expect(err).to.match(/invalid url/);
         done();
       });
     });
-    it('dose not create a match', (done) => {
+    it('does not create a match', (done) => {
       Match.count({}).exec((err, count) => {
         countBefore = count;
       });
@@ -136,13 +136,13 @@ describe('MatchesModel', () => {
   });
 
   describe('Players null', () => {
-    it('return correct error', (done) => {
+    it('returns correct error', (done) => {
       Match.create(matchPlayersNull, (err, match) => {
         expect(err).to.match(/there must be at least one player/);
         done();
       });
     });
-    it('dose not create a match', (done) => {
+    it('does not create a match', (done) => {
       Match.count({}).exec((err, count) => {
         countBefore = count;
       });
@@ -155,13 +155,13 @@ describe('MatchesModel', () => {
   });
 
   describe('Players empty', () => {
-    it('return correct error', (done) => {
+    it('returns correct error', (done) => {
       Match.create(matchWithoutPlayers, (err, match) => {
         expect(err).to.match(/there must be at least one player/);
         done();
       });
     });
-    it('dose not create a match', (done) => {
+    it('does not create a match', (done) => {
       Match.count({}).exec((err, count) => {
         countBefore = count;
       });
@@ -174,13 +174,13 @@ describe('MatchesModel', () => {
   });
 
   describe('Without owner', () => {
-    it('return correct error', (done) => {
+    it('returns correct error', (done) => {
       Match.create(matchWithoutOwner, (err, match) => {
         expect(err).to.match(/must have a owner/);
         done();
       });
     });
-    it('dose not create a match', (done) => {
+    it('does not create a match', (done) => {
       Match.count({}).exec((err, count) => {
         countBefore = count;
       });
@@ -193,13 +193,13 @@ describe('MatchesModel', () => {
   });
 
   describe('Invalid Date', () => {
-    it('return correct error', (done) => {
+    it('returns correct error', (done) => {
       Match.create(matchInvalidDate, (err, match) => {
         expect(err).to.match(/Cast to Date failed/);
         done();
       });
     });
-    it('dose not create a match', (done) => {
+    it('does not create a match', (done) => {
       Match.count({}).exec((err, count) => {
         countBefore = count;
       });
@@ -212,13 +212,13 @@ describe('MatchesModel', () => {
   });
 
   describe('Without game', () => {
-    it('return correct error', (done) => {
+    it('returns correct error', (done) => {
       Match.create(matchWithoutGame, (err, match) => {
         expect(err).to.match(/there must be a game/);
         done();
       });
     });
-    it('dose not create a match', (done) => {
+    it('does not create a match', (done) => {
       Match.count({}).exec((err, count) => {
         countBefore = count;
       });
@@ -231,7 +231,7 @@ describe('MatchesModel', () => {
   });
 
   describe('Url with "-"', () => {
-    it('does not return error', (done) => {
+    it('does not returns error', (done) => {
       Match.create(match3, (err, match) => {
         expect(err).to.eq(null);
         done();
@@ -250,7 +250,7 @@ describe('MatchesModel', () => {
   });
 
   describe('Url with only numbers', () => {
-    it('does not return error', (done) => {
+    it('does not returns error', (done) => {
       Match.create(match4, (err, match) => {
         expect(err).to.eq(null);
         done();

@@ -56,13 +56,13 @@ describe('QuestionModel', () => {
   })
 
   describe('Without text', () => {
-    it('return correct error', (done) => {
+    it('returns correct error', (done) => {
       Game.create(QuestWithoutText, (err, game) => {
         expect(err).to.match(/you must write the question/);
         done();
       });
     });
-    it('dose not create a game', (done) => {
+    it('does not create a game', (done) => {
       Game.count({}).exec((err, count) => {
         countBefore = count;
       });
@@ -75,13 +75,13 @@ describe('QuestionModel', () => {
   });
   
   describe('Invalid difficulty', () => {
-    it('return correct error', (done) => {
+    it('returns correct error', (done) => {
       Game.create(QuestInvalidDifficulty, (err, game) => {
         expect(err).to.match(/is not a valid enum value for path `difficulty`/);
         done();
       });
     });
-    it('dose not create a game', (done) => {
+    it('does not create a game', (done) => {
       Game.count({}).exec((err, count) => {
         countBefore = count;
       });
@@ -94,13 +94,13 @@ describe('QuestionModel', () => {
   });
 
   describe('Wihtout answers', () => {
-    it('return correct error', (done) => {
+    it('returns correct error', (done) => {
       Game.create(QuestWithoutAnswers, (err, game) => {
         expect(err).to.match(/you must write the answers/);
         done();
       });
     });
-    it('dose not create a game', (done) => {
+    it('does not create a game', (done) => {
       Game.count({}).exec((err, count) => {
         countBefore = count;
       });
@@ -113,13 +113,13 @@ describe('QuestionModel', () => {
   });
 
   describe('Less answers', () => {
-    it('return correct error', (done) => {
+    it('returns correct error', (done) => {
       Game.create(QuestLessAnswers, (err, game) => {
         expect(err).to.match(/there must be 4 possibles answers/);
         done();
       });
     });
-    it('dose not create a game', (done) => {
+    it('does not create a game', (done) => {
       Game.count({}).exec((err, count) => {
         countBefore = count;
       });
@@ -132,13 +132,13 @@ describe('QuestionModel', () => {
   });
 
   describe('More answers', () => {
-    it('return correct error', (done) => {
+    it('returns correct error', (done) => {
       Game.create(QuestMoreAnswers, (err, game) => {
         expect(err).to.match(/there must be 4 possibles answers/);
         done();
       });
     });
-    it('dose not create a game', (done) => {
+    it('does not create a game', (done) => {
       Game.count({}).exec((err, count) => {
         countBefore = count;
       });
@@ -151,13 +151,13 @@ describe('QuestionModel', () => {
   });
 
   describe('Without correctAnswer', () => {
-    it('return correct error', (done) => {
+    it('returns correct error', (done) => {
       Game.create(QuestWithoutCorrect, (err, game) => {
         expect(err).to.match(/you must select correct answer/);
         done();
       });
     });
-    it('dose not create a game', (done) => {
+    it('does not create a game', (done) => {
       Game.count({}).exec((err, count) => {
         countBefore = count;
       });
@@ -170,13 +170,13 @@ describe('QuestionModel', () => {
   });
 
   describe('Invalid correctAnswer (0)', () => {
-    it('return correct error', (done) => {
+    it('returns correct error', (done) => {
       Game.create(QuestInvalidCorrect, (err, game) => {
         expect(err).to.match(/there must be a correct answer/);
         done();
       });
     });
-    it('dose not create a game', (done) => {
+    it('does not create a game', (done) => {
       Game.count({}).exec((err, count) => {
         countBefore = count;
       });
@@ -189,13 +189,13 @@ describe('QuestionModel', () => {
   });
 
   describe('Invalid correctAnswer (5)', () => {
-    it('return correct error', (done) => {
+    it('returns correct error', (done) => {
       Game.create(QuestInvalidCorrect2, (err, game) => {
         expect(err).to.match(/there must be a correct answer/);
         done();
       });
     });
-    it('dose not create a game', (done) => {
+    it('does not create a game', (done) => {
       Game.count({}).exec((err, count) => {
         countBefore = count;
       });
