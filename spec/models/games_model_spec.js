@@ -26,6 +26,7 @@ describe('GamesModel', () => {
   var gameRankingWithoutUser;
   var gameRankingWithoutPoints;
   var gameInvalidDate;
+  var countBefore;
 
   beforeEach(function(done) {
     factory.createMany('game', 2, [{
@@ -98,11 +99,13 @@ describe('GamesModel', () => {
     });
     it('dose not create a game', (done) => {
       Game.count({}).exec((err, count) => {
-        Game.create(gameWithoutName, (err, game) => {
-          expect(count).to.eq(count);
-          done();
-        });
+        countBefore = count;
       });
+      Game.create(gameWithoutName);
+      Game.count({}).exec((err, count) => {
+        expect(count).to.eq(countBefore);   
+      });
+      done();
     });
   });
 
@@ -115,11 +118,13 @@ describe('GamesModel', () => {
     });
     it('dose not create a game', (done) => {
       Game.count({}).exec((err, count) => {
-        Game.create(gameDupName, (err, game) => {
-          expect(count).to.eq(count);
-          done();
-        });
+        countBefore = count;
       });
+      Game.create(gameDupName);
+      Game.count({}).exec((err, count) => {
+        expect(count).to.eq(countBefore);   
+      });
+      done();
     });
   });
 
@@ -132,11 +137,13 @@ describe('GamesModel', () => {
     });
     it('dose not create a game', (done) => {
       Game.count({}).exec((err, count) => {
-        Game.create(gameInvalidName, (err, game) => {
-          expect(count).to.eq(count);
-          done();
-        });
+        countBefore = count;
       });
+      Game.create(gameInvalidName);
+      Game.count({}).exec((err, count) => {
+        expect(count).to.eq(countBefore);   
+      });
+      done();
     });
   });
 
@@ -149,11 +156,13 @@ describe('GamesModel', () => {
     });
     it('dose not create a game', (done) => {
       Game.count({}).exec((err, count) => {
-        Game.create(gameNegativeRating, (err, game) => {
-          expect(count).to.eq(count);
-          done();
-        });
+        countBefore = count;
       });
+      Game.create(gameNegativeRating);
+      Game.count({}).exec((err, count) => {
+        expect(count).to.eq(countBefore);   
+      });
+      done();
     });
   });
 
@@ -166,11 +175,13 @@ describe('GamesModel', () => {
     });
     it('dose not create a game', (done) => {
       Game.count({}).exec((err, count) => {
-        Game.create(gameInvalidRating, (err, game) => {
-          expect(count).to.eq(count);
-          done();
-        });
+        countBefore = count;
       });
+      Game.create(gameInvalidRating);
+      Game.count({}).exec((err, count) => {
+        expect(count).to.eq(countBefore);   
+      });
+      done();
     });
   });
 
@@ -183,11 +194,13 @@ describe('GamesModel', () => {
     });
     it('dose not create a game', (done) => {
       Game.count({}).exec((err, count) => {
-        Game.create(gameNegativeTimesPlayed, (err, game) => {
-          expect(count).to.eq(count);
-          done();
-        });
+        countBefore = count;
       });
+      Game.create(gameNegativeTimesPlayed);
+      Game.count({}).exec((err, count) => {
+        expect(count).to.eq(countBefore);   
+      });
+      done();
     });
   });
   
@@ -200,11 +213,13 @@ describe('GamesModel', () => {
     });
     it('dose not create a game', (done) => {
       Game.count({}).exec((err, count) => {
-        Game.create(gameWithoutCreator, (err, game) => {
-          expect(count).to.eq(count);
-          done();
-        });
+        countBefore = count;
       });
+      Game.create(gameWithoutCreator);
+      Game.count({}).exec((err, count) => {
+        expect(count).to.eq(countBefore);   
+      });
+      done();
     });
   });
 
@@ -217,11 +232,13 @@ describe('GamesModel', () => {
     });
     it('dose not create a game', (done) => {
       Game.count({}).exec((err, count) => {
-        Game.create(gameWithoutQuestions, (err, game) => {
-          expect(count).to.eq(count);
-          done();
-        });
+        countBefore = count;
       });
+      Game.create(gameWithoutQuestions);
+      Game.count({}).exec((err, count) => {
+        expect(count).to.eq(countBefore);   
+      });
+      done();
     });
   });
 
@@ -234,11 +251,13 @@ describe('GamesModel', () => {
     });
     it('dose not create a game', (done) => {
       Game.count({}).exec((err, count) => {
-        Game.create(gameRankingWithoutUser, (err, game) => {
-          expect(count).to.eq(count);
-          done();
-        });
+        countBefore = count;
       });
+      Game.create(gameRankingWithoutUser);
+      Game.count({}).exec((err, count) => {
+        expect(count).to.eq(countBefore);   
+      });
+      done();
     });
   });
 
@@ -251,11 +270,13 @@ describe('GamesModel', () => {
     });
     it('dose not create a game', (done) => {
       Game.count({}).exec((err, count) => {
-        Game.create(gameRankingWithoutPoints, (err, game) => {
-          expect(count).to.eq(count);
-          done();
-        });
+        countBefore = count;
       });
+      Game.create(gameRankingWithoutPoints);
+      Game.count({}).exec((err, count) => {
+        expect(count).to.eq(countBefore);   
+      });
+      done();
     });
   });
 
@@ -268,11 +289,13 @@ describe('GamesModel', () => {
     });
     it('dose not create a game', (done) => {
       Game.count({}).exec((err, count) => {
-        Game.create(gameInvalidDate, (err, game) => {
-          expect(count).to.eq(count);
-          done();
-        });
+        countBefore = count;
       });
+      Game.create(gameInvalidDate);
+      Game.count({}).exec((err, count) => {
+        expect(count).to.eq(countBefore);   
+      });
+      done();
     });
   });
 
@@ -285,11 +308,13 @@ describe('GamesModel', () => {
     });
     it('creates a game', (done) => {
       Game.count({}).exec((err, count) => {
-        Game.create(game3, (err, game) => {
-          expect(count).to.eq(count++);
-          done();
-        });
+        countBefore = count;
       });
+      Game.create(game3);
+      Game.count({}).exec((err, count) => {
+        expect(count).to.eq(countBefore++);   
+      });
+      done();
     });
   });
 
@@ -302,11 +327,13 @@ describe('GamesModel', () => {
     });
     it('creates a game', (done) => {
       Game.count({}).exec((err, count) => {
-        Game.create(game4, (err, game) => {
-          expect(count).to.eq(count++);
-          done();
-        });
+        countBefore = count;
       });
+      Game.create(game4);
+      Game.count({}).exec((err, count) => {
+        expect(count).to.eq(countBefore++);   
+      });
+      done();
     });
   });
 });

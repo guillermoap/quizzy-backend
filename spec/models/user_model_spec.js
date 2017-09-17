@@ -17,7 +17,6 @@ describe('UsersModel', () => {
   var user4;
   var user5;
   var user6;
-  var user7;
   var userWithoutNick;
   var userDupNick;
   var userInvalidNick; 
@@ -25,6 +24,7 @@ describe('UsersModel', () => {
   var userDupEmail;
   var userInvalidEmail;
   var userWithoutPass;
+  var countBefore;
 
   beforeEach(function(done) {
     factory.createMany('user', 2, [{
@@ -91,11 +91,13 @@ describe('UsersModel', () => {
     });
     it('dose not create a user', (done) => {
       User.count({}).exec((err, count) => {
-        User.create(userWithoutNick, (err, user) => {
-          expect(count).to.eq(count);
-          done();
-        });
+        countBefore = count;
       });
+      User.create(userWithoutNick);
+      User.count({}).exec((err, count) => {
+        expect(count).to.eq(countBefore);   
+      });
+      done();
     });
   });
 
@@ -108,11 +110,13 @@ describe('UsersModel', () => {
     });
     it('dose not create a user', (done) => {
       User.count({}).exec((err, count) => {
-        User.create(userDupNick, (err, user) => {
-          expect(count).to.eq(count);
-          done();
-        });
+        countBefore = count;
       });
+      User.create(userDupNick);
+      User.count({}).exec((err, count) => {
+        expect(count).to.eq(countBefore);   
+      });
+      done();
     });
   });
 
@@ -125,11 +129,13 @@ describe('UsersModel', () => {
     });
     it('dose not create a user', (done) => {
       User.count({}).exec((err, count) => {
-        User.create(userInvalidNick, (err, user) => {
-          expect(count).to.eq(count);
-          done();
-        });
+        countBefore = count;
       });
+      User.create(userInvalidNick);
+      User.count({}).exec((err, count) => {
+        expect(count).to.eq(countBefore);   
+      });
+      done();
     });
   });
   
@@ -142,11 +148,13 @@ describe('UsersModel', () => {
     });
     it('dose not create a user', (done) => {
       User.count({}).exec((err, count) => {
-        User.create(userWithoutEmail, (err, user) => {
-          expect(count).to.eq(count);
-          done();
-        });
+        countBefore = count;
       });
+      User.create(userWithoutEmail);
+      User.count({}).exec((err, count) => {
+        expect(count).to.eq(countBefore);   
+      });
+      done();
     });
   });
 
@@ -159,11 +167,13 @@ describe('UsersModel', () => {
     });
     it('dose not create a user', (done) => {
       User.count({}).exec((err, count) => {
-        User.create(userDupEmail, (err, user) => {
-          expect(count).to.eq(count);
-          done();
-        });
+        countBefore = count;
       });
+      User.create(userDupEmail);
+      User.count({}).exec((err, count) => {
+        expect(count).to.eq(countBefore);   
+      });
+      done();
     });
   });
 
@@ -176,11 +186,13 @@ describe('UsersModel', () => {
     });
     it('dose not create a user', (done) => {
       User.count({}).exec((err, count) => {
-        User.create(userInvalidEmail, (err, user) => {
-          expect(count).to.eq(count);
-          done();
-        });
+        countBefore = count;
       });
+      User.create(userInvalidEmail);
+      User.count({}).exec((err, count) => {
+        expect(count).to.eq(countBefore);   
+      });
+      done();
     });
   });
   
@@ -193,11 +205,13 @@ describe('UsersModel', () => {
     });
     it('dose not create a user', (done) => {
       User.count({}).exec((err, count) => {
-        User.create(userWithoutPass, (err, user) => {
-          expect(count).to.eq(count);
-          done();
-        });
+        countBefore = count;
       });
+      User.create(userWithoutPass);
+      User.count({}).exec((err, count) => {
+        expect(count).to.eq(countBefore);   
+      });
+      done();
     });
   });
 
@@ -210,11 +224,13 @@ describe('UsersModel', () => {
     });
     it('creates a user', (done) => {
       User.count({}).exec((err, count) => {
-        User.create(user3, (err, user) => {
-          expect(count).to.eq(count++);
-          done();
-        });
+        countBefore = count;
       });
+      User.create(user3);
+      User.count({}).exec((err, count) => {
+        expect(count).to.eq(countBefore++);   
+      });
+      done();
     });
   });
 
@@ -227,11 +243,13 @@ describe('UsersModel', () => {
     });
     it('creates a user', (done) => {
       User.count({}).exec((err, count) => {
-        User.create(user4, (err, user) => {
-          expect(count).to.eq(count++);
-          done();
-        });
+        countBefore = count;
       });
+      User.create(user4);
+      User.count({}).exec((err, count) => {
+        expect(count).to.eq(countBefore++);   
+      });
+      done();
     });
   });
 
@@ -244,11 +262,13 @@ describe('UsersModel', () => {
     });
     it('creates a user', (done) => {
       User.count({}).exec((err, count) => {
-        User.create(user5, (err, user) => {
-          expect(count).to.eq(count++);
-          done();
-        });
+        countBefore = count;
       });
+      User.create(user5);
+      User.count({}).exec((err, count) => {
+        expect(count).to.eq(countBefore++);   
+      });
+      done();
     });
   });
 
@@ -261,11 +281,13 @@ describe('UsersModel', () => {
     });
     it('creates a user', (done) => {
       User.count({}).exec((err, count) => {
-        User.create(user6, (err, user) => {
-          expect(count).to.eq(count++);
-          done();
-        });
+        countBefore = count;
       });
+      User.create(user6);
+      User.count({}).exec((err, count) => {
+        expect(count).to.eq(countBefore++);   
+      });
+      done();
     });
   });
 });

@@ -23,6 +23,7 @@ describe('MatchesModel', () => {
   var matchWithoutOwner;
   var matchInvalidDate;
   var matchWithoutGame;
+  var countBefore;
 
   beforeEach(function(done) {
     factory.createMany('match', 2, [{
@@ -86,11 +87,13 @@ describe('MatchesModel', () => {
     });
     it('dose not create a match', (done) => {
       Match.count({}).exec((err, count) => {
-        Match.create(matchWithoutUrl, (err, match) => {
-          expect(count).to.eq(count);
-          done();
-        });
+        countBefore = count;
       });
+      Match.create(matchWithoutUrl);
+      Match.count({}).exec((err, count) => {
+        expect(count).to.eq(countBefore);   
+      });
+      done();
     });
   });
 
@@ -103,11 +106,13 @@ describe('MatchesModel', () => {
     });
     it('dose not create a match', (done) => {
       Match.count({}).exec((err, count) => {
-        Match.create(matchDupUrl, (err, match) => {
-          expect(count).to.eq(count);
-          done();
-        });
+        countBefore = count;
       });
+      Match.create(matchDupUrl);
+      Match.count({}).exec((err, count) => {
+        expect(count).to.eq(countBefore);   
+      });
+      done();
     });
   });
 
@@ -120,11 +125,13 @@ describe('MatchesModel', () => {
     });
     it('dose not create a match', (done) => {
       Match.count({}).exec((err, count) => {
-        Match.create(matchInvalidUrl, (err, match) => {
-          expect(count).to.eq(count);
-          done();
-        });
+        countBefore = count;
       });
+      Match.create(matchInvalidUrl);
+      Match.count({}).exec((err, count) => {
+        expect(count).to.eq(countBefore);   
+      });
+      done();
     });
   });
 
@@ -137,11 +144,13 @@ describe('MatchesModel', () => {
     });
     it('dose not create a match', (done) => {
       Match.count({}).exec((err, count) => {
-        Match.create(matchPlayersNull, (err, match) => {
-          expect(count).to.eq(count);
-          done();
-        });
+        countBefore = count;
       });
+      Match.create(matchPlayersNull);
+      Match.count({}).exec((err, count) => {
+        expect(count).to.eq(countBefore);   
+      });
+      done();
     });
   });
 
@@ -154,11 +163,13 @@ describe('MatchesModel', () => {
     });
     it('dose not create a match', (done) => {
       Match.count({}).exec((err, count) => {
-        Match.create(matchWithoutPlayers, (err, match) => {
-          expect(count).to.eq(count);
-          done();
-        });
+        countBefore = count;
       });
+      Match.create(matchWithoutPlayers);
+      Match.count({}).exec((err, count) => {
+        expect(count).to.eq(countBefore);   
+      });
+      done();
     });
   });
 
@@ -171,11 +182,13 @@ describe('MatchesModel', () => {
     });
     it('dose not create a match', (done) => {
       Match.count({}).exec((err, count) => {
-        Match.create(matchWithoutOwner, (err, match) => {
-          expect(count).to.eq(count);
-          done();
-        });
+        countBefore = count;
       });
+      Match.create(matchWithoutOwner);
+      Match.count({}).exec((err, count) => {
+        expect(count).to.eq(countBefore);   
+      });
+      done();
     });
   });
 
@@ -188,11 +201,13 @@ describe('MatchesModel', () => {
     });
     it('dose not create a match', (done) => {
       Match.count({}).exec((err, count) => {
-        Match.create(matchInvalidDate, (err, match) => {
-          expect(count).to.eq(count);
-          done();
-        });
+        countBefore = count;
       });
+      Match.create(matchInvalidDate);
+      Match.count({}).exec((err, count) => {
+        expect(count).to.eq(countBefore);   
+      });
+      done();
     });
   });
 
@@ -205,11 +220,13 @@ describe('MatchesModel', () => {
     });
     it('dose not create a match', (done) => {
       Match.count({}).exec((err, count) => {
-        Match.create(matchWithoutGame, (err, match) => {
-          expect(count).to.eq(count);
-          done();
-        });
+        countBefore = count;
       });
+      Match.create(matchWithoutGame);
+      Match.count({}).exec((err, count) => {
+        expect(count).to.eq(countBefore);   
+      });
+      done();
     });
   });
 
@@ -222,11 +239,13 @@ describe('MatchesModel', () => {
     });
     it('creates a match', (done) => {
       Match.count({}).exec((err, count) => {
-        Match.create(match3, (err, match) => {
-          expect(count).to.eq(count++);
-          done();
-        });
+        countBefore = count;
       });
+      Match.create(match3);
+      Match.count({}).exec((err, count) => {
+        expect(count).to.eq(countBefore++);   
+      });
+      done();
     });
   });
 
@@ -239,11 +258,13 @@ describe('MatchesModel', () => {
     });
     it('creates a match', (done) => {
       Match.count({}).exec((err, count) => {
-        Match.create(match4, (err, match) => {
-          expect(count).to.eq(count++);
-          done();
-        });
+        countBefore = count;
       });
+      Match.create(match4);
+      Match.count({}).exec((err, count) => {
+        expect(count).to.eq(countBefore++);   
+      });
+      done(); 
     });
   });
 });

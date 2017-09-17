@@ -19,6 +19,7 @@ describe('QuestionModel', () => {
   var QuestInvalidCorrect;
   var QuestInvalidCorrect2;
   var QuestWithoutCorrect;
+  var countBefore;
 
   afterEach(function(done) {
     Game.remove({}, function() {
@@ -63,11 +64,13 @@ describe('QuestionModel', () => {
     });
     it('dose not create a game', (done) => {
       Game.count({}).exec((err, count) => {
-        Game.create(QuestWithoutText, (err, game) => {
-          expect(count).to.eq(count);
-          done();
-        });
+        countBefore = count;
       });
+      Game.create(QuestWithoutText);
+      Game.count({}).exec((err, count) => {
+        expect(count).to.eq(countBefore);   
+      });
+      done();
     });
   });
   
@@ -80,11 +83,13 @@ describe('QuestionModel', () => {
     });
     it('dose not create a game', (done) => {
       Game.count({}).exec((err, count) => {
-        Game.create(QuestInvalidDifficulty, (err, game) => {
-          expect(count).to.eq(count);
-          done();
-        });
+        countBefore = count;
       });
+      Game.create(QuestInvalidDifficulty);
+      Game.count({}).exec((err, count) => {
+        expect(count).to.eq(countBefore);   
+      });
+      done();
     });
   });
 
@@ -97,11 +102,13 @@ describe('QuestionModel', () => {
     });
     it('dose not create a game', (done) => {
       Game.count({}).exec((err, count) => {
-        Game.create(QuestWithoutAnswers, (err, game) => {
-          expect(count).to.eq(count);
-          done();
-        });
+        countBefore = count;
       });
+      Game.create(QuestWithoutAnswers);
+      Game.count({}).exec((err, count) => {
+        expect(count).to.eq(countBefore);   
+      });
+      done();
     });
   });
 
@@ -114,11 +121,13 @@ describe('QuestionModel', () => {
     });
     it('dose not create a game', (done) => {
       Game.count({}).exec((err, count) => {
-        Game.create(QuestLessAnswers, (err, game) => {
-          expect(count).to.eq(count);
-          done();
-        });
+        countBefore = count;
       });
+      Game.create(QuestLessAnswers);
+      Game.count({}).exec((err, count) => {
+        expect(count).to.eq(countBefore);   
+      });
+      done();
     });
   });
 
@@ -131,11 +140,13 @@ describe('QuestionModel', () => {
     });
     it('dose not create a game', (done) => {
       Game.count({}).exec((err, count) => {
-        Game.create(QuestMoreAnswers, (err, game) => {
-          expect(count).to.eq(count);
-          done();
-        });
+        countBefore = count;
       });
+      Game.create(QuestMoreAnswers);
+      Game.count({}).exec((err, count) => {
+        expect(count).to.eq(countBefore);   
+      });
+      done();
     });
   });
 
@@ -148,11 +159,13 @@ describe('QuestionModel', () => {
     });
     it('dose not create a game', (done) => {
       Game.count({}).exec((err, count) => {
-        Game.create(QuestWithoutCorrect, (err, game) => {
-          expect(count).to.eq(count);
-          done();
-        });
+        countBefore = count;
       });
+      Game.create(QuestWithoutCorrect);
+      Game.count({}).exec((err, count) => {
+        expect(count).to.eq(countBefore);   
+      });
+      done();
     });
   });
 
@@ -165,11 +178,13 @@ describe('QuestionModel', () => {
     });
     it('dose not create a game', (done) => {
       Game.count({}).exec((err, count) => {
-        Game.create(QuestInvalidCorrect, (err, game) => {
-          expect(count).to.eq(count);
-          done();
-        });
+        countBefore = count;
       });
+      Game.create(QuestInvalidCorrect);
+      Game.count({}).exec((err, count) => {
+        expect(count).to.eq(countBefore);   
+      });
+      done();
     });
   });
 
@@ -182,11 +197,13 @@ describe('QuestionModel', () => {
     });
     it('dose not create a game', (done) => {
       Game.count({}).exec((err, count) => {
-        Game.create(QuestInvalidCorrect2, (err, game) => {
-          expect(count).to.eq(count);
-          done();
-        });
+        countBefore = count;
       });
+      Game.create(QuestInvalidCorrect2);
+      Game.count({}).exec((err, count) => {
+        expect(count).to.eq(countBefore);   
+      });
+      done();
     });
   });
 });
