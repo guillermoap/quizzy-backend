@@ -91,13 +91,13 @@ describe('GamesModel', () => {
   })
 
   describe('Without name', () => {
-    it('return correct error', (done) => {
+    it('returns correct error', (done) => {
       Game.create(gameWithoutName, (err, game) => {
         expect(err).to.match(/you must enter a name/);
         done();
       });
     });
-    it('dose not create a game', (done) => {
+    it('does not create a game', (done) => {
       Game.count({}).exec((err, count) => {
         countBefore = count;
       });
@@ -110,13 +110,13 @@ describe('GamesModel', () => {
   });
 
   describe('Same name', () => {
-    it('return correct error', (done) => {
+    it('returns correct error', (done) => {
       Game.create(gameDupName, (err, game) => {
         expect(err).to.match(/E11000 duplicate key error collection: quizzy-backend-test.games index: name_1/);
         done();
       });
     });
-    it('dose not create a game', (done) => {
+    it('does not create a game', (done) => {
       Game.count({}).exec((err, count) => {
         countBefore = count;
       });
@@ -129,13 +129,13 @@ describe('GamesModel', () => {
   });
 
   describe('Invalid name', () => {
-    it('return correct error', (done) => {
+    it('returns correct error', (done) => {
       Game.create(gameInvalidName, (err, game) => {
         expect(err).to.match(/invalid name/);
         done();
       });
     });
-    it('dose not create a game', (done) => {
+    it('does not create a game', (done) => {
       Game.count({}).exec((err, count) => {
         countBefore = count;
       });
@@ -148,13 +148,13 @@ describe('GamesModel', () => {
   });
 
   describe('Negative Rating', () => {
-    it('return correct error', (done) => {
+    it('returns correct error', (done) => {
       Game.create(gameNegativeRating, (err, game) => {
         expect(err).to.match(/there must be a correct rating/);
         done();
       });
     });
-    it('dose not create a game', (done) => {
+    it('does not create a game', (done) => {
       Game.count({}).exec((err, count) => {
         countBefore = count;
       });
@@ -167,13 +167,13 @@ describe('GamesModel', () => {
   });
 
   describe('Rating out of range', () => {
-    it('return correct error', (done) => {
+    it('returns correct error', (done) => {
       Game.create(gameInvalidRating, (err, game) => {
         expect(err).to.match(/there must be a correct rating/);
         done();
       });
     });
-    it('dose not create a game', (done) => {
+    it('does not create a game', (done) => {
       Game.count({}).exec((err, count) => {
         countBefore = count;
       });
@@ -186,13 +186,13 @@ describe('GamesModel', () => {
   });
 
   describe('Negative timesPlayed', () => {
-    it('return correct error', (done) => {
+    it('returns correct error', (done) => {
       Game.create(gameNegativeTimesPlayed, (err, game) => {
         expect(err).to.match(/timesPlayed must be positive/);
         done();
       });
     });
-    it('dose not create a game', (done) => {
+    it('does not create a game', (done) => {
       Game.count({}).exec((err, count) => {
         countBefore = count;
       });
@@ -205,13 +205,13 @@ describe('GamesModel', () => {
   });
   
   describe('Without creator', () => {
-    it('return correct error', (done) => {
+    it('returns correct error', (done) => {
       Game.create(gameWithoutCreator, (err, game) => {
         expect(err).to.match(/must have a creator/);
         done();
       });
     });
-    it('dose not create a game', (done) => {
+    it('does not create a game', (done) => {
       Game.count({}).exec((err, count) => {
         countBefore = count;
       });
@@ -224,13 +224,13 @@ describe('GamesModel', () => {
   });
 
   describe('Without questions', () => {
-    it('return correct error', (done) => {
+    it('returns correct error', (done) => {
       Game.create(gameWithoutQuestions, (err, game) => {
         expect(err).to.match(/there must be at least one question/);
         done();
       });
     });
-    it('dose not create a game', (done) => {
+    it('does not create a game', (done) => {
       Game.count({}).exec((err, count) => {
         countBefore = count;
       });
@@ -243,13 +243,13 @@ describe('GamesModel', () => {
   });
 
   describe('Ranking without user', () => {
-    it('return correct error', (done) => {
+    it('returns correct error', (done) => {
       Game.create(gameRankingWithoutUser, (err, game) => {
         expect(err).to.match(/ranking must have a user/);
         done();
       });
     });
-    it('dose not create a game', (done) => {
+    it('does not create a game', (done) => {
       Game.count({}).exec((err, count) => {
         countBefore = count;
       });
@@ -262,13 +262,13 @@ describe('GamesModel', () => {
   });
 
   describe('Ranking without points', () => {
-    it('return correct error', (done) => {
+    it('returns correct error', (done) => {
       Game.create(gameRankingWithoutPoints, (err, game) => {
         expect(err).to.match(/ranking must have a points/);
         done();
       });
     });
-    it('dose not create a game', (done) => {
+    it('does not create a game', (done) => {
       Game.count({}).exec((err, count) => {
         countBefore = count;
       });
@@ -281,13 +281,13 @@ describe('GamesModel', () => {
   });
 
   describe('Invalid date', () => {
-    it('return correct error', (done) => {
+    it('returns correct error', (done) => {
       Game.create(gameInvalidDate, (err, game) => {
         expect(err).to.match(/Cast to Date failed/);
         done();
       });
     });
-    it('dose not create a game', (done) => {
+    it('does not create a game', (done) => {
       Game.count({}).exec((err, count) => {
         countBefore = count;
       });
@@ -300,7 +300,7 @@ describe('GamesModel', () => {
   });
 
   describe('Name with only numbers', () => {
-    it('does not return error', (done) => {
+    it('does not returns error', (done) => {
       Game.create(game3, (err, game) => {
         expect(err).to.eq(null);
         done();
@@ -319,7 +319,7 @@ describe('GamesModel', () => {
   });
 
   describe('Name with "_"', () => {
-    it('does not return error', (done) => {
+    it('does not returns error', (done) => {
       Game.create(game4, (err, game) => {
         expect(err).to.eq(null);
         done();
