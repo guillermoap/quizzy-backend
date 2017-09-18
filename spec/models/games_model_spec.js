@@ -1,14 +1,11 @@
 import chai, {
-  expect,
-  request
+  expect
 } from 'chai';
 import chaiHttp from 'chai-http';
 import factory from '../factories/factory.js';
 import app from '../../server.js';
 import mongoose from 'mongoose';
 import Game from '../../app/models/game';
-
-chai.use(chaiHttp);
 
 describe('GamesModel', () => {
   var game;
@@ -97,6 +94,7 @@ describe('GamesModel', () => {
         done();
       });
     });
+    
     it('does not create a game', (done) => {
       Game.count({}).exec((err, count) => {
         countBefore = count;
@@ -116,6 +114,7 @@ describe('GamesModel', () => {
         done();
       });
     });
+    
     it('does not create a game', (done) => {
       Game.count({}).exec((err, count) => {
         countBefore = count;
@@ -135,6 +134,7 @@ describe('GamesModel', () => {
         done();
       });
     });
+    
     it('does not create a game', (done) => {
       Game.count({}).exec((err, count) => {
         countBefore = count;
@@ -154,6 +154,7 @@ describe('GamesModel', () => {
         done();
       });
     });
+    
     it('does not create a game', (done) => {
       Game.count({}).exec((err, count) => {
         countBefore = count;
@@ -173,6 +174,7 @@ describe('GamesModel', () => {
         done();
       });
     });
+    
     it('does not create a game', (done) => {
       Game.count({}).exec((err, count) => {
         countBefore = count;
@@ -192,6 +194,7 @@ describe('GamesModel', () => {
         done();
       });
     });
+    
     it('does not create a game', (done) => {
       Game.count({}).exec((err, count) => {
         countBefore = count;
@@ -211,6 +214,7 @@ describe('GamesModel', () => {
         done();
       });
     });
+    
     it('does not create a game', (done) => {
       Game.count({}).exec((err, count) => {
         countBefore = count;
@@ -230,6 +234,7 @@ describe('GamesModel', () => {
         done();
       });
     });
+    
     it('does not create a game', (done) => {
       Game.count({}).exec((err, count) => {
         countBefore = count;
@@ -249,6 +254,7 @@ describe('GamesModel', () => {
         done();
       });
     });
+    
     it('does not create a game', (done) => {
       Game.count({}).exec((err, count) => {
         countBefore = count;
@@ -268,6 +274,7 @@ describe('GamesModel', () => {
         done();
       });
     });
+    
     it('does not create a game', (done) => {
       Game.count({}).exec((err, count) => {
         countBefore = count;
@@ -287,6 +294,7 @@ describe('GamesModel', () => {
         done();
       });
     });
+    
     it('does not create a game', (done) => {
       Game.count({}).exec((err, count) => {
         countBefore = count;
@@ -306,6 +314,7 @@ describe('GamesModel', () => {
         done();
       });
     });
+    
     it('creates a game', (done) => {
       Game.count({}).exec((err, count) => {
         countBefore = count;
@@ -325,6 +334,7 @@ describe('GamesModel', () => {
         done();
       });
     });
+    
     it('creates a game', (done) => {
       Game.count({}).exec((err, count) => {
         countBefore = count;
