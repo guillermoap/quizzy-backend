@@ -1,14 +1,10 @@
 import chai, {
-  expect,
-  request
+  expect
 } from 'chai';
-import chaiHttp from 'chai-http';
 import factory from '../factories/factory.js';
 import app from '../../server.js';
 import mongoose from 'mongoose';
 import User from '../../app/models/user';
-
-chai.use(chaiHttp);
 
 describe('UsersModel', () => {
   var user;
@@ -89,6 +85,7 @@ describe('UsersModel', () => {
         done();
       });
     });
+    
     it('does not create a user', (done) => {
       User.count({}).exec((err, count) => {
         countBefore = count;
@@ -108,6 +105,7 @@ describe('UsersModel', () => {
         done();
       });
     });
+    
     it('does not create a user', (done) => {
       User.count({}).exec((err, count) => {
         countBefore = count;
@@ -127,6 +125,7 @@ describe('UsersModel', () => {
         done();
       });
     });
+    
     it('does not create a user', (done) => {
       User.count({}).exec((err, count) => {
         countBefore = count;
@@ -146,6 +145,7 @@ describe('UsersModel', () => {
         done();
       });
     });
+    
     it('does not create a user', (done) => {
       User.count({}).exec((err, count) => {
         countBefore = count;
@@ -165,6 +165,7 @@ describe('UsersModel', () => {
         done();
       });
     });
+    
     it('does not create a user', (done) => {
       User.count({}).exec((err, count) => {
         countBefore = count;
@@ -184,6 +185,7 @@ describe('UsersModel', () => {
         done();
       });
     });
+    
     it('does not create a user', (done) => {
       User.count({}).exec((err, count) => {
         countBefore = count;
@@ -203,6 +205,7 @@ describe('UsersModel', () => {
         done();
       });
     });
+    
     it('does not create a user', (done) => {
       User.count({}).exec((err, count) => {
         countBefore = count;
@@ -222,6 +225,7 @@ describe('UsersModel', () => {
         done();
       });
     });
+    
     it('creates a user', (done) => {
       User.count({}).exec((err, count) => {
         countBefore = count;
@@ -241,6 +245,7 @@ describe('UsersModel', () => {
         done();
       });
     });
+    
     it('creates a user', (done) => {
       User.count({}).exec((err, count) => {
         countBefore = count;
@@ -260,6 +265,7 @@ describe('UsersModel', () => {
         done();
       });
     });
+    
     it('creates a user', (done) => {
       User.count({}).exec((err, count) => {
         countBefore = count;
@@ -279,6 +285,7 @@ describe('UsersModel', () => {
         done();
       });
     });
+    
     it('creates a user', (done) => {
       User.count({}).exec((err, count) => {
         countBefore = count;
