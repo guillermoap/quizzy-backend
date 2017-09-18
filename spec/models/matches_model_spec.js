@@ -66,16 +66,16 @@ describe('MatchesModel', () => {
     url: '12345'
   }])
   .then(matchAttrsArray => {
-    matchWithoutUrl = matchAttrsArray [0];
-    matchDupUrl = matchAttrsArray [1];
-    matchInvalidUrl = matchAttrsArray [2];
-    matchPlayersNull = matchAttrsArray [3];
-    matchWithoutPlayers = matchAttrsArray [4];
-    matchWithoutOwner = matchAttrsArray [5];
-    matchInvalidDate = matchAttrsArray [6];
-    matchWithoutGame = matchAttrsArray [7];
-    match3 = matchAttrsArray [8];
-    match4 = matchAttrsArray [9];
+    matchWithoutUrl = matchAttrsArray[0];
+    matchDupUrl = matchAttrsArray[1];
+    matchInvalidUrl = matchAttrsArray[2];
+    matchPlayersNull = matchAttrsArray[3];
+    matchWithoutPlayers = matchAttrsArray[4];
+    matchWithoutOwner = matchAttrsArray[5];
+    matchInvalidDate = matchAttrsArray[6];
+    matchWithoutGame = matchAttrsArray[7];
+    match3 = matchAttrsArray[8];
+    match4 = matchAttrsArray[9];
   })
 
   describe('Without url', () => {
@@ -85,6 +85,7 @@ describe('MatchesModel', () => {
         done();
       });
     });
+    
     it('does not create a match', (done) => {
       Match.count({}).exec((err, count) => {
         countBefore = count;
@@ -104,6 +105,7 @@ describe('MatchesModel', () => {
         done();
       });
     });
+    
     it('does not create a match', (done) => {
       Match.count({}).exec((err, count) => {
         countBefore = count;
@@ -123,6 +125,7 @@ describe('MatchesModel', () => {
         done();
       });
     });
+    
     it('does not create a match', (done) => {
       Match.count({}).exec((err, count) => {
         countBefore = count;
@@ -142,6 +145,7 @@ describe('MatchesModel', () => {
         done();
       });
     });
+    
     it('does not create a match', (done) => {
       Match.count({}).exec((err, count) => {
         countBefore = count;
@@ -161,6 +165,7 @@ describe('MatchesModel', () => {
         done();
       });
     });
+    
     it('does not create a match', (done) => {
       Match.count({}).exec((err, count) => {
         countBefore = count;
@@ -180,6 +185,7 @@ describe('MatchesModel', () => {
         done();
       });
     });
+    
     it('does not create a match', (done) => {
       Match.count({}).exec((err, count) => {
         countBefore = count;
@@ -199,6 +205,7 @@ describe('MatchesModel', () => {
         done();
       });
     });
+    
     it('does not create a match', (done) => {
       Match.count({}).exec((err, count) => {
         countBefore = count;
@@ -218,6 +225,7 @@ describe('MatchesModel', () => {
         done();
       });
     });
+    
     it('does not create a match', (done) => {
       Match.count({}).exec((err, count) => {
         countBefore = count;
@@ -237,6 +245,7 @@ describe('MatchesModel', () => {
         done();
       });
     });
+    
     it('creates a match', (done) => {
       Match.count({}).exec((err, count) => {
         countBefore = count;
@@ -256,6 +265,7 @@ describe('MatchesModel', () => {
         done();
       });
     });
+    
     it('creates a match', (done) => {
       Match.count({}).exec((err, count) => {
         countBefore = count;
