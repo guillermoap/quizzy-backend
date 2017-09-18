@@ -1,6 +1,4 @@
-import mongoose, {
-  Schema
-} from 'mongoose';
+import mongoose, { Schema } from 'mongoose';
 import gameSchema from './schemas/game.schema';
 
 class GameClass {}

@@ -69,6 +69,14 @@ describe('GameController', () => {
           done();
         });
     });
+    //find game that does not exist
+    it('returns 404', (done) => {
+      request(app).get(`/games/000000`)
+        .end((err, res) => {
+          expect(res).to.have.status(404);
+          done();
+        });
+    });
   });
 
   describe('create', () => {
@@ -217,6 +225,14 @@ describe('GameController', () => {
             expect(game).to.eq(null);
             done();
           });
+        });
+    });
+    //destroy game that does not exist
+    it('returns 400', (done) => {
+      request(app).delete(`/games/000000`)
+        .end((err, res) => {
+          expect(res).to.have.status(400);
+          done();
         });
     });
   });

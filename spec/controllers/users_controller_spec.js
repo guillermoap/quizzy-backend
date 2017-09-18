@@ -45,7 +45,7 @@ describe('UsersController', () => {
     it('returns the right json object', (done) => {
       request(app).get('/users')
         .end((err, res) => {
-          expect(res.body.users[0]).to.have.keys('email', 'pass', 'id');
+          expect(res.body.users[0]).to.have.keys('nickname', 'email', 'pass', 'id');
           done();
         });
     });
@@ -63,7 +63,15 @@ describe('UsersController', () => {
     it('returns the right json object', (done) => {
       request(app).get(`/users/${user.id}`)
         .end((err, res) => {
-          expect(res.body.user).to.have.keys('email', 'pass', 'id');
+          expect(res.body.user).to.have.keys('nickname', 'email', 'pass', 'id');
+          done();
+        });
+    });
+    //find user who does not exist
+    it('returns 404', (done) => {
+      request(app).get(`/users/0000000`)
+        .end((err, res) => {
+          expect(res).to.have.status(404);
           done();
         });
     });
@@ -215,6 +223,14 @@ describe('UsersController', () => {
             expect(user).to.eq(null);
             done();
           });
+        });
+    });
+    //destroy user who does not exist
+    it('returns 400', (done) => {
+      request(app).delete(`/users/000000`)
+        .end((err, res) => {
+          expect(res).to.have.status(400);
+          done();
         });
     });
   })
