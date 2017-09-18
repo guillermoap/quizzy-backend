@@ -1,7 +1,6 @@
 import chai, {
   expect
 } from 'chai';
-import chaiHttp from 'chai-http';
 import factory from '../factories/factory.js';
 import app from '../../server.js';
 import mongoose from 'mongoose';
