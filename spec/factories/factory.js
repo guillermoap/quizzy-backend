@@ -83,8 +83,8 @@ function fakeQuestions() {
         faker.lorem.sentence()
       ],
       correctAnswer: () => faker.random.number({
-        min: 1,
-        max: 4
+        min: 0,
+        max: 3
       })
     }
     questionSet.push(question);
