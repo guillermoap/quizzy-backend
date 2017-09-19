@@ -125,7 +125,7 @@ describe('GameController', () => {
         request(app).post('/games')
           .send(params)
           .end((err, res) => {
-            expect(res).to.have.status(400);
+            expect(res).to.have.status(500);
             done();
           });
       });
