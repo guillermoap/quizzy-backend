@@ -38,7 +38,7 @@ describe('QuestionModel', () => {
   }, {
     questions: [{answers: ['ans1', 'ans2', 'ans3', 'ans4', 'ans5']}]
   }, {
-    questions: [{correctAnswer: 0}]
+    questions: [{correctAnswer: -1}]
   }, {
     questions: [{correctAnswer: 5}]
   }, {

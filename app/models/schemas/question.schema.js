@@ -24,8 +24,8 @@ const questionSchema = new Schema({
   correctAnswer : {
     type : Number,
     required : [true, 'you must select correct answer'],
-    min: [1, 'there must be a correct answer'],
-    max: [4, 'there must be a correct answer']
+    min: [0, 'there must be a correct answer'],
+    max: [3, 'there must be a correct answer']
   }
 })
 
