@@ -33,7 +33,7 @@ export const show = (req, res, next) => {
 export const create = (req, res, next) => {
   Game.create(req.body.game, function(err, game) {
     if (err) {
-      return res.status(400)
+      return res.status(500)
         .json({
           error: err.message
         });
