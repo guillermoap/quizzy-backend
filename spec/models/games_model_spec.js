@@ -12,6 +12,7 @@ describe('GamesModel', () => {
   var game3;
   var game4;
   var gameWithoutName;
+  var gameNameEmpty;
   var gameDupName;
   var gameInvalidName;
   var gameNegativeRating;
@@ -24,11 +25,10 @@ describe('GamesModel', () => {
   var gameInvalidDate;
   var gameWith2answers;
   var gameWith6answers;
-  var countBefore;
 
   beforeEach(function(done) {
     factory.createMany('game', 2, [{
-      name: 'quizzy'
+      name: 'quizzY'
     }, {
       name: 'Futbol'
     }])
@@ -45,8 +45,10 @@ describe('GamesModel', () => {
     });
   });
    
-  factory.attrsMany('game', 15, [{
+  factory.attrsMany('game', 16, [{
     name: null
+  }, {
+    name: '       '
   }, {
     name: 'Quizzy'
   }, {
@@ -104,25 +106,38 @@ describe('GamesModel', () => {
   }])
   .then(gameAttrsArray => {
     gameWithoutName = gameAttrsArray[0];
-    gameDupName = gameAttrsArray[1];
-    gameInvalidName = gameAttrsArray[2];
-    gameNegativeRating = gameAttrsArray[3];
-    gameInvalidRating = gameAttrsArray[4];
-    gameNegativeTimesPlayed = gameAttrsArray[5];
-    gameWithoutCreator = gameAttrsArray[6];
-    gameWithoutQuestions = gameAttrsArray[7];
-    gameRankingWithoutUser = gameAttrsArray[8];
-    gameRankingWithoutPoints = gameAttrsArray[9];
-    gameInvalidDate = gameAttrsArray[10];
-    game3 = gameAttrsArray[11];
-    game4 = gameAttrsArray[12];
-    gameWith6answers = gameAttrsArray[13];
-    gameWith2answers = gameAttrsArray[14];
+    gameNameEmpty = gameAttrsArray[1];
+    gameDupName = gameAttrsArray[2];
+    gameInvalidName = gameAttrsArray[3];
+    gameNegativeRating = gameAttrsArray[4];
+    gameInvalidRating = gameAttrsArray[5];
+    gameNegativeTimesPlayed = gameAttrsArray[6];
+    gameWithoutCreator = gameAttrsArray[7];
+    gameWithoutQuestions = gameAttrsArray[8];
+    gameRankingWithoutUser = gameAttrsArray[9];
+    gameRankingWithoutPoints = gameAttrsArray[10];
+    gameInvalidDate = gameAttrsArray[11];
+    game3 = gameAttrsArray[12];
+    game4 = gameAttrsArray[13];
+    gameWith6answers = gameAttrsArray[14];
+    gameWith2answers = gameAttrsArray[15];
   })
 
   describe('Without name', () => {
     it('returns correct error and does not create a game', (done) => {
       Game.create(gameWithoutName, (err, game) => {
+        expect(err).to.match(/you must enter a name/);
+        Game.count({}).exec((err, count) => {
+          expect(count).to.eq(2);   
+          done();        
+        });
+      });
+    });
+  });
+
+  describe('Name empty', () => {
+    it('returns correct error and does not create a game', (done) => {
+      Game.create(gameNameEmpty, (err, game) => {
         expect(err).to.match(/you must enter a name/);
         Game.count({}).exec((err, count) => {
           expect(count).to.eq(2);   

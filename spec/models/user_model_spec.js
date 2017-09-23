@@ -24,13 +24,12 @@ describe('UsersModel', () => {
   var userWithoutPass;
   var userinvalidPass;
   var userinvalidPass2;
-  var countBefore;
 
   beforeEach(function(done) {
     factory.createMany('user', 2, [{
       email: 'jose2017@spec.com', nickname: 'jose2017'
     }, {
-      email: 'juan2017@spec.com', nickname: 'juan2017'
+      email: 'juan2017@spec.com', nickname: 'juaN2017'
     }])
     .then(userArray => {
       user = userArray[0];

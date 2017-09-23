@@ -12,6 +12,7 @@ describe('MatchesModel', () => {
   var match3;
   var match4;
   var matchWithoutUrl;
+  var matchUrlEmpty;
   var matchDupUrl;
   var matchInvalidUrl;
   var matchPlayersNull;
@@ -19,11 +20,10 @@ describe('MatchesModel', () => {
   var matchWithoutOwner;
   var matchInvalidDate;
   var matchWithoutGame;
-  var countBefore;
 
   beforeEach(function(done) {
     factory.createMany('match', 2, [{
-      url: 'quizzy2017'
+      url: 'quizzY2017'
     }, {
       url: 'MatchTest'
     }])
@@ -40,8 +40,10 @@ describe('MatchesModel', () => {
     });
   });
    
-  factory.attrsMany('match', 10, [{
+  factory.attrsMany('match', 11, [{
     url: null
+  }, {
+    url: '          '
   }, {
     url: 'Quizzy2017'
   }, {
@@ -63,20 +65,33 @@ describe('MatchesModel', () => {
   }])
   .then(matchAttrsArray => {
     matchWithoutUrl = matchAttrsArray[0];
-    matchDupUrl = matchAttrsArray[1];
-    matchInvalidUrl = matchAttrsArray[2];
-    matchPlayersNull = matchAttrsArray[3];
-    matchWithoutPlayers = matchAttrsArray[4];
-    matchWithoutOwner = matchAttrsArray[5];
-    matchInvalidDate = matchAttrsArray[6];
-    matchWithoutGame = matchAttrsArray[7];
-    match3 = matchAttrsArray[8];
-    match4 = matchAttrsArray[9];
+    matchUrlEmpty = matchAttrsArray[1];
+    matchDupUrl = matchAttrsArray[2];
+    matchInvalidUrl = matchAttrsArray[3];
+    matchPlayersNull = matchAttrsArray[4];
+    matchWithoutPlayers = matchAttrsArray[5];
+    matchWithoutOwner = matchAttrsArray[6];
+    matchInvalidDate = matchAttrsArray[7];
+    matchWithoutGame = matchAttrsArray[8];
+    match3 = matchAttrsArray[9];
+    match4 = matchAttrsArray[10];
   })
 
   describe('Without url', () => {
     it('returns correct error and does not create a match', (done) => {
       Match.create(matchWithoutUrl, (err, match) => {
+        expect(err).to.match(/you must enter a url/);
+        Match.count({}).exec((err, count) => {
+          expect(count).to.eq(2);   
+          done();
+        });
+      });
+    });
+  });
+
+  describe('Url empty', () => {
+    it('returns correct error and does not create a match', (done) => {
+      Match.create(matchUrlEmpty, (err, match) => {
         expect(err).to.match(/you must enter a url/);
         Match.count({}).exec((err, count) => {
           expect(count).to.eq(2);   

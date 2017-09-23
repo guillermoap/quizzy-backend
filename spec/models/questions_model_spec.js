@@ -21,7 +21,6 @@ describe('QuestionModel', () => {
   var QuestInvalidCorrect;
   var QuestInvalidCorrect2;
   var QuestWithoutCorrect;
-  var countBefore;
 
   afterEach(function(done) {
     Game.remove({}, function() {
@@ -118,7 +117,7 @@ describe('QuestionModel', () => {
       }, {
         answer: 'ans4'  
       }],
-      correctAnswer: 8
+      correctAnswer: 4
     }]
   }, {
     questions: [{
