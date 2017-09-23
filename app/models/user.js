@@ -5,8 +5,10 @@ var userSchema = new Schema({
     type : String,
     required: [true, 'you must enter a nickname'],
     unique: true,
+    lowercase: true,
+    trim: true,
     validate: {
-      validator: function(nickname) { return !/\W/.test(nickname) },
+      validator: function(nickname) { return /^(\w|-)+$/.test(nickname) },
       message: 'invalid nickname'          
     }
   },

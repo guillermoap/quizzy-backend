@@ -179,7 +179,7 @@ describe('GameController', () => {
     context('with invalid params', () => {
       let params;
       factory.attrs('game', {
-          name: 'Basket'
+          name: 'basket'
         })
         .then(attrs => {
           params = {
@@ -201,7 +201,7 @@ describe('GameController', () => {
           .send(params)
           .end((err, res) => {
             Game.findById(game.id).lean().exec((err, game) => {
-              expect(game.name).to.eq('Futbol');
+              expect(game.name).to.eq('futbol');
               done();
             });
           });

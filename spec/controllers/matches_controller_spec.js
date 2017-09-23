@@ -181,7 +181,7 @@ describe('MatchesController', () => {
     context('with invalid params', () => {
       let params;
       factory.attrs('match', {
-          url: 'testURL2'
+          url: 'testurl2'
         })
         .then(attrs => {
           params = {
@@ -203,7 +203,7 @@ describe('MatchesController', () => {
           .send(params)
           .end((err, res) => {
             Match.findById(match.id).lean().exec((err, match) => {
-              expect(match.url).to.eq('testURL');
+              expect(match.url).to.eq('testurl');
               done();
             });
           });

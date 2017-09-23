@@ -38,9 +38,9 @@ describe('UsersModel', () => {
   factory.attrsMany('user', 11, [{
     nickname: null
   }, {
-    nickname: 'juan2017'
+    nickname: 'Juan2017'
   }, {
-    nickname: 'sebas--'
+    nickname: 'sebas$^f'
   }, {
     email: null
   }, {
@@ -50,7 +50,7 @@ describe('UsersModel', () => {
   }, {
     password: null
   }, {
-    nickname: 'juan_perez'
+    nickname: 'juan_perez-3'
   }, {
     nickname: 'juan'
   }, {
@@ -79,222 +79,134 @@ describe('UsersModel', () => {
   });
 
   describe('Without nickname', () => {
-    it('returns correct error', (done) => {
+    it('returns correct error and does not create a user1', (done) => {
       User.create(userWithoutNick, (err, user) => {
         expect(err).to.match(/you must enter a nickname/);
-        done();
+        User.count({}).exec((err, count) => {
+          expect(count).to.eq(2); 
+          done();
+        });
       });
-    });
-    
-    it('does not create a user', (done) => {
-      User.count({}).exec((err, count) => {
-        countBefore = count;
-      });
-      User.create(userWithoutNick);
-      User.count({}).exec((err, count) => {
-        expect(count).to.eq(countBefore);   
-      });
-      done();
     });
   });
 
   describe('Same nickname', () => {
-    it('returns correct error', (done) => {
+    it('returns correct error and does not create a user2', (done) => {
       User.create(userDupNick, (err, user) => {
         expect(err).to.match(/E11000 duplicate key error collection: quizzy-backend-test.users index: nickname_1/);
-        done();
+        User.count({}).exec((err, count) => {
+          expect(count).to.eq(2);   
+          done();
+        });
       });
     });
-    
-    it('does not create a user', (done) => {
-      User.count({}).exec((err, count) => {
-        countBefore = count;
-      });
-      User.create(userDupNick);
-      User.count({}).exec((err, count) => {
-        expect(count).to.eq(countBefore);   
-      });
-      done();
-    });
-  });
+  });  
 
   describe('Invalid nickname', () => {
-    it('returns correct error', (done) => {
+    it('returns correct error and does not creat a user3', (done) => {
       User.create(userInvalidNick, (err, user) => {
         expect(err).to.match(/invalid nickname/);
-        done();
+        User.count({}).exec((err, count) => {
+          expect(count).to.eq(2);   
+          done();
+        });
       });
-    });
-    
-    it('does not create a user', (done) => {
-      User.count({}).exec((err, count) => {
-        countBefore = count;
-      });
-      User.create(userInvalidNick);
-      User.count({}).exec((err, count) => {
-        expect(count).to.eq(countBefore);   
-      });
-      done();
     });
   });
   
   describe('Without email', () => {
-    it('returns correct error', (done) => {
+    it('returns correct error and does not create a user4', (done) => {
       User.create(userWithoutEmail, (err, user) => {
         expect(err).to.match(/you must enter a email/);
-        done();
+        User.count({}).exec((err, count) => {
+          expect(count).to.eq(2);   
+          done();
+        });
       });
-    });
-    
-    it('does not create a user', (done) => {
-      User.count({}).exec((err, count) => {
-        countBefore = count;
-      });
-      User.create(userWithoutEmail);
-      User.count({}).exec((err, count) => {
-        expect(count).to.eq(countBefore);   
-      });
-      done();
     });
   });
 
   describe('Same email', () => {
-    it('returns correct error', (done) => {
+    it('returns correct error and does not create a user5', (done) => {
       User.create(userDupEmail, (err, user) => {
         expect(err).to.match(/E11000 duplicate key error collection: quizzy-backend-test.users index: email_1/);
-        done();
+        User.count({}).exec((err, count) => {
+          expect(count).to.eq(2);   
+          done();
+        });
       });
-    });
-    
-    it('does not create a user', (done) => {
-      User.count({}).exec((err, count) => {
-        countBefore = count;
-      });
-      User.create(userDupEmail);
-      User.count({}).exec((err, count) => {
-        expect(count).to.eq(countBefore);   
-      });
-      done();
     });
   });
 
   describe('Invalid email', () => {
-    it('returns correct error', (done) => {
+    it('returns correct error and does not create a user6', (done) => {
       User.create(userInvalidEmail, (err, user) => {
         expect(err).to.match(/invalid email/);
-        done();
+        User.count({}).exec((err, count) => {
+          expect(count).to.eq(2);   
+          done();
+        });
       });
-    });
-    
-    it('does not create a user', (done) => {
-      User.count({}).exec((err, count) => {
-        countBefore = count;
-      });
-      User.create(userInvalidEmail);
-      User.count({}).exec((err, count) => {
-        expect(count).to.eq(countBefore);   
-      });
-      done();
     });
   });
   
   describe('Without password', () => {
-    it('returns correct error', (done) => {
+    it('returns correct error and does not create a user7', (done) => {
       User.create(userWithoutPass, (err, user) => {
         expect(err).to.match(/you must enter a password/);
-        done();
+        User.count({}).exec((err, count) => {
+          expect(count).to.eq(2);   
+          done();
+        });
       });
-    });
-    
-    it('does not create a user', (done) => {
-      User.count({}).exec((err, count) => {
-        countBefore = count;
-      });
-      User.create(userWithoutPass);
-      User.count({}).exec((err, count) => {
-        expect(count).to.eq(countBefore);   
-      });
-      done();
     });
   });
 
-  describe('Nickname wiht "_"', () => {
-    it('does not returns error', (done) => {
+  describe('Nickname wiht "_" and "-"', () => {
+    it('does not returns error and creates a user', (done) => {
       User.create(user3, (err, user) => {
         expect(err).to.eq(null);
-        done();
+        User.count({}).exec((err, count) => {
+          expect(count).to.eq(3);   
+          done();
+        });
       });
-    });
-    
-    it('creates a user', (done) => {
-      User.count({}).exec((err, count) => {
-        countBefore = count;
-      });
-      User.create(user3);
-      User.count({}).exec((err, count) => {
-        expect(count).to.eq(countBefore++);   
-      });
-      done();
     });
   });
 
   describe('Nickname with only letters', () => {
-    it('does not returns error', (done) => {
+    it('does not returns error and creates a user', (done) => {
       User.create(user4, (err, user) => {
         expect(err).to.eq(null);
-        done();
+        User.count({}).exec((err, count) => {
+          expect(count).to.eq(3);   
+          done();
+        });
       });
-    });
-    
-    it('creates a user', (done) => {
-      User.count({}).exec((err, count) => {
-        countBefore = count;
-      });
-      User.create(user4);
-      User.count({}).exec((err, count) => {
-        expect(count).to.eq(countBefore++);   
-      });
-      done();
     });
   });
 
   describe('Nickname with only numbers', () => {
-    it('does not returns error', (done) => {
+    it('does not returns error and creates a user', (done) => {
       User.create(user5, (err, user) => {
         expect(err).to.eq(null);
-        done();
+        User.count({}).exec((err, count) => {
+          expect(count).to.eq(3);   
+          done();
+        });
       });
-    });
-    
-    it('creates a user', (done) => {
-      User.count({}).exec((err, count) => {
-        countBefore = count;
-      });
-      User.create(user5);
-      User.count({}).exec((err, count) => {
-        expect(count).to.eq(countBefore++);   
-      });
-      done();
     });
   });
 
   describe('Email with only numbers', () => {
-    it('does not returns error', (done) => {
+    it('does not returns error and creates a user', (done) => {
       User.create(user6, (err, user) => {
         expect(err).to.eq(null);
-        done();
+        User.count({}).exec((err, count) => {
+          expect(count).to.eq(3);   
+          done();
+        });
       });
-    });
-    
-    it('creates a user', (done) => {
-      User.count({}).exec((err, count) => {
-        countBefore = count;
-      });
-      User.create(user6);
-      User.count({}).exec((err, count) => {
-        expect(count).to.eq(countBefore++);   
-      });
-      done();
     });
   });
 });

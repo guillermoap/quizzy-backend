@@ -16,18 +16,7 @@ factory.define('game', Game, {
   rating: () => faker.random.number(5),
   timesPlayed: () => faker.random.number(20),
   creator: () => faker.name.findName(),
-  "questions": [{
-    "text": "Who is the best?",
-    "difficulty": "Easy",
-    "correctAnswer": 1,
-    "_id": "59a9c900b8f51d245cbf034e",
-    "answers": [
-      () => faker.name.findName(),
-      () => faker.name.findName(),
-      () => faker.name.findName(),
-      () => faker.name.findName()
-    ]
-  }],
+  "questions": fakeQuestions(),
   "tags": [
     "bla",
     "you just lost the game"
@@ -77,15 +66,15 @@ function fakeQuestions() {
       text: () => faker.lorem.sentence(),
       difficulty: () => faker.random.arrayElement(["Easy", "Medium", "Hard"]),
       answers: [
-        faker.lorem.sentence(),
-        faker.lorem.sentence(),
-        faker.lorem.sentence(),
-        faker.lorem.sentence()
+        {answer: faker.lorem.sentence()},
+        {answer: faker.lorem.sentence()},
+        {answer: faker.lorem.sentence()},
+        {answer: faker.lorem.sentence()}
       ],
-      correctAnswer: () => faker.random.number({
+      correctAnswer: 0/*() => faker.random.number({
         min: 0,
         max: 3
-      })
+      })*/
     }
     questionSet.push(question);
   }

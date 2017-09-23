@@ -6,9 +6,11 @@ var matchSchema = new Schema ({
     type : String,
     required: [true, 'you must enter a url'],
     unique: true,
-    validate: {
-      validator: function(url) { return !/\W/.test(url)},
-      message: 'invalid url'          
+    lowercase: true,
+    trim: true,
+    validate : {
+      validator: function(url) { return /^(\w|-)+$/.test(url)},
+      message: 'invalid url'
     }
   },
   isRealTime: Boolean,
