@@ -118,7 +118,7 @@ describe('QuestionModel', () => {
       }, {
         answer: 'ans4'  
       }],
-      correctAnswer: 5
+      correctAnswer: 8
     }]
   }, {
     questions: [{

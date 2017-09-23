@@ -22,6 +22,8 @@ describe('GamesModel', () => {
   var gameRankingWithoutUser;
   var gameRankingWithoutPoints;
   var gameInvalidDate;
+  var gameWith2answers;
+  var gameWith6answers;
   var countBefore;
 
   beforeEach(function(done) {
@@ -43,7 +45,7 @@ describe('GamesModel', () => {
     });
   });
    
-  factory.attrsMany('game', 13, [{
+  factory.attrsMany('game', 15, [{
     name: null
   }, {
     name: 'Quizzy'
@@ -69,6 +71,36 @@ describe('GamesModel', () => {
     name: 'Juego_Aleatorio-33 44 55' 
   }, {
     name: '1324'
+  }, {
+    questions: [{
+      text: 'ques',
+      difficulty: 'Easy',
+      answers: [{
+        answer: 'ans1'
+      }, {
+        answer: 'ans2'
+      }, {
+        answer: 'ans3'
+      }, {
+        answer: 'ans4'
+      }, {
+        answer: 'ans5'
+      }, {
+        answer: 'ans6' 
+      }],
+      correctAnswer: 5
+    }]
+  }, {
+    questions: [{
+      text: 'ques',
+      difficulty: 'Easy',
+      answers: [{
+        answer: 'ans1'
+      }, {
+        answer: 'ans2' 
+      }],
+      correctAnswer: 1
+    }]
   }])
   .then(gameAttrsArray => {
     gameWithoutName = gameAttrsArray[0];
@@ -84,6 +116,8 @@ describe('GamesModel', () => {
     gameInvalidDate = gameAttrsArray[10];
     game3 = gameAttrsArray[11];
     game4 = gameAttrsArray[12];
+    gameWith6answers = gameAttrsArray[13];
+    gameWith2answers = gameAttrsArray[14];
   })
 
   describe('Without name', () => {
@@ -233,6 +267,30 @@ describe('GamesModel', () => {
   describe('Name with "_", "-" and " "', () => {
     it('does not returns error', (done) => {
       Game.create(game4, (err, game) => {
+        expect(err).to.eq(null);
+        Game.count({}).exec((err, count) => {
+          expect(count).to.eq(3);   
+          done();
+        });
+      });
+    });
+  });
+
+  describe('With 6 answers', () => {
+    it('does not returns error', (done) => {
+      Game.create(gameWith6answers, (err, game) => {
+        expect(err).to.eq(null);
+        Game.count({}).exec((err, count) => {
+          expect(count).to.eq(3);   
+          done();
+        });
+      });
+    });
+  });
+
+  describe('With 2 answers', () => {
+    it('does not returns error', (done) => {
+      Game.create(gameWith2answers, (err, game) => {
         expect(err).to.eq(null);
         Game.count({}).exec((err, count) => {
           expect(count).to.eq(3);   

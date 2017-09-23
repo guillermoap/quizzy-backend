@@ -32,7 +32,7 @@ const questionSchema = new Schema({
     type : Number,
     required : [true, 'you must select correct answer'],
     min: [0, 'there must be a correct answer'],
-    max: [3, 'there must be a correct answer'] //falta acomodar a cantidad variable de answers
+    max: [5, 'there must be a correct answer'] //falta acomodar a cantidad variable de answers
   }
 })
 
