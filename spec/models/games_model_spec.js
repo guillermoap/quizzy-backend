@@ -88,7 +88,7 @@ describe('GamesModel', () => {
       }, {
         answer: 'ans6' 
       }],
-      correctAnswer: 5
+      correctAnswer: 4
     }]
   }, {
     questions: [{

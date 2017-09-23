@@ -28,7 +28,7 @@ var userSchema = new Schema({
       validator: function(password) { return (
         password.length > 7 &&
         password.length < 21 &&
-        /^([a-z]|[A-Z])(\d|[a-z]|[A-Z])+$/.test(password)) },
+        /^\S+$/.test(password)) },
       message: 'invalid password'
     }
   }

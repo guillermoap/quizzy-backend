@@ -77,14 +77,14 @@ describe('QuestionModel', () => {
   }, {
     questions: [{
       text: 'ques',
-      difficulty: 'facil',
+      difficulty: 'Easy',
       answers: null,
       correctAnswer: 3
     }]
   }, {
     questions: [{
       text: 'ques',
-      difficulty: 'facil',
+      difficulty: 'Easy',
       answers: [{
         answer: 'ans1'  
       }],
@@ -93,7 +93,7 @@ describe('QuestionModel', () => {
   }, {
     questions: [{
       text: 'ques',
-      difficulty: 'facil',
+      difficulty: 'Easy',
       answers: [{
         answer: 'ans1'
       }, {
@@ -108,7 +108,7 @@ describe('QuestionModel', () => {
   }, {
     questions: [{
       text: 'ques',
-      difficulty: 'facil',
+      difficulty: 'Easy',
       answers: [{
         answer: 'ans1'
       }, {
@@ -123,7 +123,7 @@ describe('QuestionModel', () => {
   }, {
     questions: [{
       text: 'ques',
-      difficulty: 'facil',
+      difficulty: 'Easy',
       answers: [{
         answer: 'ans1'
       }, {
@@ -138,7 +138,7 @@ describe('QuestionModel', () => {
   }, {
     questions: [{
       text: 'ques',
-      difficulty: 'facil',
+      difficulty: 'Easy',
       answers: [{
         answer: 'ans1'
       }, {
@@ -153,7 +153,7 @@ describe('QuestionModel', () => {
   }, {
     questions: [{
       text: 'ques',
-      difficulty: 'facil',
+      difficulty: 'Easy',
       answers: [{
         answer: 'ans1'
       }, {
@@ -169,7 +169,7 @@ describe('QuestionModel', () => {
       }, {
         answer: 'ans7' 
       }],
-      correctAnswer: 3
+      correctAnswer: 5
     }]
   }])
   .then(gameAttrsArray => {
@@ -281,7 +281,7 @@ describe('QuestionModel', () => {
     });
   });
 
-  describe('Invalid correctAnswer (5)', () => {
+  describe('Invalid correctAnswer (8)', () => {
     it('returns correct error and does not create a game', (done) => {
       Game.create(QuestInvalidCorrect2, (err, game) => {
         expect(err).to.match(/there must be a correct answer/);

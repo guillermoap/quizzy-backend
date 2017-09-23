@@ -62,13 +62,13 @@ describe('UsersModel', () => {
   }, {
     email: '124512@hotmail.com'
   }, {
-    password: '234123asad'
+    password: '   234123asad'
   }, {
-    password: 'Assd34342-45'
+    password: 'Assd34342 45'
   }, {
     password: 'adadasdqdasd'
   }, {
-    password: 'A25245729842'  
+    password: '#$%#$%dfgvg--2'  
   }])
   .then(userAttrsArray => {
     userWithoutNick = userAttrsArray [0];
@@ -226,7 +226,7 @@ describe('UsersModel', () => {
     });
   });
 
-  describe('Pasword begins with number', () => {
+  describe('Pasword begins with " "', () => {
     it('returns correct error and does not create a user', (done) => {
       User.create(userinvalidPass, (err, user) => {
         expect(err).to.match(/invalid password/);
@@ -238,7 +238,7 @@ describe('UsersModel', () => {
     });
   });
 
-  describe('Pasword with "-"', () => {
+  describe('Pasword with " "', () => {
     it('returns correct error and does not create a user', (done) => {
       User.create(userinvalidPass2, (err, user) => {
         expect(err).to.match(/invalid password/);
@@ -262,7 +262,7 @@ describe('UsersModel', () => {
     });
   });
 
-  describe('Pasword with only numbers', () => {
+  describe('Pasword with caracteres', () => {
     it('does not returns error and creates a user', (done) => {
       User.create(user8, (err, user) => {
         expect(err).to.eq(null);

@@ -32,7 +32,10 @@ const questionSchema = new Schema({
     type : Number,
     required : [true, 'you must select correct answer'],
     min: [0, 'there must be a correct answer'],
-    max: [5, 'there must be a correct answer'] //falta acomodar a cantidad variable de answers
+    validate : {
+      validator: function(correctAnswer) { return (this.answers.length > correctAnswer) },
+      message: 'there must be a correct answer'
+    }
   }
 })
 
