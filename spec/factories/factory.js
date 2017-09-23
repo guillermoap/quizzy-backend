@@ -7,7 +7,7 @@ import Match from '../../app/models/match';
 factory.define('user', User, {
   nickname: () => faker.name.firstName(),
   email: () => faker.internet.email(),
-  password: () => faker.internet.password()
+  password: () => faker.internet.password(8, 20)
 });
 
 factory.define('game', Game, {

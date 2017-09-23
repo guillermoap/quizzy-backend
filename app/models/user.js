@@ -23,7 +23,14 @@ var userSchema = new Schema({
   },
   password : {
     type : String,
-    required : [true, 'you must enter a password']
+    required : [true, 'you must enter a password'],
+    validate : {
+      validator: function(password) { return (
+        password.length > 7 &&
+        password.length < 21 &&
+        /^([a-z]|[A-Z])(\d|[a-z]|[A-Z])+$/.test(password)) },
+      message: 'invalid password'
+    }
   }
 });
 

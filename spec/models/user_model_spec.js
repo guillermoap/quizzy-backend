@@ -13,6 +13,8 @@ describe('UsersModel', () => {
   var user4;
   var user5;
   var user6;
+  var user7;
+  var user8;
   var userWithoutNick;
   var userDupNick;
   var userInvalidNick; 
@@ -20,6 +22,8 @@ describe('UsersModel', () => {
   var userDupEmail;
   var userInvalidEmail;
   var userWithoutPass;
+  var userinvalidPass;
+  var userinvalidPass2;
   var countBefore;
 
   beforeEach(function(done) {
@@ -35,7 +39,7 @@ describe('UsersModel', () => {
     });
   });
    
-  factory.attrsMany('user', 11, [{
+  factory.attrsMany('user', 15, [{
     nickname: null
   }, {
     nickname: 'Juan2017'
@@ -57,6 +61,14 @@ describe('UsersModel', () => {
     nickname: '12345'
   }, {
     email: '124512@hotmail.com'
+  }, {
+    password: '234123asad'
+  }, {
+    password: 'Assd34342-45'
+  }, {
+    password: 'adadasdqdasd'
+  }, {
+    password: 'A25245729842'  
   }])
   .then(userAttrsArray => {
     userWithoutNick = userAttrsArray [0];
@@ -70,6 +82,10 @@ describe('UsersModel', () => {
     user4 = userAttrsArray [8];
     user5 = userAttrsArray [9];
     user6 = userAttrsArray [10];
+    userinvalidPass = userAttrsArray[11];
+    userinvalidPass2 = userAttrsArray[12];
+    user7 = userAttrsArray[13];
+    user8 = userAttrsArray[14];
   });
 
   afterEach(function(done) {
@@ -201,6 +217,54 @@ describe('UsersModel', () => {
   describe('Email with only numbers', () => {
     it('does not returns error and creates a user', (done) => {
       User.create(user6, (err, user) => {
+        expect(err).to.eq(null);
+        User.count({}).exec((err, count) => {
+          expect(count).to.eq(3);   
+          done();
+        });
+      });
+    });
+  });
+
+  describe('Pasword begins with number', () => {
+    it('returns correct error and does not create a user', (done) => {
+      User.create(userinvalidPass, (err, user) => {
+        expect(err).to.match(/invalid password/);
+        User.count({}).exec((err, count) => {
+          expect(count).to.eq(2);   
+          done();
+        });
+      });
+    });
+  });
+
+  describe('Pasword with "-"', () => {
+    it('returns correct error and does not create a user', (done) => {
+      User.create(userinvalidPass2, (err, user) => {
+        expect(err).to.match(/invalid password/);
+        User.count({}).exec((err, count) => {
+          expect(count).to.eq(2);   
+          done();
+        });
+      });
+    });
+  });
+
+  describe('Pasword with only letters', () => {
+    it('does not returns error and creates a user', (done) => {
+      User.create(user7, (err, user) => {
+        expect(err).to.eq(null);
+        User.count({}).exec((err, count) => {
+          expect(count).to.eq(3);   
+          done();
+        });
+      });
+    });
+  });
+
+  describe('Pasword with only numbers', () => {
+    it('does not returns error and creates a user', (done) => {
+      User.create(user8, (err, user) => {
         expect(err).to.eq(null);
         User.count({}).exec((err, count) => {
           expect(count).to.eq(3);   
