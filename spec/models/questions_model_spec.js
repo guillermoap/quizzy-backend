@@ -12,6 +12,7 @@ chai.use(chaiHttp);
 
 describe('QuestionModel', () => {
   var QuestWithoutText;
+  var QuestTextEmpty;
   var QuestInvalidDifficulty;
   var QuestWithoutAnswers;
   var QuestLessAnswers;
@@ -28,8 +29,10 @@ describe('QuestionModel', () => {
     });
   });
    
-  factory.attrsMany('game', 9, [{
-    questions: [{test: null}]
+  factory.attrsMany('game', 10, [{
+    questions: [{text: null}]
+  }, {
+    questions: [{text: '        '}]
   }, {
     questions: [{difficulty: 'facil'}]
   }, {
@@ -75,19 +78,33 @@ describe('QuestionModel', () => {
   }])
   .then(gameAttrsArray => {
     QuestWithoutText = gameAttrsArray[0];
-    QuestInvalidDifficulty = gameAttrsArray[1];
-    QuestWithoutAnswers = gameAttrsArray[2];
-    QuestLessAnswers = gameAttrsArray[3];
-    QuestInvalidCorrect = gameAttrsArray[4];
-    QuestInvalidCorrect2 = gameAttrsArray[5];
-    QuestWithoutCorrect = gameAttrsArray[6];
-    QuestWithAnswerEmpty = gameAttrsArray[7];
-    QuestMoreAnswers = gameAttrsArray[8];
+    QuestTextEmpty = gameAttrsArray[1];
+    QuestInvalidDifficulty = gameAttrsArray[2];
+    QuestWithoutAnswers = gameAttrsArray[3];
+    QuestLessAnswers = gameAttrsArray[4];
+    QuestInvalidCorrect = gameAttrsArray[5];
+    QuestInvalidCorrect2 = gameAttrsArray[6];
+    QuestWithoutCorrect = gameAttrsArray[7];
+    QuestWithAnswerEmpty = gameAttrsArray[8];
+    QuestMoreAnswers = gameAttrsArray[9];
   })
 
   describe('Without text', () => {
     it('returns correct error and does not create a game', (done) => {
       Game.create(QuestWithoutText, (err, game) => {
+        expect(err).to.match(/you must write the question/);
+        Game.count({}).exec((err, count) => {
+          expect(count).to.eq(0);   
+          done();  
+        });
+      });
+    });
+  });
+
+  describe('Text empty', () => {
+    it('returns correct error and does not create a game', (done) => {
+      Game.create(QuestTextEmpty, (err, game) => {
+        console.log(QuestTextEmpty);
         expect(err).to.match(/you must write the question/);
         Game.count({}).exec((err, count) => {
           expect(count).to.eq(0);   

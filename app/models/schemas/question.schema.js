@@ -7,7 +7,8 @@ const questionSchema = new Schema({
   },
   text : {
     type : String,
-    required : [true, 'you must write the question']
+    required : [true, 'you must write the question'],
+    trim: true
   },
   difficulty : {
     type : String,
