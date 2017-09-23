@@ -71,10 +71,10 @@ function fakeQuestions() {
         {answer: faker.lorem.sentence()},
         {answer: faker.lorem.sentence()}
       ],
-      correctAnswer: 0/*() => faker.random.number({
+      correctAnswer: () => faker.random.number({
         min: 0,
         max: 3
-      })*/
+      })
     }
     questionSet.push(question);
   }

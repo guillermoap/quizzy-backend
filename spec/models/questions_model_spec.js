@@ -30,50 +30,146 @@ describe('QuestionModel', () => {
   });
    
   factory.attrsMany('game', 10, [{
-    questions: [{text: null}]
-  }, {
-    questions: [{text: '        '}]
-  }, {
-    questions: [{difficulty: 'facil'}]
-  }, {
-    questions: [{answers: null}]
-  }, {
     questions: [{
+      text: null,
+      difficulty: 'Hard',
       answers: [{
         answer: 'ans1'
-      }]
-    }]
-  }, {
-    questions: [{correctAnswer: -1}]
-  }, {
-    questions: [{correctAnswer: 5}]
-  }, {
-    questions: [{correctAnswer: null}]
-  }, {
-    questions: [{
-      answers: [{
-        answer: '      '
       }, {
-        answer: 'ans1'
-      }]
+        answer: 'ans2'
+      }, {
+        answer: 'ans3'
+      }, {
+        answer: 'ans4'  
+      }],
+      correctAnswer: 3
     }]
   }, {
     questions: [{
+      text: '                 ',
+      difficulty: 'Hard',
       answers: [{
-        answer: 'a'
+        answer: 'ans1'
       }, {
-        answer: 'b'
+        answer: 'ans2'
       }, {
-        answer: 'c'
+        answer: 'ans3'
       }, {
-        answer: 'd'
+        answer: 'ans4'  
+      }],
+      correctAnswer: 3
+    }]
+  }, {
+    questions: [{
+      text: 'ques',
+      difficulty: 'facil',
+      answers: [{
+        answer: 'ans1'
       }, {
-        answer: 'e'
+        answer: 'ans2'
       }, {
-        answer: 'f'
+        answer: 'ans3'
       }, {
-        answer: 'g'
-      }]
+        answer: 'ans4'  
+      }],
+      correctAnswer: 3
+    }]
+  }, {
+    questions: [{
+      text: 'ques',
+      difficulty: 'facil',
+      answers: null,
+      correctAnswer: 3
+    }]
+  }, {
+    questions: [{
+      text: 'ques',
+      difficulty: 'facil',
+      answers: [{
+        answer: 'ans1'  
+      }],
+      correctAnswer: 3
+    }]
+  }, {
+    questions: [{
+      text: 'ques',
+      difficulty: 'facil',
+      answers: [{
+        answer: 'ans1'
+      }, {
+        answer: 'ans2'
+      }, {
+        answer: 'ans3'
+      }, {
+        answer: 'ans4'  
+      }],
+      correctAnswer: -1
+    }]
+  }, {
+    questions: [{
+      text: 'ques',
+      difficulty: 'facil',
+      answers: [{
+        answer: 'ans1'
+      }, {
+        answer: 'ans2'
+      }, {
+        answer: 'ans3'
+      }, {
+        answer: 'ans4'  
+      }],
+      correctAnswer: 5
+    }]
+  }, {
+    questions: [{
+      text: 'ques',
+      difficulty: 'facil',
+      answers: [{
+        answer: 'ans1'
+      }, {
+        answer: 'ans2'
+      }, {
+        answer: 'ans3'
+      }, {
+        answer: 'ans4'  
+      }],
+      correctAnswer: null
+    }]
+  }, {
+    questions: [{
+      text: 'ques',
+      difficulty: 'facil',
+      answers: [{
+        answer: 'ans1'
+      }, {
+        answer: 'ans2'
+      }, {
+        answer: '         '
+      }, {
+        answer: 'ans4'  
+      }],
+      correctAnswer: 3
+    }]
+  }, {
+    questions: [{
+      text: 'ques',
+      difficulty: 'facil',
+      answers: [{
+        answer: 'ans1'
+      }, {
+        answer: 'ans2'
+      }, {
+        answer: 'ans3'
+      }, {
+        answer: 'ans4'
+      }, {
+        answer: 'ans5'
+      }, {
+        answer: 'ans6'
+      }, {
+        answer: 'ans7' 
+      }],
+      correctAnswer: 3
     }]
   }])
   .then(gameAttrsArray => {
