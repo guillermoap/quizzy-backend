@@ -16,7 +16,11 @@ const questionSchema = new Schema({
   },
   answers : {
     type : [{
-      answer : String
+      answer : {
+        type: String,
+        trim: true,
+        required: [true, 'answer can not be empty']
+      }
     }],
     required: [true, 'you must write the answers'],
     validate : {

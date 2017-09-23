@@ -104,7 +104,6 @@ describe('QuestionModel', () => {
   describe('Text empty', () => {
     it('returns correct error and does not create a game', (done) => {
       Game.create(QuestTextEmpty, (err, game) => {
-        console.log(QuestTextEmpty);
         expect(err).to.match(/you must write the question/);
         Game.count({}).exec((err, count) => {
           expect(count).to.eq(0);   
@@ -198,16 +197,15 @@ describe('QuestionModel', () => {
     });
   });
 
-  /*describe('Answers empty', () => {
+  describe('Answers empty', () => {
     it('returns correct error and does not create a game', (done) => {
       Game.create(QuestWithAnswerEmpty, (err, game) => {
-        console.log(err),
-        expect(err).to.match(/you must write the answer/);
+        expect(err).to.match(/answer can not be empty/);
         Game.count({}).exec((err, count) => {
           expect(count).to.eq(0);   
           done();
         });
       });
     });
-  });*/
+  });
 });
