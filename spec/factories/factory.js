@@ -5,14 +5,22 @@ import Game from '../../app/models/game';
 import Match from '../../app/models/match';
 
 factory.define('user', User, {
-  nickname: () => faker.name.firstName(),
-  email: () => faker.internet.email(),
-  password: () => faker.internet.password(8, 20)
+  nickname: () => faker.name.firstName().replace("'",'-') +
+                  faker.random.number(1000) +
+                  faker.name.lastName().replace("'",'-') + 
+                  faker.random.number(1000),
+  email: () => faker.name.firstName().replace("'",'-') +
+               faker.random.number(1000) +
+               faker.internet.email(),
+  password: () => faker.internet.password(15)
 });
 
 factory.define('game', Game, {
-  name: faker.name.firstName(),
-  description: "Great game",
+  name: () => faker.name.firstName().replace("'",'-') +
+              faker.random.number(1000) +
+              faker.name.lastName().replace("'",'-') + 
+              faker.random.number(1000),
+  description: () => faker.lorem.sentence(),
   rating: () => faker.random.number(5),
   timesPlayed: () => faker.random.number(20),
   creator: () => faker.name.findName(),
@@ -27,7 +35,10 @@ factory.define('game', Game, {
 });
 
 factory.define('match', Match, {
-  url: () => faker.name.firstName(),
+  url: () => faker.name.firstName().replace("'",'-') +
+             faker.random.number(1000) +
+             faker.name.lastName().replace("'",'-') + 
+             faker.random.number(1000),
   isRealTime: () => faker.random.boolean(),
   players: [
     () => faker.internet.userName(),
@@ -36,7 +47,10 @@ factory.define('match', Match, {
   owner: () => faker.fake('{{name.firstName}} {{name.lastName}}'),
   endingDate: () => faker.date.future(),
   game: {
-    name: () => faker.name.firstName(),
+    name: () => faker.name.firstName().replace("'",'-') + 
+                faker.random.number(1000) +
+                faker.name.lastName().replace("'",'-') + 
+                faker.random.number(1000),
     description: () => faker.lorem.sentence(),
     rating: () => faker.random.number(5),
     timesPlayed: () => faker.random.number(),
