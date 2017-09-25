@@ -3,28 +3,28 @@ import gameSchema from './schemas/game.schema';
 
 var matchSchema = new Schema ({
   url: {
-    type : String,
+    type: String,
     required: [true, 'you must enter a url'],
     unique: true,
     lowercase: true,
     trim: true,
-    validate : {
-      validator: function(url) { return /^(\w|-)+$/.test(url)},
+    validate: {
+      validator: function(url) { return /^(\w|-)+$/.test(url) },
       message: 'invalid url'
     }
   },
   isRealTime: Boolean,
   players: {
-    type : [String],
-    required : [true, 'there must be at least one player'],
-    validate : {
+    type: [String],
+    required: [true, 'there must be at least one player'],
+    validate: {
       validator: function(players) { return players.length > 0 },
       message: 'there must be at least one player'
     }
   },
   owner: {
-    type : String,
-    required : [true, 'must have a owner']
+    type: String,
+    required: [true, 'must have a owner']
   },
   endingDate: { 
     type: Date,

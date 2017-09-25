@@ -7,8 +7,7 @@ import Match from '../../app/models/match';
 factory.define('user', User, {
   nickname: () => faker.name.firstName().replace("'",'-') +
                   faker.random.number(1000) +
-                  faker.name.lastName().replace("'",'-') + 
-                  faker.random.number(1000),
+                  faker.name.lastName().replace("'",'-'),// faker.random.number(1000),
   email: () => faker.name.firstName().replace("'",'-') +
                faker.random.number(1000) +
                faker.internet.email(),
@@ -18,8 +17,7 @@ factory.define('user', User, {
 factory.define('game', Game, {
   name: () => faker.name.firstName().replace("'",'-') +
               faker.random.number(1000) +
-              faker.name.lastName().replace("'",'-') + 
-              faker.random.number(1000),
+              faker.name.lastName().replace("'",'-'),
   description: () => faker.lorem.sentence(),
   rating: () => faker.random.number(5),
   timesPlayed: () => faker.random.number(20),
@@ -37,8 +35,7 @@ factory.define('game', Game, {
 factory.define('match', Match, {
   url: () => faker.name.firstName().replace("'",'-') +
              faker.random.number(1000) +
-             faker.name.lastName().replace("'",'-') + 
-             faker.random.number(1000),
+             faker.name.lastName().replace("'",'-'),
   isRealTime: () => faker.random.boolean(),
   players: [
     () => faker.internet.userName(),
@@ -49,8 +46,7 @@ factory.define('match', Match, {
   game: {
     name: () => faker.name.firstName().replace("'",'-') + 
                 faker.random.number(1000) +
-                faker.name.lastName().replace("'",'-') + 
-                faker.random.number(1000),
+                faker.name.lastName().replace("'",'-'),
     description: () => faker.lorem.sentence(),
     rating: () => faker.random.number(5),
     timesPlayed: () => faker.random.number(),
