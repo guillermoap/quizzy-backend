@@ -12,6 +12,7 @@ describe('GamesModel', () => {
   var game3;
   var game4;
   var gameWithoutName;
+  var gameNameEmpty;
   var gameDupName;
   var gameInvalidName;
   var gameNegativeRating;
@@ -22,11 +23,12 @@ describe('GamesModel', () => {
   var gameRankingWithoutUser;
   var gameRankingWithoutPoints;
   var gameInvalidDate;
-  var countBefore;
+  var gameWith2answers;
+  var gameWith6answers;
 
   beforeEach(function(done) {
     factory.createMany('game', 2, [{
-      name: 'quizzy'
+      name: 'quizzY'
     }, {
       name: 'Futbol'
     }])
@@ -43,12 +45,14 @@ describe('GamesModel', () => {
     });
   });
    
-  factory.attrsMany('game', 13, [{
+  factory.attrsMany('game', 16, [{
     name: null
   }, {
-    name: 'quizzy'
+    name: '       '
   }, {
-    name: 'tennis-2010'
+    name: 'Quizzy'
+  }, {
+    name: 'tennis@2010'
   }, {
     rating: -2
   }, {
@@ -66,283 +70,248 @@ describe('GamesModel', () => {
   }, {
     creationDate: 'Lunes 20 de Julio de 1999'
   }, {
-    name: 'Juego_Aleatorio' 
+    name: 'Juego_Aleatorio-33 44 55' 
   }, {
     name: '1324'
+  }, {
+    questions: [{
+      text: 'ques',
+      difficulty: 'Easy',
+      answers: [{
+        answer: 'ans1'
+      }, {
+        answer: 'ans2'
+      }, {
+        answer: 'ans3'
+      }, {
+        answer: 'ans4'
+      }, {
+        answer: 'ans5'
+      }, {
+        answer: 'ans6' 
+      }],
+      correctAnswer: 4
+    }]
+  }, {
+    questions: [{
+      text: 'ques',
+      difficulty: 'Easy',
+      answers: [{
+        answer: 'ans1'
+      }, {
+        answer: 'ans2' 
+      }],
+      correctAnswer: 1
+    }]
   }])
   .then(gameAttrsArray => {
     gameWithoutName = gameAttrsArray[0];
-    gameDupName = gameAttrsArray[1];
-    gameInvalidName = gameAttrsArray[2];
-    gameNegativeRating = gameAttrsArray[3];
-    gameInvalidRating = gameAttrsArray[4];
-    gameNegativeTimesPlayed = gameAttrsArray[5];
-    gameWithoutCreator = gameAttrsArray[6];
-    gameWithoutQuestions = gameAttrsArray[7];
-    gameRankingWithoutUser = gameAttrsArray[8];
-    gameRankingWithoutPoints = gameAttrsArray[9];
-    gameInvalidDate = gameAttrsArray[10];
-    game3 = gameAttrsArray[11];
-    game4 = gameAttrsArray[12];
+    gameNameEmpty = gameAttrsArray[1];
+    gameDupName = gameAttrsArray[2];
+    gameInvalidName = gameAttrsArray[3];
+    gameNegativeRating = gameAttrsArray[4];
+    gameInvalidRating = gameAttrsArray[5];
+    gameNegativeTimesPlayed = gameAttrsArray[6];
+    gameWithoutCreator = gameAttrsArray[7];
+    gameWithoutQuestions = gameAttrsArray[8];
+    gameRankingWithoutUser = gameAttrsArray[9];
+    gameRankingWithoutPoints = gameAttrsArray[10];
+    gameInvalidDate = gameAttrsArray[11];
+    game3 = gameAttrsArray[12];
+    game4 = gameAttrsArray[13];
+    gameWith6answers = gameAttrsArray[14];
+    gameWith2answers = gameAttrsArray[15];
   })
 
   describe('Without name', () => {
-    it('returns correct error', (done) => {
+    it('returns correct error and does not create a game', (done) => {
       Game.create(gameWithoutName, (err, game) => {
         expect(err).to.match(/you must enter a name/);
-        done();
+        Game.count({}).exec((err, count) => {
+          expect(count).to.eq(2);   
+          done();        
+        });
       });
     });
-    
-    it('does not create a game', (done) => {
-      Game.count({}).exec((err, count) => {
-        countBefore = count;
+  });
+
+  describe('Name empty', () => {
+    it('returns correct error and does not create a game', (done) => {
+      Game.create(gameNameEmpty, (err, game) => {
+        expect(err).to.match(/you must enter a name/);
+        Game.count({}).exec((err, count) => {
+          expect(count).to.eq(2);   
+          done();        
+        });
       });
-      Game.create(gameWithoutName);
-      Game.count({}).exec((err, count) => {
-        expect(count).to.eq(countBefore);   
-      });
-      done();
     });
   });
 
   describe('Same name', () => {
-    it('returns correct error', (done) => {
+    it('returns correct error and does not create a game', (done) => {
       Game.create(gameDupName, (err, game) => {
         expect(err).to.match(/E11000 duplicate key error collection: quizzy-backend-test.games index: name_1/);
-        done();
+        Game.count({}).exec((err, count) => {
+          expect(count).to.eq(2);   
+          done();
+        });
       });
-    });
-    
-    it('does not create a game', (done) => {
-      Game.count({}).exec((err, count) => {
-        countBefore = count;
-      });
-      Game.create(gameDupName);
-      Game.count({}).exec((err, count) => {
-        expect(count).to.eq(countBefore);   
-      });
-      done();
     });
   });
 
   describe('Invalid name', () => {
-    it('returns correct error', (done) => {
+    it('returns correct error and does not create a game', (done) => {
       Game.create(gameInvalidName, (err, game) => {
         expect(err).to.match(/invalid name/);
-        done();
+        Game.count({}).exec((err, count) => {
+          expect(count).to.eq(2);   
+          done();  
+        });
       });
-    });
-    
-    it('does not create a game', (done) => {
-      Game.count({}).exec((err, count) => {
-        countBefore = count;
-      });
-      Game.create(gameInvalidName);
-      Game.count({}).exec((err, count) => {
-        expect(count).to.eq(countBefore);   
-      });
-      done();
     });
   });
 
   describe('Negative Rating', () => {
-    it('returns correct error', (done) => {
+    it('returns correct error and does not create a game', (done) => {
       Game.create(gameNegativeRating, (err, game) => {
         expect(err).to.match(/there must be a correct rating/);
-        done();
+        Game.count({}).exec((err, count) => {
+          expect(count).to.eq(2);   
+          done();
+        });
       });
-    });
-    
-    it('does not create a game', (done) => {
-      Game.count({}).exec((err, count) => {
-        countBefore = count;
-      });
-      Game.create(gameNegativeRating);
-      Game.count({}).exec((err, count) => {
-        expect(count).to.eq(countBefore);   
-      });
-      done();
     });
   });
 
   describe('Rating out of range', () => {
-    it('returns correct error', (done) => {
+    it('returns correct error and does not create a game', (done) => {
       Game.create(gameInvalidRating, (err, game) => {
         expect(err).to.match(/there must be a correct rating/);
-        done();
+        Game.count({}).exec((err, count) => {
+          expect(count).to.eq(2);   
+          done();
+        });
       });
-    });
-    
-    it('does not create a game', (done) => {
-      Game.count({}).exec((err, count) => {
-        countBefore = count;
-      });
-      Game.create(gameInvalidRating);
-      Game.count({}).exec((err, count) => {
-        expect(count).to.eq(countBefore);   
-      });
-      done();
     });
   });
 
   describe('Negative timesPlayed', () => {
-    it('returns correct error', (done) => {
+    it('returns correct error and does not create a game', (done) => {
       Game.create(gameNegativeTimesPlayed, (err, game) => {
         expect(err).to.match(/timesPlayed must be positive/);
-        done();
+        Game.count({}).exec((err, count) => {
+          expect(count).to.eq(2);   
+          done();
+        });
       });
-    });
-    
-    it('does not create a game', (done) => {
-      Game.count({}).exec((err, count) => {
-        countBefore = count;
-      });
-      Game.create(gameNegativeTimesPlayed);
-      Game.count({}).exec((err, count) => {
-        expect(count).to.eq(countBefore);   
-      });
-      done();
     });
   });
   
   describe('Without creator', () => {
-    it('returns correct error', (done) => {
+    it('returns correct error and does not create a game', (done) => {
       Game.create(gameWithoutCreator, (err, game) => {
         expect(err).to.match(/must have a creator/);
-        done();
+        Game.count({}).exec((err, count) => {
+          expect(count).to.eq(2);   
+          done();
+        });
       });
-    });
-    
-    it('does not create a game', (done) => {
-      Game.count({}).exec((err, count) => {
-        countBefore = count;
-      });
-      Game.create(gameWithoutCreator);
-      Game.count({}).exec((err, count) => {
-        expect(count).to.eq(countBefore);   
-      });
-      done();
     });
   });
 
   describe('Without questions', () => {
-    it('returns correct error', (done) => {
+    it('returns correct error and does not create a game', (done) => {
       Game.create(gameWithoutQuestions, (err, game) => {
         expect(err).to.match(/there must be at least one question/);
-        done();
+        Game.count({}).exec((err, count) => {
+          expect(count).to.eq(2);   
+          done();  
+        });
       });
-    });
-    
-    it('does not create a game', (done) => {
-      Game.count({}).exec((err, count) => {
-        countBefore = count;
-      });
-      Game.create(gameWithoutQuestions);
-      Game.count({}).exec((err, count) => {
-        expect(count).to.eq(countBefore);   
-      });
-      done();
     });
   });
 
   describe('Ranking without user', () => {
-    it('returns correct error', (done) => {
+    it('returns correct error and does not create a game', (done) => {
       Game.create(gameRankingWithoutUser, (err, game) => {
         expect(err).to.match(/ranking must have a user/);
-        done();
+        Game.count({}).exec((err, count) => {
+          expect(count).to.eq(2);   
+          done();  
+        }); 
       });
-    });
-    
-    it('does not create a game', (done) => {
-      Game.count({}).exec((err, count) => {
-        countBefore = count;
-      });
-      Game.create(gameRankingWithoutUser);
-      Game.count({}).exec((err, count) => {
-        expect(count).to.eq(countBefore);   
-      });
-      done();
     });
   });
 
   describe('Ranking without points', () => {
-    it('returns correct error', (done) => {
+    it('returns correct error and does not create a game', (done) => {
       Game.create(gameRankingWithoutPoints, (err, game) => {
         expect(err).to.match(/ranking must have a points/);
-        done();
+        Game.count({}).exec((err, count) => {
+          expect(count).to.eq(2);   
+          done();
+        });      
       });
-    });
-    
-    it('does not create a game', (done) => {
-      Game.count({}).exec((err, count) => {
-        countBefore = count;
-      });
-      Game.create(gameRankingWithoutPoints);
-      Game.count({}).exec((err, count) => {
-        expect(count).to.eq(countBefore);   
-      });
-      done();
     });
   });
 
   describe('Invalid date', () => {
-    it('returns correct error', (done) => {
+    it('returns correct error and does not create a game', (done) => {
       Game.create(gameInvalidDate, (err, game) => {
         expect(err).to.match(/Cast to Date failed/);
-        done();
+        Game.count({}).exec((err, count) => {
+          expect(count).to.eq(2);   
+          done();  
+        });
       });
-    });
-    
-    it('does not create a game', (done) => {
-      Game.count({}).exec((err, count) => {
-        countBefore = count;
-      });
-      Game.create(gameInvalidDate);
-      Game.count({}).exec((err, count) => {
-        expect(count).to.eq(countBefore);   
-      });
-      done();
     });
   });
 
   describe('Name with only numbers', () => {
-    it('does not returns error', (done) => {
+    it('does not returns error and creates a game', (done) => {
       Game.create(game3, (err, game) => {
         expect(err).to.eq(null);
-        done();
+        Game.count({}).exec((err, count) => {
+          expect(count).to.eq(3);   
+          done(); 
+        });
       });
-    });
-    
-    it('creates a game', (done) => {
-      Game.count({}).exec((err, count) => {
-        countBefore = count;
-      });
-      Game.create(game3);
-      Game.count({}).exec((err, count) => {
-        expect(count).to.eq(countBefore++);   
-      });
-      done();
     });
   });
 
-  describe('Name with "_"', () => {
+  describe('Name with "_", "-" and " "', () => {
     it('does not returns error', (done) => {
       Game.create(game4, (err, game) => {
         expect(err).to.eq(null);
-        done();
+        Game.count({}).exec((err, count) => {
+          expect(count).to.eq(3);   
+          done();
+        });
       });
     });
-    
-    it('creates a game', (done) => {
-      Game.count({}).exec((err, count) => {
-        countBefore = count;
+  });
+
+  describe('With 6 answers', () => {
+    it('does not returns error', (done) => {
+      Game.create(gameWith6answers, (err, game) => {
+        expect(err).to.eq(null);
+        Game.count({}).exec((err, count) => {
+          expect(count).to.eq(3);   
+          done();
+        });
       });
-      Game.create(game4);
-      Game.count({}).exec((err, count) => {
-        expect(count).to.eq(countBefore++);   
+    });
+  });
+
+  describe('With 2 answers', () => {
+    it('does not returns error', (done) => {
+      Game.create(gameWith2answers, (err, game) => {
+        expect(err).to.eq(null);
+        Game.count({}).exec((err, count) => {
+          expect(count).to.eq(3);   
+          done();
+        });
       });
-      done();
     });
   });
 });

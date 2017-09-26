@@ -12,6 +12,7 @@ describe('MatchesModel', () => {
   var match3;
   var match4;
   var matchWithoutUrl;
+  var matchUrlEmpty;
   var matchDupUrl;
   var matchInvalidUrl;
   var matchPlayersNull;
@@ -19,11 +20,10 @@ describe('MatchesModel', () => {
   var matchWithoutOwner;
   var matchInvalidDate;
   var matchWithoutGame;
-  var countBefore;
 
   beforeEach(function(done) {
     factory.createMany('match', 2, [{
-      url: 'quizzy2017'
+      url: 'quizzY2017'
     }, {
       url: 'MatchTest'
     }])
@@ -40,12 +40,14 @@ describe('MatchesModel', () => {
     });
   });
    
-  factory.attrsMany('match', 10, [{
+  factory.attrsMany('match', 11, [{
     url: null
   }, {
-    url: 'quizzy2017'
+    url: '          '
   }, {
-    url: 'sebas%%'
+    url: 'Quizzy2017'
+  }, {
+    url: 'sebass%s'
   }, {
     players: null
   }, {
@@ -57,220 +59,153 @@ describe('MatchesModel', () => {
   }, {
     game: null
   }, {
-    url: 'futbol_uruguayo_2017'
+    url: 'Futbol_Uruguayo-2017'
   }, {
     url: '12345'
   }])
   .then(matchAttrsArray => {
     matchWithoutUrl = matchAttrsArray[0];
-    matchDupUrl = matchAttrsArray[1];
-    matchInvalidUrl = matchAttrsArray[2];
-    matchPlayersNull = matchAttrsArray[3];
-    matchWithoutPlayers = matchAttrsArray[4];
-    matchWithoutOwner = matchAttrsArray[5];
-    matchInvalidDate = matchAttrsArray[6];
-    matchWithoutGame = matchAttrsArray[7];
-    match3 = matchAttrsArray[8];
-    match4 = matchAttrsArray[9];
+    matchUrlEmpty = matchAttrsArray[1];
+    matchDupUrl = matchAttrsArray[2];
+    matchInvalidUrl = matchAttrsArray[3];
+    matchPlayersNull = matchAttrsArray[4];
+    matchWithoutPlayers = matchAttrsArray[5];
+    matchWithoutOwner = matchAttrsArray[6];
+    matchInvalidDate = matchAttrsArray[7];
+    matchWithoutGame = matchAttrsArray[8];
+    match3 = matchAttrsArray[9];
+    match4 = matchAttrsArray[10];
   })
 
   describe('Without url', () => {
-    it('returns correct error', (done) => {
+    it('returns correct error and does not create a match', (done) => {
       Match.create(matchWithoutUrl, (err, match) => {
         expect(err).to.match(/you must enter a url/);
-        done();
+        Match.count({}).exec((err, count) => {
+          expect(count).to.eq(2);   
+          done();
+        });
       });
     });
-    
-    it('does not create a match', (done) => {
-      Match.count({}).exec((err, count) => {
-        countBefore = count;
+  });
+
+  describe('Url empty', () => {
+    it('returns correct error and does not create a match', (done) => {
+      Match.create(matchUrlEmpty, (err, match) => {
+        expect(err).to.match(/you must enter a url/);
+        Match.count({}).exec((err, count) => {
+          expect(count).to.eq(2);   
+          done();
+        });
       });
-      Match.create(matchWithoutUrl);
-      Match.count({}).exec((err, count) => {
-        expect(count).to.eq(countBefore);   
-      });
-      done();
     });
   });
 
   describe('Same url', () => {
-    it('returns correct error', (done) => {
+    it('returns correct error and does not create a match', (done) => {
       Match.create(matchDupUrl, (err, match) => {
-        expect(err).to.match(/ /);
-        done();
+        expect(err).to.match(/E11000 duplicate key error collection: quizzy-backend-test.matches index: url_1/);
+        Match.count({}).exec((err, count) => {
+          expect(count).to.eq(2);   
+          done();
+        });
       });
-    });
-    
-    it('does not create a match', (done) => {
-      Match.count({}).exec((err, count) => {
-        countBefore = count;
-      });
-      Match.create(matchDupUrl);
-      Match.count({}).exec((err, count) => {
-        expect(count).to.eq(countBefore);   
-      });
-      done();
     });
   });
 
   describe('Invalid url', () => {
-    it('returns correct error', (done) => {
+    it('returns correct error and does not create a match', (done) => {
       Match.create(matchInvalidUrl, (err, match) => {
         expect(err).to.match(/invalid url/);
-        done();
+        Match.count({}).exec((err, count) => {
+          expect(count).to.eq(2);   
+          done();
+        });
       });
-    });
-    
-    it('does not create a match', (done) => {
-      Match.count({}).exec((err, count) => {
-        countBefore = count;
-      });
-      Match.create(matchInvalidUrl);
-      Match.count({}).exec((err, count) => {
-        expect(count).to.eq(countBefore);   
-      });
-      done();
     });
   });
 
   describe('Players null', () => {
-    it('returns correct error', (done) => {
+    it('returns correct error and does not create a match', (done) => {
       Match.create(matchPlayersNull, (err, match) => {
         expect(err).to.match(/there must be at least one player/);
-        done();
+        Match.count({}).exec((err, count) => {
+          expect(count).to.eq(2);   
+          done();
+        });
       });
-    });
-    
-    it('does not create a match', (done) => {
-      Match.count({}).exec((err, count) => {
-        countBefore = count;
-      });
-      Match.create(matchPlayersNull);
-      Match.count({}).exec((err, count) => {
-        expect(count).to.eq(countBefore);   
-      });
-      done();
     });
   });
 
   describe('Players empty', () => {
-    it('returns correct error', (done) => {
+    it('returns correct error and does not create a match', (done) => {
       Match.create(matchWithoutPlayers, (err, match) => {
         expect(err).to.match(/there must be at least one player/);
-        done();
+        Match.count({}).exec((err, count) => {
+          expect(count).to.eq(2);   
+          done();
+        });
       });
-    });
-    
-    it('does not create a match', (done) => {
-      Match.count({}).exec((err, count) => {
-        countBefore = count;
-      });
-      Match.create(matchWithoutPlayers);
-      Match.count({}).exec((err, count) => {
-        expect(count).to.eq(countBefore);   
-      });
-      done();
     });
   });
 
   describe('Without owner', () => {
-    it('returns correct error', (done) => {
+    it('returns correct error and does not create a match', (done) => {
       Match.create(matchWithoutOwner, (err, match) => {
         expect(err).to.match(/must have a owner/);
-        done();
+        Match.count({}).exec((err, count) => {
+          expect(count).to.eq(2);   
+          done();
+        });
       });
-    });
-    
-    it('does not create a match', (done) => {
-      Match.count({}).exec((err, count) => {
-        countBefore = count;
-      });
-      Match.create(matchWithoutOwner);
-      Match.count({}).exec((err, count) => {
-        expect(count).to.eq(countBefore);   
-      });
-      done();
     });
   });
 
   describe('Invalid Date', () => {
-    it('returns correct error', (done) => {
+    it('returns correct error and does not create a match', (done) => {
       Match.create(matchInvalidDate, (err, match) => {
         expect(err).to.match(/Cast to Date failed/);
-        done();
+        Match.count({}).exec((err, count) => {
+          expect(count).to.eq(2);   
+          done();
+        });
       });
-    });
-    
-    it('does not create a match', (done) => {
-      Match.count({}).exec((err, count) => {
-        countBefore = count;
-      });
-      Match.create(matchInvalidDate);
-      Match.count({}).exec((err, count) => {
-        expect(count).to.eq(countBefore);   
-      });
-      done();
     });
   });
 
   describe('Without game', () => {
-    it('returns correct error', (done) => {
+    it('returns correct error and does not create a match', (done) => {
       Match.create(matchWithoutGame, (err, match) => {
         expect(err).to.match(/there must be a game/);
-        done();
+        Match.count({}).exec((err, count) => {
+          expect(count).to.eq(2);   
+          done();
+        });
       });
-    });
-    
-    it('does not create a match', (done) => {
-      Match.count({}).exec((err, count) => {
-        countBefore = count;
-      });
-      Match.create(matchWithoutGame);
-      Match.count({}).exec((err, count) => {
-        expect(count).to.eq(countBefore);   
-      });
-      done();
     });
   });
 
-  describe('Url with "-"', () => {
-    it('does not returns error', (done) => {
+  describe('Url with "_" and "-"', () => {
+    it('does not returns error and creates a match', (done) => {
       Match.create(match3, (err, match) => {
         expect(err).to.eq(null);
-        done();
+        Match.count({}).exec((err, count) => {
+          expect(count).to.eq(3);   
+          done();
+        });
       });
-    });
-    
-    it('creates a match', (done) => {
-      Match.count({}).exec((err, count) => {
-        countBefore = count;
-      });
-      Match.create(match3);
-      Match.count({}).exec((err, count) => {
-        expect(count).to.eq(countBefore++);   
-      });
-      done();
     });
   });
 
   describe('Url with only numbers', () => {
-    it('does not returns error', (done) => {
+    it('does not returns error and creates a match', (done) => {
       Match.create(match4, (err, match) => {
         expect(err).to.eq(null);
-        done();
+        Match.count({}).exec((err, count) => {
+          expect(count).to.eq(3);
+          done();
+        }); 
       });
-    });
-    
-    it('creates a match', (done) => {
-      Match.count({}).exec((err, count) => {
-        countBefore = count;
-      });
-      Match.create(match4);
-      Match.count({}).exec((err, count) => {
-        expect(count).to.eq(countBefore++);   
-      });
-      done(); 
     });
   });
 });

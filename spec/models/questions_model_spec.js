@@ -12,14 +12,15 @@ chai.use(chaiHttp);
 
 describe('QuestionModel', () => {
   var QuestWithoutText;
+  var QuestTextEmpty;
   var QuestInvalidDifficulty;
   var QuestWithoutAnswers;
   var QuestLessAnswers;
   var QuestMoreAnswers;
+  var QuestWithAnswerEmpty;
   var QuestInvalidCorrect;
   var QuestInvalidCorrect2;
   var QuestWithoutCorrect;
-  var countBefore;
 
   afterEach(function(done) {
     Game.remove({}, function() {
@@ -27,183 +28,279 @@ describe('QuestionModel', () => {
     });
   });
    
-  factory.attrsMany('game', 8, [{
-    questions: [{test: null}]
+  factory.attrsMany('game', 10, [{
+    questions: [{
+      text: null,
+      difficulty: 'Hard',
+      answers: [{
+        answer: 'ans1'
+      }, {
+        answer: 'ans2'
+      }, {
+        answer: 'ans3'
+      }, {
+        answer: 'ans4'  
+      }],
+      correctAnswer: 3
+    }]
   }, {
-    questions: [{difficulty: 'facil'}]
+    questions: [{
+      text: '                 ',
+      difficulty: 'Hard',
+      answers: [{
+        answer: 'ans1'
+      }, {
+        answer: 'ans2'
+      }, {
+        answer: 'ans3'
+      }, {
+        answer: 'ans4'  
+      }],
+      correctAnswer: 3
+    }]
   }, {
-    questions: [{answers: null}]
+    questions: [{
+      text: 'ques',
+      difficulty: 'facil',
+      answers: [{
+        answer: 'ans1'
+      }, {
+        answer: 'ans2'
+      }, {
+        answer: 'ans3'
+      }, {
+        answer: 'ans4'  
+      }],
+      correctAnswer: 3
+    }]
   }, {
-    questions: [{answers: ['ans1', 'ans2', 'ans3']}]
+    questions: [{
+      text: 'ques',
+      difficulty: 'Easy',
+      answers: null,
+      correctAnswer: 3
+    }]
   }, {
-    questions: [{answers: ['ans1', 'ans2', 'ans3', 'ans4', 'ans5']}]
+    questions: [{
+      text: 'ques',
+      difficulty: 'Easy',
+      answers: [{
+        answer: 'ans1'  
+      }],
+      correctAnswer: 3
+    }]
   }, {
-    questions: [{correctAnswer: -1}]
+    questions: [{
+      text: 'ques',
+      difficulty: 'Easy',
+      answers: [{
+        answer: 'ans1'
+      }, {
+        answer: 'ans2'
+      }, {
+        answer: 'ans3'
+      }, {
+        answer: 'ans4'  
+      }],
+      correctAnswer: -1
+    }]
   }, {
-    questions: [{correctAnswer: 5}]
+    questions: [{
+      text: 'ques',
+      difficulty: 'Easy',
+      answers: [{
+        answer: 'ans1'
+      }, {
+        answer: 'ans2'
+      }, {
+        answer: 'ans3'
+      }, {
+        answer: 'ans4'  
+      }],
+      correctAnswer: 4
+    }]
   }, {
-    questions: [{correctAnswer: null}]
+    questions: [{
+      text: 'ques',
+      difficulty: 'Easy',
+      answers: [{
+        answer: 'ans1'
+      }, {
+        answer: 'ans2'
+      }, {
+        answer: 'ans3'
+      }, {
+        answer: 'ans4'  
+      }],
+      correctAnswer: null
+    }]
+  }, {
+    questions: [{
+      text: 'ques',
+      difficulty: 'Easy',
+      answers: [{
+        answer: 'ans1'
+      }, {
+        answer: 'ans2'
+      }, {
+        answer: '         '
+      }, {
+        answer: 'ans4'  
+      }],
+      correctAnswer: 3
+    }]
+  }, {
+    questions: [{
+      text: 'ques',
+      difficulty: 'Easy',
+      answers: [{
+        answer: 'ans1'
+      }, {
+        answer: 'ans2'
+      }, {
+        answer: 'ans3'
+      }, {
+        answer: 'ans4'
+      }, {
+        answer: 'ans5'
+      }, {
+        answer: 'ans6'
+      }, {
+        answer: 'ans7' 
+      }],
+      correctAnswer: 5
+    }]
   }])
   .then(gameAttrsArray => {
     QuestWithoutText = gameAttrsArray[0];
-    QuestInvalidDifficulty = gameAttrsArray[1];
-    QuestWithoutAnswers = gameAttrsArray[2];
-    QuestLessAnswers = gameAttrsArray[3];
-    QuestMoreAnswers = gameAttrsArray[4];
+    QuestTextEmpty = gameAttrsArray[1];
+    QuestInvalidDifficulty = gameAttrsArray[2];
+    QuestWithoutAnswers = gameAttrsArray[3];
+    QuestLessAnswers = gameAttrsArray[4];
     QuestInvalidCorrect = gameAttrsArray[5];
     QuestInvalidCorrect2 = gameAttrsArray[6];
     QuestWithoutCorrect = gameAttrsArray[7];
+    QuestWithAnswerEmpty = gameAttrsArray[8];
+    QuestMoreAnswers = gameAttrsArray[9];
   })
 
   describe('Without text', () => {
-    it('returns correct error', (done) => {
+    it('returns correct error and does not create a game', (done) => {
       Game.create(QuestWithoutText, (err, game) => {
         expect(err).to.match(/you must write the question/);
-        done();
+        Game.count({}).exec((err, count) => {
+          expect(count).to.eq(0);   
+          done();  
+        });
       });
     });
-    it('does not create a game', (done) => {
-      Game.count({}).exec((err, count) => {
-        countBefore = count;
+  });
+
+  describe('Text empty', () => {
+    it('returns correct error and does not create a game', (done) => {
+      Game.create(QuestTextEmpty, (err, game) => {
+        expect(err).to.match(/you must write the question/);
+        Game.count({}).exec((err, count) => {
+          expect(count).to.eq(0);   
+          done();  
+        });
       });
-      Game.create(QuestWithoutText);
-      Game.count({}).exec((err, count) => {
-        expect(count).to.eq(countBefore);   
-      });
-      done();
     });
   });
   
   describe('Invalid difficulty', () => {
-    it('returns correct error', (done) => {
+    it('returns correct error and does not create a game', (done) => {
       Game.create(QuestInvalidDifficulty, (err, game) => {
         expect(err).to.match(/is not a valid enum value for path `difficulty`/);
-        done();
+        Game.count({}).exec((err, count) => {
+          expect(count).to.eq(0);   
+          done();  
+        });
       });
-    });
-    it('does not create a game', (done) => {
-      Game.count({}).exec((err, count) => {
-        countBefore = count;
-      });
-      Game.create(QuestInvalidDifficulty);
-      Game.count({}).exec((err, count) => {
-        expect(count).to.eq(countBefore);   
-      });
-      done();
     });
   });
 
   describe('Wihtout answers', () => {
-    it('returns correct error', (done) => {
+    it('returns correct error and does not create a game', (done) => {
       Game.create(QuestWithoutAnswers, (err, game) => {
         expect(err).to.match(/you must write the answers/);
-        done();
+        Game.count({}).exec((err, count) => {
+          expect(count).to.eq(0);   
+          done();  
+        }); 
       });
-    });
-    it('does not create a game', (done) => {
-      Game.count({}).exec((err, count) => {
-        countBefore = count;
-      });
-      Game.create(QuestWithoutAnswers);
-      Game.count({}).exec((err, count) => {
-        expect(count).to.eq(countBefore);   
-      });
-      done();
     });
   });
 
   describe('Less answers', () => {
-    it('returns correct error', (done) => {
+    it('returns correct error and does not create a game', (done) => {
       Game.create(QuestLessAnswers, (err, game) => {
-        expect(err).to.match(/there must be 4 possibles answers/);
-        done();
-      });
-    });
-    it('does not create a game', (done) => {
-      Game.count({}).exec((err, count) => {
-        countBefore = count;
-      });
-      Game.create(QuestLessAnswers);
-      Game.count({}).exec((err, count) => {
-        expect(count).to.eq(countBefore);   
-      });
-      done();
+        expect(err).to.match(/there must write between 2 and 6 possibles answers/);
+        Game.count({}).exec((err, count) => {
+          expect(count).to.eq(0);   
+          done();
+        });
+      }); 
     });
   });
 
   describe('More answers', () => {
-    it('returns correct error', (done) => {
+    it('returns correct error and does not create a game', (done) => {
       Game.create(QuestMoreAnswers, (err, game) => {
-        expect(err).to.match(/there must be 4 possibles answers/);
-        done();
-      });
-    });
-    it('does not create a game', (done) => {
-      Game.count({}).exec((err, count) => {
-        countBefore = count;
-      });
-      Game.create(QuestMoreAnswers);
-      Game.count({}).exec((err, count) => {
-        expect(count).to.eq(countBefore);   
-      });
-      done();
+        expect(err).to.match(/there must write between 2 and 6 possibles answers/);
+        Game.count({}).exec((err, count) => {
+          expect(count).to.eq(0);   
+          done();
+        });
+      }); 
     });
   });
 
   describe('Without correctAnswer', () => {
-    it('returns correct error', (done) => {
+    it('returns correct error and does not create a game', (done) => {
       Game.create(QuestWithoutCorrect, (err, game) => {
         expect(err).to.match(/you must select correct answer/);
-        done();
+        Game.count({}).exec((err, count) => {
+          expect(count).to.eq(0);  
+          done(); 
+        });
       });
-    });
-    it('does not create a game', (done) => {
-      Game.count({}).exec((err, count) => {
-        countBefore = count;
-      });
-      Game.create(QuestWithoutCorrect);
-      Game.count({}).exec((err, count) => {
-        expect(count).to.eq(countBefore);   
-      });
-      done();
     });
   });
 
   describe('Invalid correctAnswer (0)', () => {
-    it('returns correct error', (done) => {
+    it('returns correct error and does not create a game', (done) => {
       Game.create(QuestInvalidCorrect, (err, game) => {
         expect(err).to.match(/there must be a correct answer/);
-        done();
+        Game.count({}).exec((err, count) => {
+          expect(count).to.eq(0);   
+          done();
+        });
       });
-    });
-    it('does not create a game', (done) => {
-      Game.count({}).exec((err, count) => {
-        countBefore = count;
-      });
-      Game.create(QuestInvalidCorrect);
-      Game.count({}).exec((err, count) => {
-        expect(count).to.eq(countBefore);   
-      });
-      done();
     });
   });
 
-  describe('Invalid correctAnswer (5)', () => {
-    it('returns correct error', (done) => {
+  describe('Invalid correctAnswer (8)', () => {
+    it('returns correct error and does not create a game', (done) => {
       Game.create(QuestInvalidCorrect2, (err, game) => {
         expect(err).to.match(/there must be a correct answer/);
-        done();
+        Game.count({}).exec((err, count) => {
+          expect(count).to.eq(0);   
+          done();
+        });
       });
     });
-    it('does not create a game', (done) => {
-      Game.count({}).exec((err, count) => {
-        countBefore = count;
+  });
+
+  describe('Answers empty', () => {
+    it('returns correct error and does not create a game', (done) => {
+      Game.create(QuestWithAnswerEmpty, (err, game) => {
+        expect(err).to.match(/answer can not be empty/);
+        Game.count({}).exec((err, count) => {
+          expect(count).to.eq(0);   
+          done();
+        });
       });
-      Game.create(QuestInvalidCorrect2);
-      Game.count({}).exec((err, count) => {
-        expect(count).to.eq(countBefore);   
-      });
-      done();
     });
   });
 });
