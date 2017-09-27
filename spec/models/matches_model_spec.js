@@ -20,6 +20,8 @@ describe('MatchesModel', () => {
   var matchWithoutOwner;
   var matchInvalidDate;
   var matchWithoutGame;
+  var matchResultadosWithoutUser;
+  var matchResultadosWithoutPoints;
 
   beforeEach(function(done) {
     factory.createMany('match', 2, [{
@@ -40,7 +42,7 @@ describe('MatchesModel', () => {
     });
   });
    
-  factory.attrsMany('match', 11, [{
+  factory.attrsMany('match', 13, [{
     url: null
   }, {
     url: '          '
@@ -62,6 +64,10 @@ describe('MatchesModel', () => {
     url: 'Futbol_Uruguayo-2017'
   }, {
     url: '12345'
+  }, {
+    result: [{points: 8}]
+  }, {
+    result: [{user: 'sebas'}]
   }])
   .then(matchAttrsArray => {
     matchWithoutUrl = matchAttrsArray[0];
@@ -75,6 +81,8 @@ describe('MatchesModel', () => {
     matchWithoutGame = matchAttrsArray[8];
     match3 = matchAttrsArray[9];
     match4 = matchAttrsArray[10];
+    matchResultadosWithoutUser = matchAttrsArray[11];
+    matchResultadosWithoutPoints = matchAttrsArray[12];
   })
 
   describe('Without url', () => {
@@ -205,6 +213,30 @@ describe('MatchesModel', () => {
           expect(count).to.eq(3);
           done();
         }); 
+      });
+    });
+  });
+
+  describe('Result without user', () => {
+    it('returns correct error and does not create a game', (done) => {
+      Match.create(matchResultadosWithoutUser, (err, match) => {
+        expect(err).to.match(/result must have a user/);
+        Match.count({}).exec((err, count) => {
+          expect(count).to.eq(2);   
+          done();  
+        }); 
+      });
+    });
+  });
+
+  describe('Result without points', () => {
+    it('returns correct error and does not create a game', (done) => {
+      Match.create(matchResultadosWithoutPoints, (err, match) => {
+        expect(err).to.match(/result must have a points/);
+        Match.count({}).exec((err, count) => {
+          expect(count).to.eq(2);   
+          done();
+        });      
       });
     });
   });

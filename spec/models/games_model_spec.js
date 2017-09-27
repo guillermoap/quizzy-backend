@@ -17,7 +17,6 @@ describe('GamesModel', () => {
   var gameInvalidName;
   var gameNegativeRating;
   var gameInvalidRating;
-  var gameNegativeTimesPlayed;
   var gameWithoutCreator;
   var gameWithoutQuestions;
   var gameRankingWithoutUser;
@@ -45,7 +44,7 @@ describe('GamesModel', () => {
     });
   });
    
-  factory.attrsMany('game', 16, [{
+  factory.attrsMany('game', 15, [{
     name: null
   }, {
     name: '       '
@@ -57,8 +56,6 @@ describe('GamesModel', () => {
     rating: -2
   }, {
     rating: 8
-  }, {
-    timesPlayed: -1
   }, {
     creator: null
   }, {
@@ -111,16 +108,15 @@ describe('GamesModel', () => {
     gameInvalidName = gameAttrsArray[3];
     gameNegativeRating = gameAttrsArray[4];
     gameInvalidRating = gameAttrsArray[5];
-    gameNegativeTimesPlayed = gameAttrsArray[6];
-    gameWithoutCreator = gameAttrsArray[7];
-    gameWithoutQuestions = gameAttrsArray[8];
-    gameRankingWithoutUser = gameAttrsArray[9];
-    gameRankingWithoutPoints = gameAttrsArray[10];
-    gameInvalidDate = gameAttrsArray[11];
-    game3 = gameAttrsArray[12];
-    game4 = gameAttrsArray[13];
-    gameWith6answers = gameAttrsArray[14];
-    gameWith2answers = gameAttrsArray[15];
+    gameWithoutCreator = gameAttrsArray[6];
+    gameWithoutQuestions = gameAttrsArray[7];
+    gameRankingWithoutUser = gameAttrsArray[8];
+    gameRankingWithoutPoints = gameAttrsArray[9];
+    gameInvalidDate = gameAttrsArray[10];
+    game3 = gameAttrsArray[11];
+    game4 = gameAttrsArray[12];
+    gameWith6answers = gameAttrsArray[13];
+    gameWith2answers = gameAttrsArray[14];
   })
 
   describe('Without name', () => {
@@ -187,18 +183,6 @@ describe('GamesModel', () => {
     it('returns correct error and does not create a game', (done) => {
       Game.create(gameInvalidRating, (err, game) => {
         expect(err).to.match(/there must be a correct rating/);
-        Game.count({}).exec((err, count) => {
-          expect(count).to.eq(2);   
-          done();
-        });
-      });
-    });
-  });
-
-  describe('Negative timesPlayed', () => {
-    it('returns correct error and does not create a game', (done) => {
-      Game.create(gameNegativeTimesPlayed, (err, game) => {
-        expect(err).to.match(/timesPlayed must be positive/);
         Game.count({}).exec((err, count) => {
           expect(count).to.eq(2);   
           done();

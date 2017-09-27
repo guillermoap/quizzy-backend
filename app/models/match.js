@@ -34,7 +34,16 @@ var matchSchema = new Schema ({
     type: gameSchema,
     required: [true, 'there must be a game']
   },
-  result: [Number]
+  result: [{
+    user: {
+      type:String,
+      required: [true, 'result must have a user']
+    },
+    points: {
+      type: Number,
+      required: [true, 'result must have a points']
+    }
+  }],
 })
 
 class MatchClass {}

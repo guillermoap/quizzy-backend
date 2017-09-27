@@ -19,10 +19,6 @@ const gameSchema = new Schema({
     min: [0, 'there must be a correct rating'],
     max: [5, 'there must be a correct rating']
   },
-  timesPlayed: {
-    type: Number,
-    min: [0, 'timesPlayed must be positive']
-  },
   creator: {
     type: String, 
     required: [true, 'must have a creator']

@@ -45,7 +45,7 @@ describe('GameController', () => {
     it('returns the right json object', (done) => {
       request(app).get('/games')
         .end((err, res) => {
-          expect(res.body.games[0].game).to.have.keys('id', 'name', 'description', 'rating', 'timesPlayed', 'creator',
+          expect(res.body.games[0].game).to.have.keys('id', 'name', 'description', 'rating', 'creator',
             'creationDate', 'image', 'questions', 'ranking', 'tags');
           done();
         });
@@ -64,7 +64,7 @@ describe('GameController', () => {
     it('returns the right json object', (done) => {
       request(app).get(`/games/${game.id}`)
         .end((err, res) => {
-          expect(res.body.game).to.have.keys('id', 'name', 'description', 'rating', 'timesPlayed', 'creator',
+          expect(res.body.game).to.have.keys('id', 'name', 'description', 'rating', 'creator',
             'creationDate', 'image', 'questions', 'ranking', 'tags');
           done();
         });

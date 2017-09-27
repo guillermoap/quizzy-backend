@@ -20,7 +20,6 @@ factory.define('game', Game, {
               faker.name.lastName().replace("'",'-'),
   description: () => faker.lorem.sentence(),
   rating: () => faker.random.number(5),
-  timesPlayed: () => faker.random.number(20),
   creator: () => faker.name.findName(),
   "questions": fakeQuestions(),
   "tags": [
@@ -63,10 +62,10 @@ factory.define('match', Match, {
     endingDate: () => faker.date.past(),
     image: () => faker.image.imageUrl()
   },
-  result: [
-    () => faker.random.number(),
-    () => faker.random.number()
-  ]
+  result: [{
+      user: () => faker.internet.userName(),
+      points: () => faker.random.number()
+    }],
 });
 
 function fakeQuestions() {
@@ -75,6 +74,7 @@ function fakeQuestions() {
     question = {
       text: () => faker.lorem.sentence(),
       difficulty: () => faker.random.arrayElement(["Easy", "Medium", "Hard"]),
+      hint: () => faker.lorem.sentence(), 
       answers: [
         {answer: faker.lorem.sentence()},
         {answer: faker.lorem.sentence()},
