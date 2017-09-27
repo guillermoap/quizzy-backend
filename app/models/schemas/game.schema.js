@@ -5,7 +5,7 @@ const gameSchema = new Schema({
   name : {
     type: String, 
     unique: [true, 'this name already exists'],
-    lowercase: true,
+    lowercase: [true, 'duplicate name'],
     trim: true,
     required: [true, 'you must enter a name'],
     validate: {

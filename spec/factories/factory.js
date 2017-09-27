@@ -7,7 +7,7 @@ import Match from '../../app/models/match';
 factory.define('user', User, {
   nickname: () => faker.name.firstName().replace("'",'-') +
                   faker.random.number(1000) +
-                  faker.name.lastName().replace("'",'-'),// faker.random.number(1000),
+                  faker.name.lastName().replace("'",'-'),
   email: () => faker.name.firstName().replace("'",'-') +
                faker.random.number(1000) +
                faker.internet.email(),

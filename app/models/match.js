@@ -6,14 +6,17 @@ var matchSchema = new Schema ({
     type: String,
     required: [true, 'you must enter a url'],
     unique: true,
-    lowercase: true,
+    lowercase: [true, 'duplicate url'],
     trim: true,
     validate: {
       validator: function(url) { return /^(\w|-)+$/.test(url) },
       message: 'invalid url'
     }
   },
-  isRealTime: Boolean,
+  isRealTime: {
+    type: Boolean,
+    required: [true, 'you must enter a type of match']
+  },
   players: {
     type: [String],
     required: [true, 'there must be at least one player'],
