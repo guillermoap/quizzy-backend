@@ -8,7 +8,9 @@ import {
   show,
   create,
   update,
-  destroy
+  destroy,
+  find,
+  exists
 } from '../../app/controllers/users_controller';
 
 const router = Router();
@@ -18,6 +20,12 @@ router.use(bodyParser.json());
 router.route('/')
   .get(index)
   .post(create)
+
+router.route('/find/:name')
+  .get(find)
+
+router.route('/exists/:name')
+  .get(exists)
 
 router.route('/:id')
   .get(show)

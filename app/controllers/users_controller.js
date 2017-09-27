@@ -15,10 +15,34 @@ export const show = (req, res, next) => {
     if (err) {
       return res.status(404)
         .json({
-          error: err.message
+          error: err.messageuserShow
         });
     } else {
       res.json(userShow(user));
+    }
+  });
+}
+
+export const find = (req, res, next) => {
+  User.findByName(req.params.name).exec( (err, user) => {
+    if (err) {
+      return res.status(400)
+      .json({ error: err.message
+       });
+    } else {
+      return res.json({ nickname: user   });
+    }
+  });
+}
+
+export const exists = (req, res, next) => {
+  User.findByName(req.params.name).exec( (err, user) => {
+    if (err) {
+      return res.status(400)
+      .json({ error: err.message
+      });
+    } else {
+      return res.json({ res: user != null });
     }
   });
 }
@@ -52,6 +76,7 @@ export const update = (req, res, next) => {
     }
   });
 }
+
 
 export const destroy = (req, res, next) => {
   User.findByIdAndRemove(req.params.id).exec((err, user) => {
