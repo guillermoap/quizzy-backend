@@ -7,12 +7,14 @@ import Match from '../../app/models/match';
 factory.define('user', User, {
   nickname: () => faker.name.firstName().replace("'",'-') +
                   faker.random.number(1000) +
-                  faker.name.lastName().replace("'",'-'),// faker.random.number(1000),
+                  faker.name.lastName().replace("'",'-'),
   email: () => faker.name.firstName().replace("'",'-') +
                faker.random.number(1000) +
                faker.internet.email(),
   password: () => faker.internet.password(15)
 });
+
+var questGame = faker.random.number(30);
 
 factory.define('game', Game, {
   name: () => faker.name.firstName().replace("'",'-') +
@@ -20,27 +22,41 @@ factory.define('game', Game, {
               faker.name.lastName().replace("'",'-'),
   description: () => faker.lorem.sentence(),
   rating: () => faker.random.number(5),
-  timesPlayed: () => faker.random.number(20),
   creator: () => faker.name.findName(),
-  "questions": fakeQuestions(),
-  "tags": [
-    "bla",
-    "you just lost the game"
+  'questions': fakeQuestions(questGame),
+  'tags': [
+    'bla',
+    'you just lost the game'
   ],
-  "ranking": [],
-  "creationDate": () => faker.date.past(),
-  "image": "fake base64"
+  'ranking': [],
+  'creationDate': () => faker.date.past(),
+  'image': 'fake base64'
 });
+
+factory.define('gameMore', Game, {
+  name: () => faker.name.firstName().replace("'",'-') +
+              faker.random.number(1000) +
+              faker.name.lastName().replace("'",'-'),
+  description: () => faker.lorem.sentence(),
+  rating: () => faker.random.number(5),
+  creator: () => faker.name.findName(),
+  'questions': fakeQuestions(31),
+  'tags': [
+    'bla',
+    'you just lost the game'
+  ],
+  'ranking': [],
+  'creationDate': () => faker.date.past(),
+  'image': 'fake base64'
+});
+
+var questMatch = faker.random.number(30);
 
 factory.define('match', Match, {
   url: () => faker.name.firstName().replace("'",'-') +
              faker.random.number(1000) +
              faker.name.lastName().replace("'",'-'),
   isRealTime: () => faker.random.boolean(),
-  players: [
-    () => faker.internet.userName(),
-    () => faker.internet.userName()
-  ],
   owner: () => faker.fake('{{name.firstName}} {{name.lastName}}'),
   endingDate: () => faker.date.future(),
   game: {
@@ -51,7 +67,7 @@ factory.define('match', Match, {
     rating: () => faker.random.number(5),
     timesPlayed: () => faker.random.number(),
     creator: () => faker.fake('{{name.firstName}} {{name.lastName}}'),
-    questions: fakeQuestions(),
+    questions: fakeQuestions(questMatch),
     tags: [
       () => faker.random.word(),
       () => faker.random.word()
@@ -63,18 +79,19 @@ factory.define('match', Match, {
     endingDate: () => faker.date.past(),
     image: () => faker.image.imageUrl()
   },
-  result: [
-    () => faker.random.number(),
-    () => faker.random.number()
-  ]
+  result: [{
+      user: () => faker.internet.userName(),
+      points: () => faker.random.number()
+    }],
 });
 
-function fakeQuestions() {
+function fakeQuestions(cantQuest) {
   let question, questionSet = [];
-  for (let i = 0; i < 4; i++) {
+  for (let i = 0; i < cantQuest; i++) {
     question = {
       text: () => faker.lorem.sentence(),
-      difficulty: () => faker.random.arrayElement(["Easy", "Medium", "Hard"]),
+      difficulty: () => faker.random.arrayElement(['Easy', 'Medium', 'Hard']),
+      hint: () => faker.lorem.sentence(), 
       answers: [
         {answer: faker.lorem.sentence()},
         {answer: faker.lorem.sentence()},

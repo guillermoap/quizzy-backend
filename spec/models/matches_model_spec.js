@@ -15,11 +15,11 @@ describe('MatchesModel', () => {
   var matchUrlEmpty;
   var matchDupUrl;
   var matchInvalidUrl;
-  var matchPlayersNull;
-  var matchWithoutPlayers;
   var matchWithoutOwner;
   var matchInvalidDate;
   var matchWithoutGame;
+  var matchResultWithoutUser;
+  var matchResultWithoutPoints;
 
   beforeEach(function(done) {
     factory.createMany('match', 2, [{
@@ -49,10 +49,6 @@ describe('MatchesModel', () => {
   }, {
     url: 'sebass%s'
   }, {
-    players: null
-  }, {
-    players: []
-  }, {
     owner: null
   }, {
     endingDate: 'Lunes 20 de Julio de 1999' 
@@ -62,19 +58,23 @@ describe('MatchesModel', () => {
     url: 'Futbol_Uruguayo-2017'
   }, {
     url: '12345'
+  }, {
+    result: [{ points: 8 }]
+  }, {
+    result: [{ user: 'sebas' }]
   }])
   .then(matchAttrsArray => {
     matchWithoutUrl = matchAttrsArray[0];
     matchUrlEmpty = matchAttrsArray[1];
     matchDupUrl = matchAttrsArray[2];
     matchInvalidUrl = matchAttrsArray[3];
-    matchPlayersNull = matchAttrsArray[4];
-    matchWithoutPlayers = matchAttrsArray[5];
-    matchWithoutOwner = matchAttrsArray[6];
-    matchInvalidDate = matchAttrsArray[7];
-    matchWithoutGame = matchAttrsArray[8];
-    match3 = matchAttrsArray[9];
-    match4 = matchAttrsArray[10];
+    matchWithoutOwner = matchAttrsArray[4];
+    matchInvalidDate = matchAttrsArray[5];
+    matchWithoutGame = matchAttrsArray[6];
+    match3 = matchAttrsArray[7];
+    match4 = matchAttrsArray[8];
+    matchResultWithoutUser = matchAttrsArray[9];
+    matchResultWithoutPoints = matchAttrsArray[10];
   })
 
   describe('Without url', () => {
@@ -117,30 +117,6 @@ describe('MatchesModel', () => {
     it('returns correct error and does not create a match', (done) => {
       Match.create(matchInvalidUrl, (err, match) => {
         expect(err).to.match(/invalid url/);
-        Match.count({}).exec((err, count) => {
-          expect(count).to.eq(2);   
-          done();
-        });
-      });
-    });
-  });
-
-  describe('Players null', () => {
-    it('returns correct error and does not create a match', (done) => {
-      Match.create(matchPlayersNull, (err, match) => {
-        expect(err).to.match(/there must be at least one player/);
-        Match.count({}).exec((err, count) => {
-          expect(count).to.eq(2);   
-          done();
-        });
-      });
-    });
-  });
-
-  describe('Players empty', () => {
-    it('returns correct error and does not create a match', (done) => {
-      Match.create(matchWithoutPlayers, (err, match) => {
-        expect(err).to.match(/there must be at least one player/);
         Match.count({}).exec((err, count) => {
           expect(count).to.eq(2);   
           done();
@@ -205,6 +181,30 @@ describe('MatchesModel', () => {
           expect(count).to.eq(3);
           done();
         }); 
+      });
+    });
+  });
+
+  describe('Result without user', () => {
+    it('returns correct error and does not create a game', (done) => {
+      Match.create(matchResultWithoutUser, (err, match) => {
+        expect(err).to.match(/result must have a user/);
+        Match.count({}).exec((err, count) => {
+          expect(count).to.eq(2);   
+          done();  
+        }); 
+      });
+    });
+  });
+
+  describe('Result without points', () => {
+    it('returns correct error and does not create a game', (done) => {
+      Match.create(matchResultWithoutPoints, (err, match) => {
+        expect(err).to.match(/result must have a points/);
+        Match.count({}).exec((err, count) => {
+          expect(count).to.eq(2);   
+          done();
+        });      
       });
     });
   });

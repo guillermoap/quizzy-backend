@@ -5,7 +5,7 @@ var userSchema = new Schema({
     type: String,
     required: [true, 'you must enter a nickname'],
     unique: true,
-    lowercase: true,
+    lowercase: [true, 'duplicate nickname'],
     trim: true,
     validate: {
       validator: function(nickname) { return /^(\w|-)+$/.test(nickname) },

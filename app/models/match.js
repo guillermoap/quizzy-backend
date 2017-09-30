@@ -6,21 +6,16 @@ var matchSchema = new Schema ({
     type: String,
     required: [true, 'you must enter a url'],
     unique: true,
-    lowercase: true,
+    lowercase: [true, 'duplicate url'],
     trim: true,
     validate: {
       validator: function(url) { return /^(\w|-)+$/.test(url) },
       message: 'invalid url'
     }
   },
-  isRealTime: Boolean,
-  players: {
-    type: [String],
-    required: [true, 'there must be at least one player'],
-    validate: {
-      validator: function(players) { return players.length > 0 },
-      message: 'there must be at least one player'
-    }
+  isRealTime: {
+    type: Boolean,
+    required: [true, 'you must enter a type of match']
   },
   owner: {
     type: String,
@@ -34,7 +29,16 @@ var matchSchema = new Schema ({
     type: gameSchema,
     required: [true, 'there must be a game']
   },
-  result: [Number]
+  result: [{
+    user: {
+      type:String,
+      required: [true, 'result must have a user']
+    },
+    points: {
+      type: Number,
+      required: [true, 'result must have a points']
+    }
+  }],
 })
 
 class MatchClass {}

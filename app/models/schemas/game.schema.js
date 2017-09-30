@@ -5,7 +5,7 @@ const gameSchema = new Schema({
   name : {
     type: String, 
     unique: [true, 'this name already exists'],
-    lowercase: true,
+    lowercase: [true, 'duplicate name'],
     trim: true,
     required: [true, 'you must enter a name'],
     validate: {
@@ -19,17 +19,17 @@ const gameSchema = new Schema({
     min: [0, 'there must be a correct rating'],
     max: [5, 'there must be a correct rating']
   },
-  timesPlayed: {
-    type: Number,
-    min: [0, 'timesPlayed must be positive']
-  },
   creator: {
     type: String, 
     required: [true, 'must have a creator']
   },
   questions: {
     type: [questionSchema],
-    required: [true, 'there must be at least one question']
+    required: [true, 'there must be at least one question'],
+    validate: {
+      validator: function(questions) { return (questions.length > 0 && questions.length < 31) },
+      message: 'there must be between 1 and 30 possibles questions'
+    }
   },
   tags: [String],
   ranking: [{

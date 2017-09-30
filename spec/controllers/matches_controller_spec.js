@@ -46,7 +46,7 @@ describe('MatchesController', () => {
       request(app).get('/matches')
         .end((err, res) => {
           expect(res.body.matches[0])
-            .to.have.keys('id', 'url', 'isRealTime', 'players',
+            .to.have.keys('id', 'url', 'isRealTime',
               'owner', 'endingDate', 'game', 'result');
           done();
         });
@@ -66,7 +66,7 @@ describe('MatchesController', () => {
       request(app).get(`/matches/${match.url}`)
         .end((err, res) => {
           expect(res.body.match)
-            .to.have.keys('id', 'url', 'isRealTime', 'players',
+            .to.have.keys('id', 'url', 'isRealTime',
               'owner', 'endingDate', 'game', 'result');
           done();
         });
