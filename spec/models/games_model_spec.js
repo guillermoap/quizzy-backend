@@ -24,6 +24,7 @@ describe('GamesModel', () => {
   var gameInvalidDate;
   var gameWith2answers;
   var gameWith6answers;
+  var gameMoreQuestions;
 
   beforeEach(function(done) {
     factory.createMany('game', 2, [{
@@ -43,7 +44,12 @@ describe('GamesModel', () => {
       done();
     });
   });
-   
+  
+  factory.attrs('gameMore')
+  .then(gameAttrs => { 
+    gameMoreQuestions = gameAttrs;
+  });
+
   factory.attrsMany('game', 15, [{
     name: null
   }, {
@@ -294,6 +300,18 @@ describe('GamesModel', () => {
         Game.count({}).exec((err, count) => {
           expect(count).to.eq(3);   
           done();
+        });
+      });
+    });
+  });
+
+  describe('More questions', () => {
+    it('returns correct error and does not create a game', (done) => {
+      Game.create(gameMoreQuestions, (err, game) => {
+        expect(err).to.match(/there must write between 1 and 30 possibles questions/);
+        Game.count({}).exec((err, count) => {
+          expect(count).to.eq(2);   
+          done();        
         });
       });
     });

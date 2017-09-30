@@ -14,6 +14,8 @@ factory.define('user', User, {
   password: () => faker.internet.password(15)
 });
 
+var questGame = faker.random.number(30);
+
 factory.define('game', Game, {
   name: () => faker.name.firstName().replace("'",'-') +
               faker.random.number(1000) +
@@ -21,7 +23,7 @@ factory.define('game', Game, {
   description: () => faker.lorem.sentence(),
   rating: () => faker.random.number(5),
   creator: () => faker.name.findName(),
-  "questions": fakeQuestions(),
+  "questions": fakeQuestions(questGame),
   "tags": [
     "bla",
     "you just lost the game"
@@ -30,6 +32,25 @@ factory.define('game', Game, {
   "creationDate": () => faker.date.past(),
   "image": "fake base64"
 });
+
+factory.define('gameMore', Game, {
+  name: () => faker.name.firstName().replace("'",'-') +
+              faker.random.number(1000) +
+              faker.name.lastName().replace("'",'-'),
+  description: () => faker.lorem.sentence(),
+  rating: () => faker.random.number(5),
+  creator: () => faker.name.findName(),
+  "questions": fakeQuestions(31),
+  "tags": [
+    "bla",
+    "you just lost the game"
+  ],
+  "ranking": [],
+  "creationDate": () => faker.date.past(),
+  "image": "fake base64"
+});
+
+var questMatch = faker.random.number(30);
 
 factory.define('match', Match, {
   url: () => faker.name.firstName().replace("'",'-') +
@@ -50,7 +71,7 @@ factory.define('match', Match, {
     rating: () => faker.random.number(5),
     timesPlayed: () => faker.random.number(),
     creator: () => faker.fake('{{name.firstName}} {{name.lastName}}'),
-    questions: fakeQuestions(),
+    questions: fakeQuestions(questMatch),
     tags: [
       () => faker.random.word(),
       () => faker.random.word()
@@ -68,9 +89,9 @@ factory.define('match', Match, {
     }],
 });
 
-function fakeQuestions() {
+function fakeQuestions(cantQuest) {
   let question, questionSet = [];
-  for (let i = 0; i < 4; i++) {
+  for (let i = 0; i < cantQuest; i++) {
     question = {
       text: () => faker.lorem.sentence(),
       difficulty: () => faker.random.arrayElement(["Easy", "Medium", "Hard"]),
