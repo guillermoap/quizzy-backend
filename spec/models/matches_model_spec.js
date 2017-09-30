@@ -18,8 +18,8 @@ describe('MatchesModel', () => {
   var matchWithoutOwner;
   var matchInvalidDate;
   var matchWithoutGame;
-  var matchResultadosWithoutUser;
-  var matchResultadosWithoutPoints;
+  var matchResultWithoutUser;
+  var matchResultWithoutPoints;
 
   beforeEach(function(done) {
     factory.createMany('match', 2, [{
@@ -59,9 +59,9 @@ describe('MatchesModel', () => {
   }, {
     url: '12345'
   }, {
-    result: [{points: 8}]
+    result: [{ points: 8 }]
   }, {
-    result: [{user: 'sebas'}]
+    result: [{ user: 'sebas' }]
   }])
   .then(matchAttrsArray => {
     matchWithoutUrl = matchAttrsArray[0];
@@ -73,8 +73,8 @@ describe('MatchesModel', () => {
     matchWithoutGame = matchAttrsArray[6];
     match3 = matchAttrsArray[7];
     match4 = matchAttrsArray[8];
-    matchResultadosWithoutUser = matchAttrsArray[9];
-    matchResultadosWithoutPoints = matchAttrsArray[10];
+    matchResultWithoutUser = matchAttrsArray[9];
+    matchResultWithoutPoints = matchAttrsArray[10];
   })
 
   describe('Without url', () => {
@@ -187,7 +187,7 @@ describe('MatchesModel', () => {
 
   describe('Result without user', () => {
     it('returns correct error and does not create a game', (done) => {
-      Match.create(matchResultadosWithoutUser, (err, match) => {
+      Match.create(matchResultWithoutUser, (err, match) => {
         expect(err).to.match(/result must have a user/);
         Match.count({}).exec((err, count) => {
           expect(count).to.eq(2);   
@@ -199,7 +199,7 @@ describe('MatchesModel', () => {
 
   describe('Result without points', () => {
     it('returns correct error and does not create a game', (done) => {
-      Match.create(matchResultadosWithoutPoints, (err, match) => {
+      Match.create(matchResultWithoutPoints, (err, match) => {
         expect(err).to.match(/result must have a points/);
         Match.count({}).exec((err, count) => {
           expect(count).to.eq(2);   

@@ -23,14 +23,14 @@ factory.define('game', Game, {
   description: () => faker.lorem.sentence(),
   rating: () => faker.random.number(5),
   creator: () => faker.name.findName(),
-  "questions": fakeQuestions(questGame),
-  "tags": [
-    "bla",
-    "you just lost the game"
+  'questions': fakeQuestions(questGame),
+  'tags': [
+    'bla',
+    'you just lost the game'
   ],
-  "ranking": [],
-  "creationDate": () => faker.date.past(),
-  "image": "fake base64"
+  'ranking': [],
+  'creationDate': () => faker.date.past(),
+  'image': 'fake base64'
 });
 
 factory.define('gameMore', Game, {
@@ -40,14 +40,14 @@ factory.define('gameMore', Game, {
   description: () => faker.lorem.sentence(),
   rating: () => faker.random.number(5),
   creator: () => faker.name.findName(),
-  "questions": fakeQuestions(31),
-  "tags": [
-    "bla",
-    "you just lost the game"
+  'questions': fakeQuestions(31),
+  'tags': [
+    'bla',
+    'you just lost the game'
   ],
-  "ranking": [],
-  "creationDate": () => faker.date.past(),
-  "image": "fake base64"
+  'ranking': [],
+  'creationDate': () => faker.date.past(),
+  'image': 'fake base64'
 });
 
 var questMatch = faker.random.number(30);
@@ -90,7 +90,7 @@ function fakeQuestions(cantQuest) {
   for (let i = 0; i < cantQuest; i++) {
     question = {
       text: () => faker.lorem.sentence(),
-      difficulty: () => faker.random.arrayElement(["Easy", "Medium", "Hard"]),
+      difficulty: () => faker.random.arrayElement(['Easy', 'Medium', 'Hard']),
       hint: () => faker.lorem.sentence(), 
       answers: [
         {answer: faker.lorem.sentence()},

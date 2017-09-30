@@ -28,7 +28,7 @@ const gameSchema = new Schema({
     required: [true, 'there must be at least one question'],
     validate: {
       validator: function(questions) { return (questions.length > 0 && questions.length < 31) },
-      message: 'there must write between 1 and 30 possibles questions'
+      message: 'there must be between 1 and 30 possibles questions'
     }
   },
   tags: [String],
