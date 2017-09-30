@@ -15,8 +15,6 @@ describe('MatchesModel', () => {
   var matchUrlEmpty;
   var matchDupUrl;
   var matchInvalidUrl;
-  var matchPlayersNull;
-  var matchWithoutPlayers;
   var matchWithoutOwner;
   var matchInvalidDate;
   var matchWithoutGame;
@@ -42,7 +40,7 @@ describe('MatchesModel', () => {
     });
   });
    
-  factory.attrsMany('match', 13, [{
+  factory.attrsMany('match', 11, [{
     url: null
   }, {
     url: '          '
@@ -50,10 +48,6 @@ describe('MatchesModel', () => {
     url: 'Quizzy2017'
   }, {
     url: 'sebass%s'
-  }, {
-    players: null
-  }, {
-    players: []
   }, {
     owner: null
   }, {
@@ -74,15 +68,13 @@ describe('MatchesModel', () => {
     matchUrlEmpty = matchAttrsArray[1];
     matchDupUrl = matchAttrsArray[2];
     matchInvalidUrl = matchAttrsArray[3];
-    matchPlayersNull = matchAttrsArray[4];
-    matchWithoutPlayers = matchAttrsArray[5];
-    matchWithoutOwner = matchAttrsArray[6];
-    matchInvalidDate = matchAttrsArray[7];
-    matchWithoutGame = matchAttrsArray[8];
-    match3 = matchAttrsArray[9];
-    match4 = matchAttrsArray[10];
-    matchResultadosWithoutUser = matchAttrsArray[11];
-    matchResultadosWithoutPoints = matchAttrsArray[12];
+    matchWithoutOwner = matchAttrsArray[4];
+    matchInvalidDate = matchAttrsArray[5];
+    matchWithoutGame = matchAttrsArray[6];
+    match3 = matchAttrsArray[7];
+    match4 = matchAttrsArray[8];
+    matchResultadosWithoutUser = matchAttrsArray[9];
+    matchResultadosWithoutPoints = matchAttrsArray[10];
   })
 
   describe('Without url', () => {
@@ -125,30 +117,6 @@ describe('MatchesModel', () => {
     it('returns correct error and does not create a match', (done) => {
       Match.create(matchInvalidUrl, (err, match) => {
         expect(err).to.match(/invalid url/);
-        Match.count({}).exec((err, count) => {
-          expect(count).to.eq(2);   
-          done();
-        });
-      });
-    });
-  });
-
-  describe('Players null', () => {
-    it('returns correct error and does not create a match', (done) => {
-      Match.create(matchPlayersNull, (err, match) => {
-        expect(err).to.match(/there must be at least one player/);
-        Match.count({}).exec((err, count) => {
-          expect(count).to.eq(2);   
-          done();
-        });
-      });
-    });
-  });
-
-  describe('Players empty', () => {
-    it('returns correct error and does not create a match', (done) => {
-      Match.create(matchWithoutPlayers, (err, match) => {
-        expect(err).to.match(/there must be at least one player/);
         Match.count({}).exec((err, count) => {
           expect(count).to.eq(2);   
           done();

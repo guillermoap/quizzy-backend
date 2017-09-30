@@ -17,14 +17,6 @@ var matchSchema = new Schema ({
     type: Boolean,
     required: [true, 'you must enter a type of match']
   },
-  players: {
-    type: [String],
-    required: [true, 'there must be at least one player'],
-    validate: {
-      validator: function(players) { return players.length > 0 },
-      message: 'there must be at least one player'
-    }
-  },
   owner: {
     type: String,
     required: [true, 'must have a owner']

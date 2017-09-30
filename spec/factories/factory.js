@@ -57,10 +57,6 @@ factory.define('match', Match, {
              faker.random.number(1000) +
              faker.name.lastName().replace("'",'-'),
   isRealTime: () => faker.random.boolean(),
-  players: [
-    () => faker.internet.userName(),
-    () => faker.internet.userName()
-  ],
   owner: () => faker.fake('{{name.firstName}} {{name.lastName}}'),
   endingDate: () => faker.date.future(),
   game: {
