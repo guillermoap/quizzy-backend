@@ -13,7 +13,7 @@ import {
 
 const router = Router();
 
-router.use(bodyParser.json());
+router.use(bodyParser.json({ limit: '10mb' }));
 
 router.route('/')
   .get(index)
