@@ -97,13 +97,13 @@ describe('UsersController', () => {
       });
 
       it('creates a user', (done) => {
-        User.count({}).exec((err, count) => {
-          request(app).post('/users')
-            .send(params)
-            .end((err, res) => {
-              expect(count).to.eq(count++);
+        request(app).post('/users')
+          .send(params)
+          .end((err, res) => {
+            User.count({}).exec((err, count) => {
+              expect(count).to.eq(3);
               done();
-            });
+          });
         });
       });
     });
@@ -128,14 +128,14 @@ describe('UsersController', () => {
           });
       });
 
-      it('does not create a user', (done) => {
-        User.count({}).exec((err, count) => {
-          request(app).post('/users')
-            .send(params)
-            .end((err, res) => {
-              expect(count).to.eq(count);
+      it('does not create a user', (done) => {    
+        request(app).post('/users')
+          .send(params)
+          .end((err, res) => {
+            User.count({}).exec((err, count) => {
+              expect(count).to.eq(2);
               done();
-            });
+          });
         });
       });
     })
