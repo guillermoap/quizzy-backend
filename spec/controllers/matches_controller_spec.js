@@ -101,13 +101,13 @@ describe('MatchesController', () => {
       });
 
       it('creates a match', (done) => {
-        Match.count({}).exec((err, count) => {
-          request(app).post('/matches')
-            .send(params)
-            .end((err, res) => {
-              expect(count).to.eq(count++);
+        request(app).post('/matches')
+          .send(params)
+          .end((err, res) => {
+            Match.count({}).exec((err, count) => {
+              expect(count).to.eq(3);
               done();
-            });
+          });
         });
       });
     });
@@ -133,13 +133,13 @@ describe('MatchesController', () => {
       });
 
       it('does not create a match', (done) => {
-        Match.count({}).exec((err, count) => {
-          request(app).post('/matches')
-            .send(params)
-            .end((err, res) => {
-              expect(count).to.eq(count);
+        request(app).post('/matches')
+          .send(params)
+          .end((err, res) => {
+            Match.count({}).exec((err, count) => {
+              expect(count).to.eq(2);
               done();
-            });
+          });
         });
       });
     })
