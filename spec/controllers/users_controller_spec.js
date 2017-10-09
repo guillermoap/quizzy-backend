@@ -130,7 +130,7 @@ describe('UsersController', () => {
           });
       });
 
-      it('does not create a user', (done) => {
+      it('does not create a user', (done) => {    
         request(app).post('/users')
           .send(params)
           .end((err, res) => {
