@@ -99,13 +99,13 @@ describe('GameController', () => {
       });
 
       it('creates a game', (done) => {
-        Game.count({}).exec((err, count) => {
-          request(app).post('/games')
-            .send(params)
-            .end((err, res) => {
-              expect(count).to.eq(count++);
+        request(app).post('/games')
+          .send(params)
+          .end((err, res) => {
+            Game.count({}).exec((err, count) => {
+              expect(count).to.eq(3);
               done();
-            });
+          });
         });
       });
     });
@@ -131,13 +131,13 @@ describe('GameController', () => {
       });
 
       it('does not create a game', (done) => {
-        Game.count({}).exec((err, count) => {
-          request(app).post('/games')
-            .send(params)
-            .end((err, res) => {
-              expect(count).to.eq(count);
+        request(app).post('/games')
+          .send(params)
+          .end((err, res) => {
+            Game.count({}).exec((err, count) => {
+              expect(count).to.eq(2);
               done();
-            });
+          });
         });
       });
     })
