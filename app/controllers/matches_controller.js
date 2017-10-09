@@ -76,25 +76,25 @@ export const destroy = (req, res, next) => {
 function errorMessage(error) {
   switch(error) {
     case (error.match(/url_1 dup key/) || {}).input:
-      return ('the url already exists');
+      return ('THE URL ALREADY EXISTS');
     case (error.match(/you must enter a url/) || {}).input:
-      return ("you must enter a url");
+      return ('YOU MUST ENTER A URL');
     case (error.match(/invalid url/) || {}).input:
-      return ('invalid url');
+      return ('INVALID URL');
     case (error.match(/you must enter a type of match/) || {}).input:
-      return ('you must enter a type of match');
+      return ('YOU MUST ENTER A TYPE OF MATCH');
     case (error.match(/must have a owner/) || {}).input:
-      return ('must have a owner');
+      return ('MUST HAVE A OWNER');
     case (error.match(/result must have a user/) || {}).input:
-      return ('result must have a user');
+      return ('RESULT MUST HAVE A USER');
     case (error.match(/result must have a points/) || {}).input:
-      return ('result must have a points');
+      return ('RESULT MUST HAVE A POINTS');
     case (error.match(/Cast to Date failed/) || {}).input:
-      return ('invalid Date');
+      return ('INVALID DATE');
     case (error.match(/there must be a game/) || {}).input:
-      return ('there must be a game');
+      return ('THERE MUST BE A GAME');
     case (error.match(/game: Validation failed:/) || {}).input:
-      return ('error in the definition of the game');
+      return ('ERROR IN THE DEFINITION OF THE GAME');
     default:
       return error
   }

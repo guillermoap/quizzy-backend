@@ -69,21 +69,21 @@ export const destroy = (req, res, next) => {
 function errorMessage(error) {
   switch(error) {
     case (error.match(/email_1 dup key/) || {}).input:
-      return ('the email already exists');
+      return ('THE EMAIL ALREADY EXISTS');
     case (error.match(/nickname_1 dup key/) || {}).input:
-      return ('the nickname already exists');
+      return ('THE NICKNAME ALREADY EXISTS');
     case (error.match(/you must enter a email/) || {}).input:
-      return ("you must enter a email");
+      return ('YOU MUST ENTER A EMAIL');
     case (error.match(/invalid email/) || {}).input:
-      return ('invalid email');
+      return ('INVALID EMAIL');
     case (error.match(/you must enter a nickname/) || {}).input:
-      return ("you must enter a nickname");
+      return ('YOU MUST ENTER A NICKNAME');
     case (error.match(/invalid nickname/) || {}).input:
-      return ('invalid nickname');
+      return ('INVALID NICKNAME');
     case (error.match(/you must enter a password/) || {}).input:
-      return ("you must enter a password");
+      return ('YOU MUST ENTER A PASSWORD');
     case (error.match(/invalid password/) || {}).input:
-      return ('invalid password');
+      return ('INVALID PASSWORD');
     default:
       return error
   }

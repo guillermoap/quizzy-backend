@@ -76,37 +76,37 @@ export const destroy = (req, res, next) => {
 function errorMessage(error) {
   switch(error) {
     case (error.match(/you must enter a name/) || {}).input:
-      return ("you must enter a name");
+      return ('YOU MUST ENTER A NAME');
     case (error.match(/name_1 dup key/) || {}).input:
-      return ('the name already exists');
+      return ('THE NAME ALREADY EXISTS');
     case (error.match(/invalid name/) || {}).input:
-      return ('invalid name');
+      return ('INVALID NAME');
     case (error.match(/there must be a correct rating/) || {}).input:
-      return ('there must be a correct rating');
+      return ('THERE MUST BE A CORRECT RATING');
     case (error.match(/must have a creator/) || {}).input:
-      return ('must have a creator');
+      return ('MUST HAVE A CREATOR');
     case (error.match(/ranking must have a user/) || {}).input:
-      return ('ranking must have a user');
+      return ('RANKING MUST HAVE A USER');
     case (error.match(/ranking must have a points/) || {}).input:
-      return ('ranking must have a points');
+      return ('RANKING MUST HAVE A POINTS');
     case (error.match(/Cast to Date failed/) || {}).input:
-      return ('invalid Date');
+      return ('INVALID DATE');
     case (error.match(/there must be at least one question/) || {}).input:
-      return ('there must be at least one question');
+      return ('THERE MUST BE AT LEAST ONE QUESTION');
     case (error.match(/question can not be empty/) || {}).input:
-      return ('question can not be empty');
+      return ('QUESTION CAN NOT BE EMPTY');
     case (error.match(/Game validation failed: questions.0.difficulty:/) || {}).input:
-      return ('invalid difficluty');
+      return ('INVALID DIFFICLUTY');
     case (error.match(/you must write the answers/) || {}).input:
-      return ('you must write the answers');
+      return ('YOU MUST WRITE THE ANSWERS');
     case (error.match(/there must write between 2 and 6 possibles answers/) || {}).input:
-      return ('there must write between 2 and 6 possibles answers');
+      return ('THERE MUST WRITE BETWEEN 2 AND 6 POSSIBLES ANSWERS');
     case (error.match(/answer can not be empty/) || {}).input:
-      return ('answer can not be empty');
+      return ('ANSWER CAN NOT BE EMPTY');
     case (error.match(/there must be a correct answer/) || {}).input:
-      return ('there must be a correct answer');
+      return ('THERE MUST BE A CORRECT ANSWER');
     case (error.match(/you must select correct answer/) || {}).input:
-      return ('you must select correct answer');
+      return ('YOU MUST SELECT CORRECT ANSWER');
     default:
       return error
   }
