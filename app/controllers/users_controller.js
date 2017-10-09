@@ -15,7 +15,7 @@ export const show = (req, res, next) => {
     if (err) {
       return res.status(404)
         .json({
-          error: err.message
+          error: errorMessage(err.message)
         });
     } else {
       res.json(userShow(user));
@@ -28,7 +28,7 @@ export const create = (req, res, next) => {
     if (err) {
       return res.status(400)
         .json({
-          error: err.message
+          error: errorMessage(err.message)
         });
     } else {
       return res.json({});
@@ -45,7 +45,7 @@ export const update = (req, res, next) => {
     if (err) {
       return res.status(400)
         .json({
-          error: err.message
+          error: errorMessage(err.message)
         });
     } else {
       return res.json(userShow(user));
@@ -58,10 +58,33 @@ export const destroy = (req, res, next) => {
     if (err) {
       return res.status(400)
         .json({
-          error: err.message
+          error: errorMessage(err.message)
         });
     } else {
       return res.json({});
     }
   });
+}
+
+function errorMessage(error) {
+  switch(error) {
+    case (error.match(/email_1 dup key/) || {}).input:
+      return ('the email already exists');
+    case (error.match(/nickname_1 dup key/) || {}).input:
+      return ('the nickname already exists');
+    case (error.match(/you must enter a email/) || {}).input:
+      return ("you must enter a email");
+    case (error.match(/invalid email/) || {}).input:
+      return ('invalid email');
+    case (error.match(/you must enter a nickname/) || {}).input:
+      return ("you must enter a nickname");
+    case (error.match(/invalid nickname/) || {}).input:
+      return ('invalid nickname');
+    case (error.match(/you must enter a password/) || {}).input:
+      return ("you must enter a password");
+    case (error.match(/invalid password/) || {}).input:
+      return ('invalid password');
+    default:
+      return error
+  }
 }

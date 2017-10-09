@@ -7,7 +7,7 @@ const questionSchema = new Schema({
   },
   text: {
     type:  String,
-    required: [true, 'you must write the question'],
+    required: [true, 'question can not be empty'],
     trim: true
   },
   hint: {
