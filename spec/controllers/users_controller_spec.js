@@ -16,8 +16,10 @@ describe('UsersController', () => {
 
   beforeEach(function(done) {
     factory.createMany('user', 2, [{
+        nickname: 'spec',
         email: 'spec@spec.com'
       }, {
+        nickname: 'spec2',
         email: 'spec2@spec.com'
       }])
       .then(userArray => {
@@ -234,4 +236,124 @@ describe('UsersController', () => {
         });
     });
   })
+
+  describe('Errors', () => {
+    context('more one error', () => {
+      var user_1;
+      var user_2;
+      var user_3;
+      var user_4;
+      var user_5;
+      var user_6;
+      var user_7;
+      var user_8;
+      
+      factory.attrsMany('user', 8, [
+      {
+        email: null,
+        nickname: null,
+        password: null
+      }, {
+        email: 'sebas',
+        nickname: null,
+        password: null
+      }, {
+        nickname: null,
+        password: null
+      }, {
+        nickname: 'sebas felix',
+        password: null
+      }, {
+        password: null
+      }, {
+        password: 'as'
+      }, {
+        email: 'spec@spec.com'
+      }, {
+        nickname: 'spec'
+      }])
+      .then(userAttrsArray => {
+        user_1 = { user: userAttrsArray[0] };
+        user_2 = { user: userAttrsArray[1] };
+        user_3 = { user: userAttrsArray[2] };
+        user_4 = { user: userAttrsArray[3] };
+        user_5 = { user: userAttrsArray[4] };
+        user_6 = { user: userAttrsArray[5] };
+        user_7 = { user: userAttrsArray[6] };
+        user_8 = { user: userAttrsArray[7] };
+      })
+
+      it('return correct error', (done) => {
+        request(app).post('/users')
+          .send(user_1)
+          .end((err, res) => {
+            expect(res.body.error).to.eq('YOU MUST ENTER A EMAIL');
+            done();
+          });
+      });
+
+      it('return correct error', (done) => {
+        request(app).post('/users')
+          .send(user_2)
+          .end((err, res) => {
+            expect(res.body.error).to.eq('INVALID EMAIL');
+            done();
+          });
+      });
+
+      it('return correct error', (done) => {
+        request(app).post('/users')
+          .send(user_3)
+          .end((err, res) => {
+            expect(res.body.error).to.eq('YOU MUST ENTER A NICKNAME');
+            done();
+          });
+      });
+
+      it('return correct error', (done) => {
+        request(app).post('/users')
+          .send(user_4)
+          .end((err, res) => {
+            expect(res.body.error).to.eq('INVALID NICKNAME');
+            done();
+          });
+      });
+
+      it('return correct error', (done) => {
+        request(app).post('/users')
+          .send(user_5)
+          .end((err, res) => {
+            expect(res.body.error).to.eq('YOU MUST ENTER A PASSWORD');
+            done();
+          });
+      });
+
+      it('return correct error', (done) => {
+        request(app).post('/users')
+          .send(user_6)
+          .end((err, res) => {
+            expect(res.body.error).to.eq('INVALID PASSWORD');
+            done();
+          });
+      });
+
+      it('return correct error', (done) => {
+        request(app).post('/users')
+          .send(user_7)
+          .end((err, res) => {
+            expect(res.body.error).to.eq('THE EMAIL ALREADY EXISTS');
+            done();
+          });
+      });
+
+      it('return correct error', (done) => {
+        request(app).post('/users')
+          .send(user_8)
+          .end((err, res) => {
+            expect(res.body.error).to.eq('THE NICKNAME ALREADY EXISTS');
+            done();
+          });
+      });
+    });
+  });
 });

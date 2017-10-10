@@ -238,4 +238,183 @@ describe('MatchesController', () => {
         });
     });
   })
+
+  describe('Errors', () => {
+    context('more one error', () => {
+      var match_1;
+      var match_2;
+      var match_3;
+      var match_4;
+      var match_5;
+      var match_6;
+      var match_7;
+      var match_8;
+      var match_9;
+      var match_10;
+      
+      factory.attrsMany('match', 10, [
+      {
+        url: null, 
+        isRealTime: null, 
+        owner: null, 
+        result: [
+          {points: 3}, 
+          {user: 'user'}
+        ], 
+        endingDate: 'el dia de hoy',
+        game: null
+      }, {
+        url: 's e b a s', 
+        isRealTime: null, 
+        owner: null, 
+        result: [
+          {points: 3}, 
+          {user: 'user'}
+        ], 
+        endingDate: 'el dia de hoy',
+        game: null
+      }, { 
+        isRealTime: null, 
+        owner: null, 
+        result: [
+          {points: 3}, 
+          {user: 'user'}
+        ], 
+        endingDate: 'el dia de hoy',
+        game: null
+      }, {
+        owner: null, 
+        result: [
+          {points: 3}, 
+          {user: 'user'}
+        ], 
+        endingDate: 'el dia de hoy',
+        game: null
+      }, { 
+        result: [
+          {points: 3}, 
+          {user: 'user'}
+        ], 
+        endingDate: 'el dia de hoy',
+        game: null
+      }, { 
+        result: [
+          {user: 'user'}
+        ], 
+        endingDate: 'el dia de hoy',
+        game: null
+      }, { 
+        endingDate: 'el dia de hoy',
+        game: null
+      }, {
+        game: null
+      }, {
+        game: { }
+      }, {
+        url: 'testURL'
+      }])
+      .then(matchAttrsArray => {
+        match_1 = { match: matchAttrsArray[0] };
+        match_2 = { match: matchAttrsArray[1] };
+        match_3 = { match: matchAttrsArray[2] };
+        match_4 = { match: matchAttrsArray[3] };
+        match_5 = { match: matchAttrsArray[4] };
+        match_6 = { match: matchAttrsArray[5] };
+        match_7 = { match: matchAttrsArray[6] };
+        match_8 = { match: matchAttrsArray[7] };
+        match_9 = { match: matchAttrsArray[8] };
+        match_10 = { match: matchAttrsArray[9] };
+      })
+
+      it('return correct error', (done) => {
+        request(app).post('/matches')
+          .send(match_1)
+          .end((err, res) => {
+            expect(res.body.error).to.eq('YOU MUST ENTER A URL');
+            done();
+          });
+      });
+
+      it('return correct error', (done) => {
+        request(app).post('/matches')
+          .send(match_2)
+          .end((err, res) => {
+            expect(res.body.error).to.eq('INVALID URL');
+            done();
+          });
+      });
+
+      it('return correct error', (done) => {
+        request(app).post('/matches')
+          .send(match_3)
+          .end((err, res) => {
+            expect(res.body.error).to.eq('YOU MUST ENTER A TYPE OF MATCH');
+            done();
+          });
+      });
+
+      it('return correct error', (done) => {
+        request(app).post('/matches')
+          .send(match_4)
+          .end((err, res) => {
+            expect(res.body.error).to.eq('MUST HAVE A OWNER');
+            done();
+          });
+      });
+
+      it('return correct error', (done) => {
+        request(app).post('/matches')
+          .send(match_5)
+          .end((err, res) => {
+            expect(res.body.error).to.eq('RESULT MUST HAVE A USER');
+            done();
+          });
+      });
+
+      it('return correct error', (done) => {
+        request(app).post('/matches')
+          .send(match_6)
+          .end((err, res) => {
+            expect(res.body.error).to.eq('RESULT MUST HAVE A POINTS');
+            done();
+          });
+      });
+
+      it('return correct error', (done) => {
+        request(app).post('/matches')
+          .send(match_7)
+          .end((err, res) => {
+            expect(res.body.error).to.eq('INVALID DATE');
+            done();
+          });
+      });
+
+      it('return correct error', (done) => {
+        request(app).post('/matches')
+          .send(match_8)
+          .end((err, res) => {
+            expect(res.body.error).to.eq('THERE MUST BE A GAME');
+            done();
+          });
+      });
+
+      it('return correct error', (done) => {
+        request(app).post('/matches')
+          .send(match_9)
+          .end((err, res) => {
+            expect(res.body.error).to.eq('ERROR IN THE DEFINITION OF THE GAME');
+            done();
+          });
+      });
+
+      it('return correct error', (done) => {
+        request(app).post('/matches')
+          .send(match_10)
+          .end((err, res) => {
+            expect(res.body.error).to.eq('THE URL ALREADY EXISTS');
+            done();
+          });
+      });
+    });
+  });
 });
