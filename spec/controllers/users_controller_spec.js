@@ -287,7 +287,7 @@ describe('UsersController', () => {
         request(app).post('/users')
           .send(user_1)
           .end((err, res) => {
-            expect(res.body.error).to.eq('YOU MUST ENTER A EMAIL');
+            expect(res.body.error).to.eq('You must enter a email');
             done();
           });
       });
@@ -296,7 +296,7 @@ describe('UsersController', () => {
         request(app).post('/users')
           .send(user_2)
           .end((err, res) => {
-            expect(res.body.error).to.eq('INVALID EMAIL');
+            expect(res.body.error).to.eq('Invalid email');
             done();
           });
       });
@@ -305,7 +305,7 @@ describe('UsersController', () => {
         request(app).post('/users')
           .send(user_3)
           .end((err, res) => {
-            expect(res.body.error).to.eq('YOU MUST ENTER A NICKNAME');
+            expect(res.body.error).to.eq('You must enter a nickname');
             done();
           });
       });
@@ -314,7 +314,7 @@ describe('UsersController', () => {
         request(app).post('/users')
           .send(user_4)
           .end((err, res) => {
-            expect(res.body.error).to.eq('INVALID NICKNAME');
+            expect(res.body.error).to.eq('Invalid nickname');
             done();
           });
       });
@@ -323,7 +323,7 @@ describe('UsersController', () => {
         request(app).post('/users')
           .send(user_5)
           .end((err, res) => {
-            expect(res.body.error).to.eq('YOU MUST ENTER A PASSWORD');
+            expect(res.body.error).to.eq('You must enter a password');
             done();
           });
       });
@@ -332,7 +332,7 @@ describe('UsersController', () => {
         request(app).post('/users')
           .send(user_6)
           .end((err, res) => {
-            expect(res.body.error).to.eq('INVALID PASSWORD');
+            expect(res.body.error).to.eq('Invalid password');
             done();
           });
       });
@@ -341,7 +341,7 @@ describe('UsersController', () => {
         request(app).post('/users')
           .send(user_7)
           .end((err, res) => {
-            expect(res.body.error).to.eq('THE EMAIL ALREADY EXISTS');
+            expect(res.body.error).to.eq('The email already exists');
             done();
           });
       });
@@ -350,7 +350,7 @@ describe('UsersController', () => {
         request(app).post('/users')
           .send(user_8)
           .end((err, res) => {
-            expect(res.body.error).to.eq('THE NICKNAME ALREADY EXISTS');
+            expect(res.body.error).to.eq('The nickname already exists');
             done();
           });
       });

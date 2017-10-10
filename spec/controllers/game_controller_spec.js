@@ -397,7 +397,7 @@ describe('GameController', () => {
         request(app).post('/games')
           .send(game_1)
           .end((err, res) => {
-            expect(res.body.error).to.eq('YOU MUST ENTER A NAME');
+            expect(res.body.error).to.eq('You must enter a name');
             done();
           });
       });
@@ -406,7 +406,7 @@ describe('GameController', () => {
         request(app).post('/games')
           .send(game_2)
           .end((err, res) => {
-            expect(res.body.error).to.eq('THE NAME ALREADY EXISTS');
+            expect(res.body.error).to.eq('The name already exists');
             done();
           });
       });
@@ -415,7 +415,7 @@ describe('GameController', () => {
         request(app).post('/games')
           .send(game_3)
           .end((err, res) => {
-            expect(res.body.error).to.eq('INVALID NAME');
+            expect(res.body.error).to.eq('Invalid name');
             done();
           });
       });
@@ -424,7 +424,7 @@ describe('GameController', () => {
         request(app).post('/games')
           .send(game_4)
           .end((err, res) => {
-            expect(res.body.error).to.eq('THERE MUST BE A CORRECT RATING');
+            expect(res.body.error).to.eq('There must be a correct rating');
             done();
           });
       });
@@ -433,7 +433,7 @@ describe('GameController', () => {
         request(app).post('/games')
           .send(game_5)
           .end((err, res) => {
-            expect(res.body.error).to.eq('MUST HAVE A CREATOR');
+            expect(res.body.error).to.eq('Must have a creator');
             done();
           });
       });
@@ -442,7 +442,7 @@ describe('GameController', () => {
         request(app).post('/games')
           .send(game_6)
           .end((err, res) => {
-            expect(res.body.error).to.eq('RANKING MUST HAVE A USER');
+            expect(res.body.error).to.eq('Ranking must have a user');
             done();
           });
       });
@@ -451,7 +451,7 @@ describe('GameController', () => {
         request(app).post('/games')
           .send(game_7)
           .end((err, res) => {
-            expect(res.body.error).to.eq('RANKING MUST HAVE A POINTS');
+            expect(res.body.error).to.eq('Ranking must have a points');
             done();
           });
       });
@@ -460,7 +460,7 @@ describe('GameController', () => {
         request(app).post('/games')
           .send(game_8)
           .end((err, res) => {
-            expect(res.body.error).to.eq('INVALID DATE');
+            expect(res.body.error).to.eq('Invalid date');
             done();
           });
       });
@@ -469,7 +469,7 @@ describe('GameController', () => {
         request(app).post('/games')
           .send(game_9)
           .end((err, res) => {
-            expect(res.body.error).to.eq('THERE MUST BE AT LEAST ONE QUESTION');
+            expect(res.body.error).to.eq('There must be at least one question');
             done();
           });
       });
@@ -478,7 +478,7 @@ describe('GameController', () => {
         request(app).post('/games')
           .send(game_10)
           .end((err, res) => {
-            expect(res.body.error).to.eq('QUESTION CAN NOT BE EMPTY');
+            expect(res.body.error).to.eq('Question can not be empty');
             done();
           });
       });
@@ -487,7 +487,7 @@ describe('GameController', () => {
         request(app).post('/games')
           .send(game_11)
           .end((err, res) => {
-            expect(res.body.error).to.eq('INVALID DIFFICLUTY');
+            expect(res.body.error).to.eq('Invalid difficluty');
             done();
           });
       });
@@ -496,7 +496,7 @@ describe('GameController', () => {
         request(app).post('/games')
           .send(game_12)
           .end((err, res) => {
-            expect(res.body.error).to.eq('YOU MUST WRITE THE ANSWERS');
+            expect(res.body.error).to.eq('You must write the answers');
             done();
           });
       });
@@ -505,7 +505,7 @@ describe('GameController', () => {
         request(app).post('/games')
           .send(game_13)
           .end((err, res) => {
-            expect(res.body.error).to.eq('THERE MUST WRITE BETWEEN 2 AND 6 POSSIBLES ANSWERS');
+            expect(res.body.error).to.eq('There must write between 2 and 6 possibles answers');
             done();
           });
       });
@@ -514,7 +514,7 @@ describe('GameController', () => {
         request(app).post('/games')
           .send(game_14)
           .end((err, res) => {
-            expect(res.body.error).to.eq('ANSWER CAN NOT BE EMPTY');            
+            expect(res.body.error).to.eq('Answer can not be empty');            
             done();
           });
       });
@@ -523,7 +523,7 @@ describe('GameController', () => {
         request(app).post('/games')
           .send(game_15)
           .end((err, res) => {
-            expect(res.body.error).to.eq('YOU MUST SELECT CORRECT ANSWER');
+            expect(res.body.error).to.eq('You must select correct answer');
             done();
           });
       });
@@ -532,7 +532,7 @@ describe('GameController', () => {
         request(app).post('/games')
           .send(game_16)
           .end((err, res) => {
-            expect(res.body.error).to.eq('THERE MUST BE A CORRECT ANSWER');
+            expect(res.body.error).to.eq('There must be a correct answer');
             done();
           });
       });

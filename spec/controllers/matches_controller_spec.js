@@ -330,7 +330,7 @@ describe('MatchesController', () => {
         request(app).post('/matches')
           .send(match_1)
           .end((err, res) => {
-            expect(res.body.error).to.eq('YOU MUST ENTER A URL');
+            expect(res.body.error).to.eq('You must enter a url');
             done();
           });
       });
@@ -339,7 +339,7 @@ describe('MatchesController', () => {
         request(app).post('/matches')
           .send(match_2)
           .end((err, res) => {
-            expect(res.body.error).to.eq('INVALID URL');
+            expect(res.body.error).to.eq('Invalid url');
             done();
           });
       });
@@ -348,7 +348,7 @@ describe('MatchesController', () => {
         request(app).post('/matches')
           .send(match_3)
           .end((err, res) => {
-            expect(res.body.error).to.eq('YOU MUST ENTER A TYPE OF MATCH');
+            expect(res.body.error).to.eq('You must enter a type of match');
             done();
           });
       });
@@ -357,7 +357,7 @@ describe('MatchesController', () => {
         request(app).post('/matches')
           .send(match_4)
           .end((err, res) => {
-            expect(res.body.error).to.eq('MUST HAVE A OWNER');
+            expect(res.body.error).to.eq('Must have a owner');
             done();
           });
       });
@@ -366,7 +366,7 @@ describe('MatchesController', () => {
         request(app).post('/matches')
           .send(match_5)
           .end((err, res) => {
-            expect(res.body.error).to.eq('RESULT MUST HAVE A USER');
+            expect(res.body.error).to.eq('Result must have a user');
             done();
           });
       });
@@ -375,7 +375,7 @@ describe('MatchesController', () => {
         request(app).post('/matches')
           .send(match_6)
           .end((err, res) => {
-            expect(res.body.error).to.eq('RESULT MUST HAVE A POINTS');
+            expect(res.body.error).to.eq('Result must have a points');
             done();
           });
       });
@@ -384,7 +384,7 @@ describe('MatchesController', () => {
         request(app).post('/matches')
           .send(match_7)
           .end((err, res) => {
-            expect(res.body.error).to.eq('INVALID DATE');
+            expect(res.body.error).to.eq('Invalid date');
             done();
           });
       });
@@ -393,7 +393,7 @@ describe('MatchesController', () => {
         request(app).post('/matches')
           .send(match_8)
           .end((err, res) => {
-            expect(res.body.error).to.eq('THERE MUST BE A GAME');
+            expect(res.body.error).to.eq('There must be a game');
             done();
           });
       });
@@ -402,7 +402,7 @@ describe('MatchesController', () => {
         request(app).post('/matches')
           .send(match_9)
           .end((err, res) => {
-            expect(res.body.error).to.eq('ERROR IN THE DEFINITION OF THE GAME');
+            expect(res.body.error).to.eq('Error in the definition of the game');
             done();
           });
       });
@@ -411,7 +411,7 @@ describe('MatchesController', () => {
         request(app).post('/matches')
           .send(match_10)
           .end((err, res) => {
-            expect(res.body.error).to.eq('THE URL ALREADY EXISTS');
+            expect(res.body.error).to.eq('The url already exists');
             done();
           });
       });
