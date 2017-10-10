@@ -357,7 +357,7 @@ describe('MatchesController', () => {
         request(app).post('/matches')
           .send(match_4)
           .end((err, res) => {
-            expect(res.body.error).to.eq('Must have a owner');
+            expect(res.body.error).to.eq('Must have an owner');
             done();
           });
       });
@@ -375,7 +375,7 @@ describe('MatchesController', () => {
         request(app).post('/matches')
           .send(match_6)
           .end((err, res) => {
-            expect(res.body.error).to.eq('Result must have a points');
+            expect(res.body.error).to.eq('Result must have points');
             done();
           });
       });

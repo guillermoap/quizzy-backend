@@ -451,7 +451,7 @@ describe('GameController', () => {
         request(app).post('/games')
           .send(game_7)
           .end((err, res) => {
-            expect(res.body.error).to.eq('Ranking must have a points');
+            expect(res.body.error).to.eq('Ranking must have points');
             done();
           });
       });
@@ -505,7 +505,7 @@ describe('GameController', () => {
         request(app).post('/games')
           .send(game_13)
           .end((err, res) => {
-            expect(res.body.error).to.eq('There must write between 2 and 6 possibles answers');
+            expect(res.body.error).to.eq('The question must have between 2 and 6 possibles answers');
             done();
           });
       });
@@ -523,7 +523,7 @@ describe('GameController', () => {
         request(app).post('/games')
           .send(game_15)
           .end((err, res) => {
-            expect(res.body.error).to.eq('You must select correct answer');
+            expect(res.body.error).to.eq('You must select a correct answer');
             done();
           });
       });

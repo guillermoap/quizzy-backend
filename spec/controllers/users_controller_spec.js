@@ -287,7 +287,7 @@ describe('UsersController', () => {
         request(app).post('/users')
           .send(user_1)
           .end((err, res) => {
-            expect(res.body.error).to.eq('You must enter a email');
+            expect(res.body.error).to.eq('You must enter an email');
             done();
           });
       });
