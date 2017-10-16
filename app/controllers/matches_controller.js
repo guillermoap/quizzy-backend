@@ -38,7 +38,7 @@ export const create = (req, res, next) => {
           error: errorMessage(err.message)
         });
     } else {
-      return res.json({});
+      return res.json(matchShow(match));
     }
   });
 }
