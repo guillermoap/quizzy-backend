@@ -260,8 +260,8 @@ describe('MatchesController', () => {
         cantPlayers: 0,
         owner: null, 
         result: [
-          {points: 3}, 
-          {user: 'user'}
+          { points: 3 }, 
+          { user: 'user' }
         ], 
         endingDate: 'el dia de hoy',
         game: null
@@ -271,8 +271,8 @@ describe('MatchesController', () => {
         cantPlayers: 0,
         owner: null, 
         result: [
-          {points: 3}, 
-          {user: 'user'}
+          { points: 3 }, 
+          { user: 'user' }
         ], 
         endingDate: 'el dia de hoy',
         game: null
@@ -281,29 +281,29 @@ describe('MatchesController', () => {
         cantPlayers: 0,
         owner: null, 
         result: [
-          {points: 3}, 
-          {user: 'user'}
+          { points: 3 }, 
+          { user: 'user' }
         ], 
         endingDate: 'el dia de hoy',
         game: null
       }, {
         owner: null, 
         result: [
-          {points: 3}, 
-          {user: 'user'}
+          { points: 3 }, 
+          { user: 'user' }
         ], 
         endingDate: 'el dia de hoy',
         game: null
       }, { 
         result: [
-          {points: 3}, 
-          {user: 'user'}
+          { points: 3 }, 
+          { user: 'user' }
         ], 
         endingDate: 'el dia de hoy',
         game: null
       }, { 
         result: [
-          {user: 'user'}
+          { user: 'user' }
         ], 
         endingDate: 'el dia de hoy',
         game: null
@@ -320,8 +320,8 @@ describe('MatchesController', () => {
         cantPlayers: 0, 
         owner: null, 
         result: [
-          {points: 3}, 
-          {user: 'user'}
+          { points: 3 }, 
+          { user: 'user' }
         ], 
         endingDate: 'el dia de hoy',
         game: null
