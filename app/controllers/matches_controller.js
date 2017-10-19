@@ -83,6 +83,8 @@ function errorMessage(error) {
       return ('Invalid url');
     case (error.match(/you must enter a type of match/) || {}).input:
       return ('You must enter a type of match');
+    case (error.match(/there must be at least two players/) || {}).input:
+      return ('There must be at least two players');
     case (error.match(/must have a owner/) || {}).input:
       return ('Must have an owner');
     case (error.match(/result must have a user/) || {}).input:

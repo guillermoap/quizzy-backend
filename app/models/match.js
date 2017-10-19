@@ -17,6 +17,14 @@ var matchSchema = new Schema ({
     type: Boolean,
     required: [true, 'you must enter a type of match']
   },
+  cantPlayers: {
+    type: Number,
+    validate: {
+      validator: function(cantPlayers) { return cantPlayers > 1 },
+      message: 'there must be at least two players'
+    },
+    default: 3
+  },
   owner: {
     type: String,
     required: [true, 'must have a owner']
