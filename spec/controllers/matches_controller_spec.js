@@ -46,7 +46,7 @@ describe('MatchesController', () => {
       request(app).get('/matches')
         .end((err, res) => {
           expect(res.body.matches[0])
-            .to.have.keys('id', 'url', 'isRealTime',
+            .to.have.keys('id', 'url', 'isRealTime', 'cantPlayers',
               'owner', 'endingDate', 'game', 'result');
           done();
         });
@@ -66,7 +66,7 @@ describe('MatchesController', () => {
       request(app).get(`/matches/${match.url}`)
         .end((err, res) => {
           expect(res.body.match)
-            .to.have.keys('id', 'url', 'isRealTime',
+            .to.have.keys('id', 'url', 'isRealTime', 'cantPlayers',
               'owner', 'endingDate', 'game', 'result');
           done();
         });
@@ -251,11 +251,13 @@ describe('MatchesController', () => {
       var match_8;
       var match_9;
       var match_10;
+      var match_11;
       
-      factory.attrsMany('match', 10, [
+      factory.attrsMany('match', 11, [
       {
         url: null, 
-        isRealTime: null, 
+        isRealTime: null,
+        cantPlayers: 0,
         owner: null, 
         result: [
           {points: 3}, 
@@ -265,7 +267,8 @@ describe('MatchesController', () => {
         game: null
       }, {
         url: 's e b a s', 
-        isRealTime: null, 
+        isRealTime: null,
+        cantPlayers: 0,
         owner: null, 
         result: [
           {points: 3}, 
@@ -274,7 +277,8 @@ describe('MatchesController', () => {
         endingDate: 'el dia de hoy',
         game: null
       }, { 
-        isRealTime: null, 
+        isRealTime: null,
+        cantPlayers: 0,
         owner: null, 
         result: [
           {points: 3}, 
@@ -312,6 +316,15 @@ describe('MatchesController', () => {
         game: { }
       }, {
         url: 'testURL'
+      }, { 
+        cantPlayers: 0, 
+        owner: null, 
+        result: [
+          {points: 3}, 
+          {user: 'user'}
+        ], 
+        endingDate: 'el dia de hoy',
+        game: null
       }])
       .then(matchAttrsArray => {
         match_1 = { match: matchAttrsArray[0] };
@@ -324,6 +337,7 @@ describe('MatchesController', () => {
         match_8 = { match: matchAttrsArray[7] };
         match_9 = { match: matchAttrsArray[8] };
         match_10 = { match: matchAttrsArray[9] };
+        match_11 = { match: matchAttrsArray[10] };
       })
 
       it('return correct error', (done) => {
@@ -349,6 +363,15 @@ describe('MatchesController', () => {
           .send(match_3)
           .end((err, res) => {
             expect(res.body.error).to.eq('You must enter a type of match');
+            done();
+          });
+      });
+
+      it('return correct error', (done) => {
+        request(app).post('/matches')
+          .send(match_11)
+          .end((err, res) => {
+            expect(res.body.error).to.eq('There must be at least two players');
             done();
           });
       });
