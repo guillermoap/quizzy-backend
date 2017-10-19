@@ -263,20 +263,20 @@ describe('GameController', () => {
         rating: -3, 
         creator: null, 
         ranking: [
-          {points: 3}, 
-          {user: 'user'}
+          { points: 3 }, 
+          { user: 'user' }
         ], 
         creationDate: 'el dia de hoy',
         questions: null
-      }, { //el checkeo de duplicated se realiza al final de todos por defecto
+      }, { 
         name: 'basket'
       }, {
         name: '$$$$$', 
         rating: -3, 
         creator: null, 
         ranking: [
-          {points: 3}, 
-          {user: 'user'}
+          { points: 3 }, 
+          { user: 'user' }
         ], 
         creationDate: 'el dia de hoy',
         questions: null
@@ -284,29 +284,29 @@ describe('GameController', () => {
         rating: -3, 
         creator: null, 
         ranking: [
-          {points: 3}, 
-          {user: 'user'}
+          { points: 3 }, 
+          { user: 'user' }
         ], 
         creationDate: 'el dia de hoy',
         questions: null
       }, {
         creator: null, 
         ranking: [
-          {points: 3}, 
-          {user: 'user'}
+          { points: 3 }, 
+          { user: 'user' }
         ], 
         creationDate: 'el dia de hoy',
         questions: null
       }, { 
         ranking: [
-          {points: 3}, 
-          {user: 'user'}
+          { points: 3 }, 
+          { user: 'user' }
         ], 
         creationDate: 'el dia de hoy',
         questions: null
       }, {
         ranking: [ 
-          {user: 'user'}
+          { user: 'user' }
         ], 
         creationDate: 'el dia de hoy',
         questions: null

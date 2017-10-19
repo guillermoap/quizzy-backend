@@ -3,6 +3,7 @@ import {
   userIndex,
   userShow
 } from '../views/users_view';
+import { errorMessageUser } from '../errors/user_errors';
 
 export const index = (req, res, next) => {
   User.find().lean().exec((err, users) => {
@@ -15,7 +16,7 @@ export const show = (req, res, next) => {
     if (err) {
       return res.status(404)
         .json({
-          error: errorMessage(err.message)
+          error: errorMessageUser(err.message)
         });
     } else {
       res.json(userShow(user));
@@ -28,7 +29,7 @@ export const create = (req, res, next) => {
     if (err) {
       return res.status(400)
         .json({
-          error: errorMessage(err.message)
+          error: errorMessageUser(err.message)
         });
     } else {
       return res.json({});
@@ -45,7 +46,7 @@ export const update = (req, res, next) => {
     if (err) {
       return res.status(400)
         .json({
-          error: errorMessage(err.message)
+          error: errorMessageUser(err.message)
         });
     } else {
       return res.json(userShow(user));
@@ -58,33 +59,10 @@ export const destroy = (req, res, next) => {
     if (err) {
       return res.status(400)
         .json({
-          error: errorMessage(err.message)
+          error: errorMessageUser(err.message)
         });
     } else {
       return res.json({});
     }
   });
-}
-
-function errorMessage(error) {
-  switch(error) {
-    case (error.match(/email_1 dup key/) || {}).input:
-      return ('The email already exists');
-    case (error.match(/nickname_1 dup key/) || {}).input:
-      return ('The nickname already exists');
-    case (error.match(/you must enter a email/) || {}).input:
-      return ('You must enter an email');
-    case (error.match(/invalid email/) || {}).input:
-      return ('Invalid email');
-    case (error.match(/you must enter a nickname/) || {}).input:
-      return ('You must enter a nickname');
-    case (error.match(/invalid nickname/) || {}).input:
-      return ('Invalid nickname');
-    case (error.match(/you must enter a password/) || {}).input:
-      return ('You must enter a password');
-    case (error.match(/invalid password/) || {}).input:
-      return ('Invalid password');
-    default:
-      return error
-  }
 }
