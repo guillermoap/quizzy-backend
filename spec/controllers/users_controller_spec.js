@@ -89,11 +89,11 @@ describe('UsersController', () => {
           };
         })
 
-      it('returns 200', (done) => {
+      it('returns 201', (done) => {
         request(app).post('/users')
           .send(params)
           .end((err, res) => {
-            expect(res).to.have.status(200);
+            expect(res).to.have.status(201);
             done();
           });
       });
@@ -121,11 +121,11 @@ describe('UsersController', () => {
           };
         })
 
-      it('returns 400', (done) => {
+      it('returns 422', (done) => {
         request(app).post('/users')
           .send(params)
           .end((err, res) => {
-            expect(res).to.have.status(400);
+            expect(res).to.have.status(422);
             done();
           });
       });
@@ -187,11 +187,11 @@ describe('UsersController', () => {
           };
         })
 
-      it('returns 400', (done) => {
+      it('returns 422', (done) => {
         request(app).put(`/users/${user.id}`)
           .send(params)
           .end((err, res) => {
-            expect(res).to.have.status(400);
+            expect(res).to.have.status(422);
             done();
           });
       });
@@ -228,10 +228,10 @@ describe('UsersController', () => {
         });
     });
     //destroy user who does not exist
-    it('returns 400', (done) => {
+    it('returns 404', (done) => {
       request(app).delete(`/users/000000`)
         .end((err, res) => {
-          expect(res).to.have.status(400);
+          expect(res).to.have.status(404);
           done();
         });
     });

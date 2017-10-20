@@ -18,22 +18,21 @@ export const show = (req, res, next) => {
         .json({
           error: errorMessageUser(err.message)
         });
-    } else {
-      res.json(userShow(user));
     }
+    res.json(userShow(user));
   });
 }
 
 export const create = (req, res, next) => {
   User.create(req.body.user, function(err, user) {
     if (err) {
-      return res.status(400)
+      return res.status(422)
         .json({
           error: errorMessageUser(err.message)
         });
-    } else {
-      return res.json({});
     }
+    return res.status(201)
+      .json(userShow(user));
   });
 }
 
@@ -44,25 +43,23 @@ export const update = (req, res, next) => {
     new: true
   }).exec((err, user) => {
     if (err) {
-      return res.status(400)
+      return res.status(422)
         .json({
           error: errorMessageUser(err.message)
         });
-    } else {
-      return res.json(userShow(user));
     }
+    return res.json(userShow(user));
   });
 }
 
 export const destroy = (req, res, next) => {
   User.findByIdAndRemove(req.params.id).exec((err, user) => {
     if (err) {
-      return res.status(400)
+      return res.status(404)
         .json({
           error: errorMessageUser(err.message)
         });
-    } else {
-      return res.json({});
     }
+    return res.json({});
   });
 }

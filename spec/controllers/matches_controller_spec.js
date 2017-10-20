@@ -74,7 +74,7 @@ describe('MatchesController', () => {
     //find match that does not exist
     it('returns 404', (done) => {
       request(app).get(`/matches/0000000`)
-        .end((err, res) => {
+        .end((res) => {
           expect(res).to.have.status(404);
           done();
         });
@@ -91,11 +91,11 @@ describe('MatchesController', () => {
           };
         })
 
-      it('returns 200', (done) => {
+      it('returns 201', (done) => {
         request(app).post('/matches')
           .send(params)
           .end((err, res) => {
-            expect(res).to.have.status(200);
+            expect(res).to.have.status(201);
             done();
           });
       });
@@ -123,11 +123,11 @@ describe('MatchesController', () => {
           };
         })
 
-      it('returns 400', (done) => {
+      it('returns 422', (done) => {
         request(app).post('/matches')
           .send(params)
           .end((err, res) => {
-            expect(res).to.have.status(400);
+            expect(res).to.have.status(422);
             done();
           });
       });
@@ -189,11 +189,11 @@ describe('MatchesController', () => {
           };
         })
 
-      it('returns 400', (done) => {
+      it('returns 422', (done) => {
         request(app).put(`/matches/${match.id}`)
           .send(params)
           .end((err, res) => {
-            expect(res).to.have.status(400);
+            expect(res).to.have.status(422);
             done();
           });
       });
@@ -230,10 +230,10 @@ describe('MatchesController', () => {
         });
     });
     //destroy match that does not exist
-    it('returns 400', (done) => {
+    it('returns 404', (done) => {
       request(app).delete(`/matches/000000`)
         .end((err, res) => {
-          expect(res).to.have.status(400);
+          expect(res).to.have.status(404);
           done();
         });
     });

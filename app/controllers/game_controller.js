@@ -8,13 +8,12 @@ import { errorMessageGame } from '../errors/game_errors';
 export const index = (req, res, next) => {
   Game.find().lean().exec((err, games) => {
     if (err) {
-      return res.status(400)
+      return res.status(422)
         .json({
           error: errorMessageGame(err.message)
         });
-    } else {
-      res.json(gameIndex(games));
     }
+    res.json(gameIndex(games));
   });
 };
 
@@ -25,22 +24,21 @@ export const show = (req, res, next) => {
         .json({
           error: errorMessageGame(err.message)
         });
-    } else {
-      res.json(gameShow(game));
     }
+    res.json(gameShow(game));
   });
 };
 
 export const create = (req, res, next) => {
   Game.create(req.body.game, function(err, game) {
     if (err) {
-      return res.status(500)
+      return res.status(422)
         .json({
           error: errorMessageGame(err.message)
         });
-    } else {
-      return res.json({});
     }
+    return res.status(201)
+      .json(gameShow(game));
   });
 };
 
@@ -51,25 +49,23 @@ export const update = (req, res, next) => {
     new: true
   }).exec((err, game) => {
     if (err) {
-      return res.status(400)
+      return res.status(422)
         .json({
           error: errorMessageGame(err.message)
         });
-    } else {
-      return res.json(gameShow(game));
     }
+    return res.json(gameShow(game));
   });
 };
 
 export const destroy = (req, res, next) => {
   Game.findByIdAndRemove(req.params.id).exec((err, game) => {
     if (err) {
-      return res.status(400)
+      return res.status(404)
         .json({
           error: errorMessageGame(err.message)
         });
-    } else {
-      return res.json({});
     }
+    return res.json({});
   });
 };
