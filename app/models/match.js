@@ -17,10 +17,10 @@ var matchSchema = new Schema ({
     type: Boolean,
     required: [true, 'you must enter a type of match']
   },
-  cantPlayers: {
+  totalPlayers: {
     type: Number,
     validate: {
-      validator: function(cantPlayers) { return cantPlayers > 1 },
+      validator: function(totalPlayers) { return totalPlayers > 1 },
       message: 'there must be at least two players'
     },
     default: 3

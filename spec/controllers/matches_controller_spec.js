@@ -46,7 +46,7 @@ describe('MatchesController', () => {
       request(app).get('/matches')
         .end((err, res) => {
           expect(res.body.matches[0])
-            .to.have.keys('id', 'url', 'isRealTime', 'cantPlayers',
+            .to.have.keys('id', 'url', 'isRealTime', 'totalPlayers',
               'owner', 'endingDate', 'game', 'result');
           done();
         });
@@ -66,7 +66,7 @@ describe('MatchesController', () => {
       request(app).get(`/matches/${match.url}`)
         .end((err, res) => {
           expect(res.body.match)
-            .to.have.keys('id', 'url', 'isRealTime', 'cantPlayers',
+            .to.have.keys('id', 'url', 'isRealTime', 'totalPlayers',
               'owner', 'endingDate', 'game', 'result');
           done();
         });
@@ -257,7 +257,7 @@ describe('MatchesController', () => {
       {
         url: null, 
         isRealTime: null,
-        cantPlayers: 0,
+        totalPlayers: 0,
         owner: null, 
         result: [
           { points: 3 }, 
@@ -268,7 +268,7 @@ describe('MatchesController', () => {
       }, {
         url: 's e b a s', 
         isRealTime: null,
-        cantPlayers: 0,
+        totalPlayers: 0,
         owner: null, 
         result: [
           { points: 3 }, 
@@ -278,7 +278,7 @@ describe('MatchesController', () => {
         game: null
       }, { 
         isRealTime: null,
-        cantPlayers: 0,
+        totalPlayers: 0,
         owner: null, 
         result: [
           { points: 3 }, 
@@ -317,7 +317,7 @@ describe('MatchesController', () => {
       }, {
         url: 'testURL'
       }, { 
-        cantPlayers: 0, 
+        totalPlayers: 0, 
         owner: null, 
         result: [
           { points: 3 }, 
