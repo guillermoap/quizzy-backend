@@ -17,7 +17,7 @@ mongoose.connect(`mongodb://${config.database.host}/${config.database.db}`);
 // Initialize http server
 const app = express();
 // Initialize Ws server
-var eWs = expressWs(app)
+const eWs = expressWs(app)
 
 // Prettify JSON
 app.set('json spaces', 3);
@@ -37,8 +37,8 @@ app.use('/games',games);
 app.use('/matches', matches);
 
 //WebSockets server
-var aWss = eWs.getWss('/echo');
-let connected = [];
+const aWss = eWs.getWss('/echo');
+var connected = [];
 
 app.ws('/realusers', (ws, req) => {
   ws.send('hola');
