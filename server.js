@@ -6,6 +6,7 @@ import games from './config/routes/games';
 import users from './config/routes/users.js';
 import matches from './config/routes/matches.js';
 import cors from 'cors';
+import expressWs from 'express-ws'
 
 var env = process.env.NODE_ENV || 'development';
 var config = configuration[env];
@@ -15,6 +16,8 @@ mongoose.connect(`mongodb://${config.database.host}/${config.database.db}`);
 
 // Initialize http server
 const app = express();
+// Initialize Ws server
+var eWs = expressWs(app)
 
 // Prettify JSON
 app.set('json spaces', 3);
@@ -25,17 +28,45 @@ if ((env != 'test') && (env != 'prodTest')) {
 }
 
 // cors middleware to accept any pattern matching example.com subdomains
-
 app.use(cors());
 app.options('*',cors());
+
 //Middleware to set the general routing
 app.use('/users', users);
 app.use('/games',games);
 app.use('/matches', matches);
 
+//WebSockets server
+var aWss = eWs.getWss('/echo');
+let connected = [];
+
+app.ws('/realusers', (ws, req) => {
+  ws.send('hola');
+  ws.on('message', msg => {
+    console.log(msg);
+    connected.push(msg);
+    console.log(connected);
+    for (var i=0; i < connected.length; i++){
+      ws.broadcast(connected[i]);
+    }
+  })
+  ws.on('close', () => {
+    connected = [];
+    ws.broadcast('hola');
+    console.log('WebSocket was closed');
+  })
+
+  ws.broadcast = function broadcast(msg) {
+    aWss.clients.forEach(function each(client) {
+       client.send(msg);
+    });
+  };
+})
+
 const server = app.listen(config.server.port, config.server.host, () => {
   const { address, port } = server.address();
   console.log(`Listening at http://${address}:${port}`);
+  console.log(`Websocket listening at http://${address}:${port}`);
 });
 
 export default app;
