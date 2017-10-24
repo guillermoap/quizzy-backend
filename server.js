@@ -44,7 +44,6 @@ app.ws('/realusers', (ws, req) => {
   ws.send('hola');
   ws.on('message', msg => {
     connected.push(msg);
-    console.log(JSON.stringify(connected));
     ws.broadcast(JSON.stringify(connected));
   })
   ws.on('close', () => {
