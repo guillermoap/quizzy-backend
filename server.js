@@ -43,17 +43,13 @@ let connected = [];
 app.ws('/realusers', (ws, req) => {
   ws.send('hola');
   ws.on('message', msg => {
-    console.log(msg);
     connected.push(msg);
-    console.log(connected);
-    for (var i=0; i < connected.length; i++){
-      ws.broadcast(connected[i]);
-    }
+    console.log(JSON.stringify(connected));
+    ws.broadcast(JSON.stringify(connected));
   })
   ws.on('close', () => {
     connected = [];
     ws.broadcast('hola');
-    console.log('WebSocket was closed');
   })
 
   ws.broadcast = function broadcast(msg) {
