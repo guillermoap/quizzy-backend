@@ -7,6 +7,7 @@ import factory from '../factories/factory.js';
 import app from '../../server.js';
 import mongoose from 'mongoose';
 import Match from '../../app/models/match';
+import Game from '../../app/models/game';
 
 chai.use(chaiHttp);
 
@@ -209,6 +210,100 @@ describe('MatchesController', () => {
           });
       });
     });
+  });
+
+  describe('update Ranking', () => {
+    context('with ranking not empty', () => {
+      let params;
+      let gameWithRanking;
+      factory.attrs('game', {
+          ranking: [{user: 'sebas', points: 12}]
+        })
+        .then(attrs => {
+          gameWithRanking = attrs
+        })
+      factory.attrs('match', {
+          url: 'updatedURL',
+          game: gameWithRanking
+        })
+        .then(attrs => {
+          params = {
+            match: attrs
+          };
+        })
+      let params1 = {
+        user: 'sebas',
+        points: 9999
+      }
+
+      it('returns 200', (done) => {
+        request(app).put(`/matches/${match.id}`)
+          .send(params1)
+          .end((err, res) => {
+            expect(res).to.have.status(200);
+            done();
+          });
+      });
+
+      it('updates a match', (done) => {
+        request(app).put(`/matches/${match.id}`)
+          .send(params1)
+          .end((err, res) => {
+            Match.findById(match.id).lean().exec((err, match) => {
+              console.log(gameWithRanking)
+              console.log(match.url)
+              console.log(match.game.ranking)
+              expect(res.body[0][1]).to.eq("user: 'sebas'");
+              done();
+            });
+          });
+      });
+    });
+/*
+    context('with ranking empty', () => {
+      let params;
+      let gameWithOutRanking;
+      factory.attrs('game', {
+          ranking: [{user: 'sebas', points: 12}]
+        })
+        .then(attrs => {
+          gameWithOutRanking = attrs
+        })
+      factory.attrs('match', {
+          url: 'updatedURL',
+          game: gameWithOutRanking
+        })
+        .then(attrs => {
+          params = {
+            match: attrs
+          };
+        })
+      let params1 = {
+        user: 'sebas',
+        points: 9999
+      }
+
+      it('returns 200', (done) => {
+        request(app).put(`/matches/${match.id}`)
+          .send(params1)
+          .end((err, res) => {
+            expect(res).to.have.status(200);
+            done();
+          });
+      });
+
+      it('updates a match', (done) => {
+        request(app).put(`/matches/${match.id}`)
+          .send(params1)
+          .end((err, res) => {
+            Match.findById(match.id).lean().exec((err, match) => {
+              console.log(match.game.ranking)
+              expect(res.body[0]).to.eq({user: 'sebas', points: 9999});
+              done();
+            });
+          });
+      });
+    });*/
   });
 
   describe('destroy', () => {
