@@ -43,7 +43,7 @@ var connected = [];
 app.ws('/realusers', (ws, req) => {
   ws.send('hola');
   ws.on('message', msg => {
-    connected.push(msg);
+    connected.push(JSON.parse(msg));
     ws.broadcast(JSON.stringify(connected));
   })
   ws.on('close', () => {
