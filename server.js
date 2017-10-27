@@ -37,13 +37,13 @@ app.use('/games',games);
 app.use('/matches', matches);
 
 //WebSockets server
-const aWss = eWs.getWss('/echo');
+const aWss = eWs.getWss('/realusers');
 var connected = [];
 
 app.ws('/realusers', (ws, req) => {
   ws.send('hola');
   ws.on('message', msg => {
-    connected.push(msg);
+    connected.push(JSON.parse(msg));
     ws.broadcast(JSON.stringify(connected));
   })
   ws.on('close', () => {
