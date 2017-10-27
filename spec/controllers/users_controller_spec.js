@@ -210,10 +210,10 @@ describe('UsersController', () => {
   });
 
   describe('destroy', () => {
-    it('returns 200', (done) => {
+    it('returns 204', (done) => {
       request(app).delete(`/users/${user.id}`)
         .end((err, res) => {
-          expect(res).to.have.status(200);
+          expect(res).to.have.status(204);
           done();
         });
     });

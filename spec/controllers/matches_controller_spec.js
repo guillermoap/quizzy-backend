@@ -7,6 +7,7 @@ import factory from '../factories/factory.js';
 import app from '../../server.js';
 import mongoose from 'mongoose';
 import Match from '../../app/models/match';
+import Game from '../../app/models/game';
 
 chai.use(chaiHttp);
 
@@ -16,7 +17,7 @@ describe('MatchesController', () => {
 
   beforeEach(function(done) {
     factory.createMany('match', 2, [{
-        url: 'testURL'
+        url: 'testURL',
       }, {
         url: 'testURL2'
       }])
@@ -211,11 +212,54 @@ describe('MatchesController', () => {
     });
   });
 
+  describe('update Ranking', () => {
+    context('with ranking not empty', () => {
+      let params1 = {
+        user: 'sebas',
+        points: 99999
+      }
+
+      let params2 = {
+        user: 'sebas',
+        points: 0
+      }
+
+      it('insert in first place', (done) => {
+        request(app).get(`/matches/testurl2`)
+        .end((err, res) => {
+          request(app).put(`/matches/${res.body.match.id}`)
+          .send(params1)
+          .end((err, res) => {
+            expect(res).to.have.status(200);
+            expect(res.body.ranking[0].user).to.eq('sebas');
+            expect(res.body.ranking[0].points).to.eq(99999);
+            done();
+          });
+        });
+      });
+
+      it('insert in last place', (done) => {
+        request(app).get(`/matches/testurl2`)
+        .end((err, res) => {
+          request(app).put(`/matches/${res.body.match.id}`)
+          .send(params2)
+          .end((err, res) => {
+            expect(res).to.have.status(200);
+            let length = res.body.ranking.length;
+            expect(res.body.ranking[length-1].user).to.eq('sebas');
+            expect(res.body.ranking[length-1].points).to.eq(0);
+            done();
+          });
+        });
+      });
+    });
+  });
+
   describe('destroy', () => {
-    it('returns 200', (done) => {
+    it('returns 204', (done) => {
       request(app).delete(`/matches/${match.id}`)
         .end((err, res) => {
-          expect(res).to.have.status(200);
+          expect(res).to.have.status(204);
           done();
         });
     });
