@@ -253,7 +253,7 @@ describe('MatchesController', () => {
               console.log(gameWithRanking)
               console.log(match.url)
               console.log(match.game.ranking)
-              expect(res.body[0][1]).to.eq("user: 'sebas'");
+              expect(res.body[0]).to.eq({user: 'sebas', points: 9999});
               done();
             });
           });

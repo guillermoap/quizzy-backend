@@ -60,6 +60,6 @@ export const destroy = (req, res, next) => {
           error: errorMessageUser(err.message)
         });
     }
-    return res.json({});
+    return res.status(204).json({});
   });
 }

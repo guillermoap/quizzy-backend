@@ -12,6 +12,7 @@ function rankingInsert(match, user, points) {
 
    //para terminar, sobreescribir el ranking del game del match con la variable ranking, y devolver esa variable como resultado de la funcion       para utilizar en el fronten
   match.game.ranking = ranking;
+  console.log('   Tiki chupala')
   return match;
   function greaterOrEqual(item) {
     return points >= item.points;
