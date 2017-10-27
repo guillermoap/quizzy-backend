@@ -227,7 +227,7 @@ describe('MatchesController', () => {
       it('insert in first place', (done) => {
         request(app).get(`/matches/testurl2`)
         .end((err, res) => {
-          request(app).put(`/matches/${res.body.match.id}`)
+          request(app).put(`/matches/${ res.body.match.id }`)
           .send(params1)
           .end((err, res) => {
             expect(res).to.have.status(200);
@@ -241,7 +241,7 @@ describe('MatchesController', () => {
       it('insert in last place', (done) => {
         request(app).get(`/matches/testurl2`)
         .end((err, res) => {
-          request(app).put(`/matches/${res.body.match.id}`)
+          request(app).put(`/matches/${ res.body.match.id }`)
           .send(params2)
           .end((err, res) => {
             expect(res).to.have.status(200);
