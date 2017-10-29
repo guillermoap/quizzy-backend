@@ -1,4 +1,4 @@
-/*import chai, {
+import chai, {
   expect
 } from 'chai';
 import factory from '../factories/factory.js';
@@ -126,4 +126,4 @@ describe('Factory', () => {
       done();
     });
   });
-});*/
+});
