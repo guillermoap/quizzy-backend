@@ -74,7 +74,7 @@ factory.define('match', Match, {
     ],
     ranking: [{
       user: () => faker.internet.userName(),
-      points: () => faker.random.number()
+      points: () => faker.random.number(10000)
     }],
     endingDate: () => faker.date.past(),
     image: () => faker.image.imageUrl()
