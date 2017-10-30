@@ -14,7 +14,7 @@ export const index = (req, res, next) => {
 
 export const show = (req, res, next) => {
   Match.findOne({
-    'url': req.params.url
+    'url': req.params.url.toLowerCase().trim()
   }).lean().exec((err, match) => {
     if (err) {
       return res.status(422)
@@ -44,7 +44,7 @@ export const create = (req, res, next) => {
 }
 
 export const update = (req, res, next) => {
-  if (req.body.match != null) {  
+  if (req.body.match !== undefined) {  
     Match.findByIdAndUpdate(req.params.id, {
       $set: req.body.match
     }, {
@@ -58,7 +58,7 @@ export const update = (req, res, next) => {
       }
       return res.json(matchShow(match));
     });
-  } else if (req.body.user != null && req.body.points != null) {
+  } else if (req.body.user !== undefined && req.body.points !== undefined) {
     Match.findById(req.params.id, (err, match) => {
       let matchUpdate = rankingInsert(match, req.body.user, req.body.points)
       Match.update({ _id: req.params.id }, {

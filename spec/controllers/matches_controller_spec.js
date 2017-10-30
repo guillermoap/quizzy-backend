@@ -212,53 +212,48 @@ describe('MatchesController', () => {
     });
   });
 
-  // describe('update Ranking', () => {
-  //   context('with ranking not empty', () => {
-  //     let params;
-  //     let gameWithRanking;
-  //     factory.attrs('game', {
-  //         ranking: [{user: 'sebas', points: 12}]
-  //       })
-  //       .then(attrs => {
-  //         gameWithRanking = attrs
-  //       })
-  //     factory.attrs('match', {
-  //         url: 'updatedURL',
-  //         game: gameWithRanking
-  //       })
-  //       .then(attrs => {
-  //         params = {
-  //           match: attrs
-  //         };
-  //       })
-  //     let params1 = {
-  //       user: 'sebas',
-  //       points: 9999
-  //     }
+  describe('update Ranking', () => {
+    context('with ranking not empty', () => {
+      let params1 = {
+        user: 'sebas',
+        points: 99999
+      }
 
-  //     it('returns 200', (done) => {
-  //       request(app).put(`/matches/${match.id}`)
-  //         .send(params1)
-  //         .end((err, res) => {
-  //           expect(res).to.have.status(200);
-  //           done();
-  //         });
-  //     });
+      let params2 = {
+        user: 'sebas',
+        points: 0
+      }
 
-  //     it('updates a match', (done) => {
-  //       request(app).put(`/matches/${match.id}`)
-  //         .send(params1)
-  //         .end((err, res) => {
-  //           Match.findById(match.id).lean().exec((err, match) => {
-  //             console.log(gameWithRanking)
-  //             console.log(match.url)
-  //             console.log(match.game.ranking)
-  //             expect(res.body[0]).to.eq({user: 'sebas', points: 9999});
-  //             done();
-  //           });
-  //         });
-  //     });
-  //   });
+      it('insert in first place', (done) => {
+        request(app).get(`/matches/testurl2`)
+        .end((err, res) => {
+          request(app).put(`/matches/${res.body.match.id}`)
+          .send(params1)
+          .end((err, res) => {
+            expect(res).to.have.status(200);
+            expect(res.body[0].user).to.eq('sebas');
+            expect(res.body[0].points).to.eq(99999);
+            done();
+          });
+        });
+      });
+
+      it('insert in last place', (done) => {
+        request(app).get(`/matches/testurl2`)
+        .end((err, res) => {
+          request(app).put(`/matches/${res.body.match.id}`)
+          .send(params2)
+          .end((err, res) => {
+            expect(res).to.have.status(200);
+            let length = res.body.length;
+            expect(res.body[length-1].user).to.eq('sebas');
+            expect(res.body[length-1].points).to.eq(0);
+            done();
+          });
+        });
+      });
+    });
+  });
 
   describe('destroy', () => {
     it('returns 204', (done) => {
