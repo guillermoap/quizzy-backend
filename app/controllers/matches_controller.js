@@ -59,14 +59,21 @@ export const update = (req, res, next) => {
       return res.json(matchShow(match));
     });
   } else if (req.body.user !== undefined && req.body.points !== undefined) {
-    Match.findById(req.params.id, (err, match) => {
-      let matchUpdate = rankingInsert(match, req.body.user, req.body.points)
-      Match.update({ _id: req.params.id }, {
-        $set: matchUpdate
-      }, {
-        new: true
-      }).exec()
-      return res.json(matchUpdate.game.ranking);
+      Match.findById(req.params.id, (err, match) => {
+      if (err) {
+        return res.status(422)
+          .json({
+            error: errorMessageMatch(err.message)
+          });
+      } else {
+        let matchUpdate = rankingInsert(match, req.body.user, req.body.points)
+        Match.update({ _id: req.params.id }, {
+          $set: matchUpdate
+        }, {
+          new: true
+        }).exec()
+        return res.json(matchUpdate.game.ranking);
+      }
     })
   } else{
     return res.status(404).json({})
