@@ -252,6 +252,30 @@ describe('MatchesController', () => {
           });
         });
       });
+
+      it('Match do not exist', (done) => {
+        request(app).get(`/matches/unMatch`)
+        .end((err, res) => {
+          request(app).put(`/matches/${res.body.match.id}`)
+          .send(params2)
+          .end((err, res) => {
+            expect(res).to.have.status(422);
+            done();
+          });
+        });
+      });
+
+      it('Bad request', (done) => {
+        request(app).get(`/matches/testurl2`)
+        .end((err, res) => {
+          request(app).put(`/matches/${res.body.match.id}`)
+          .send()
+          .end((err, res) => {
+            expect(res).to.have.status(404);
+            done();
+          });
+        });
+      });
     });
   });
 
