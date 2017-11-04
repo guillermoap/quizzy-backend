@@ -72,11 +72,74 @@ describe('MatchesController', () => {
           done();
         });
     });
+
+    it('non-existent variable', (done) => {
+      request(app).get(`/matches/${match.url}?var=ranking`)
+        .end((err, res) => {
+          expect(res.body.match)
+            .to.have.keys('id', 'url', 'isRealTime', 'totalPlayers',
+              'owner', 'endingDate', 'game', 'result');
+          done();
+        });
+    });
+
+    it('returns 200', (done) => {
+      request(app).get(`/matches/${match.id}`)
+        .end((err, res) => {
+          expect(res).to.have.status(200);
+          done();
+        });
+    });
+
+    it('returns the right json object', (done) => {
+      request(app).get(`/matches/${match.id}`)
+        .end((err, res) => {
+          expect(res.body.match)
+            .to.have.keys('id', 'url', 'isRealTime', 'totalPlayers',
+              'owner', 'endingDate', 'game', 'result');
+          done();
+        });
+    });
+
+    it('non-existent variable', (done) => {
+      request(app).get(`/matches/${match.id}?cosa`)
+        .end((err, res) => {
+          expect(res.body.match)
+            .to.have.keys('id', 'url', 'isRealTime', 'totalPlayers',
+              'owner', 'endingDate', 'game', 'result');
+          done();
+        });
+    });
     //find match that does not exist
     it('returns 404', (done) => {
       request(app).get(`/matches/0000000`)
         .end((res) => {
           expect(res).to.have.status(404);
+          done();
+        });
+    });
+
+    it('Show ranking returns 200', (done) => {
+      request(app).get(`/matches/${match.id}?v=ranking`)
+        .end((err, res) => {
+          expect(res).to.have.status(200);
+          done();
+        });
+    });
+
+    it('Show ranking', (done) => {
+      request(app).get(`/matches/${match.id}?v=ranking`)
+        .end((err, res) => {
+          expect(res.body[0])
+            .to.have.keys('user', 'points', '_id');
+          done();
+        });
+    });
+
+    it('Show ranking returns 422', (done) => {
+      request(app).get(`/matches/020202?v=ranking`)
+        .end((err, res) => {
+          expect(res).to.have.status(422);
           done();
         });
     });

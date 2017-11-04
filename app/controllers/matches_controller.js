@@ -13,21 +13,40 @@ export const index = (req, res, next) => {
 };
 
 export const show = (req, res, next) => {
-  Match.findOne({
-    'url': req.params.url.toLowerCase().trim()
-  }).lean().exec((err, match) => {
-    if (err) {
-      return res.status(422)
-        .json({
-          error: errorMessageMatch(err.message)
+  if (req.query.v == 'ranking'){
+    Match.findById(req.params.url, (err, match) => {
+      if (err) {
+        return res.status(422)
+          .json({
+            error: errorMessageMatch(err.message)
+          });
+      } else {
+        return res.json(match.game.ranking);
+      }
+    })
+  } else {
+    Match.findById(req.params.url, (err, match) => {
+      if (err) {
+        Match.findOne({
+          'url': req.params.url.toLowerCase().trim()
+        }).lean().exec((err, match1) => {
+          if (err) {
+            return res.status(422)
+              .json({
+                error: errorMessageMatch(err.message)
+              });
+          }
+          if (match1 == null) {
+            return res.status(404)
+              .json();
+          }
+          res.json(matchShow(match1));
         });
-    }
-    if (match == null) {
-      return res.status(404)
-        .json();
-    }
-    res.json(matchShow(match));
-  });
+      } else {
+        return (res.json(matchShow(match)))
+      }
+    })
+  }
 }
 
 export const create = (req, res, next) => {
