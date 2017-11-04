@@ -13,7 +13,7 @@ export const index = (req, res, next) => {
 };
 
 export const show = (req, res, next) => {
-  if (req.query.v == 'ranking'){
+  if (req.query.v === 'ranking'){
     Match.findById(req.params.url, (err, match) => {
       if (err) {
         return res.status(422)
@@ -36,7 +36,7 @@ export const show = (req, res, next) => {
                 error: errorMessageMatch(err.message)
               });
           }
-          if (match1 == null) {
+          if (match1 === null) {
             return res.status(404)
               .json();
           }
