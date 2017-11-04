@@ -20,12 +20,30 @@ export const index = (req, res, next) => {
 export const show = (req, res, next) => {
   Game.findById(req.params.id).lean().exec((err, game) => {
     if (err) {
-      return res.status(404)
-        .json({
-          error: errorMessageGame(err.message)
-        });
+      if (req.params.id === null) {
+        return res.status(404)
+            .json({
+              error: errorMessageGame(err.message)
+            });
+      } else {
+        Game.findOne({
+          'name': req.params.id.toLowerCase().trim()
+        }).lean().exec((err, game1) => {
+          if (err) {  
+            return res.status(404)
+            .json({
+              error: errorMessageGame(err.message)
+            });
+          } else if (game1){
+            return res.json(true);
+          } else {
+            return res.status(404).json(false);
+          }
+        })
+      }
+    } else {
+      return res.json(gameShow(game));
     }
-    res.json(gameShow(game));
   });
 };
 

@@ -237,6 +237,32 @@ describe('GameController', () => {
     });
   });
 
+  describe('Exist name', () => {
+    it('there is a game with that name', (done) => {
+      request(app).get(`/games/baSKet`)
+        .end((err, res) => {
+          expect(res.body).to.eq(true);
+          done();
+        });
+    });
+
+    it('there is a game with that name', (done) => {
+      request(app).get(`/games/bAsKEt`)
+        .end((err, res) => {
+          expect(res.body).to.eq(true);
+          done();
+        });
+    });
+
+    it('there is a game with that name', (done) => {
+      request(app).get(`/games/tenistas`)
+        .end((err, res) => {
+          expect(res.body).to.eq(false);
+          done();
+        });
+    });
+  });
+
   describe('Errors', () => {
     context('more one error', () => {
       var game_1;
