@@ -1,7 +1,7 @@
 function rankingInsert(match, user, points) {
   let userPosition = match.game.ranking.findIndex(greaterOrEqual);
   if (userPosition === -1) {
-    userPosition = ranking.length;
+    userPosition = match.game.ranking.length;
   }
   match.game.ranking.splice(userPosition, 0, {
     user: user,
