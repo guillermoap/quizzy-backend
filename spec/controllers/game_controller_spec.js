@@ -311,9 +311,9 @@ describe('GameController', () => {
                 }, {
                   answer: 'no'
                 }]                
-              } ]
+              }]
             }
-          };
+          }
         })
 
       it('returns correct number of correctAnswers', (done) => {
@@ -321,6 +321,7 @@ describe('GameController', () => {
         request(app).post('/games')
           .send(params)
           .end((err, res) => {
+            console.log(res.match)
             id = res.match.id;
           });
         request(app).get('/games/${ id }')

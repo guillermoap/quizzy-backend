@@ -22,22 +22,6 @@ function encript(question) {
   return question
 };
 
-/*function desencript(question) {
-    let lengthAnswers = question.answers.length;
-    let numberDifficulty
-    if (question.difficulty === 'Easy') {
-      numberDifficulty = 20;
-    } else if (question.difficulty === 'Medium') {
-      numberDifficulty = 40;
-    } else if (question.difficulty === 'Hard') {
-      numberDifficulty = 60;
-    };
-    let lengthText = question.text.length;
-    let correctDesencript = (((question.correctAnswer / lengthText) + lengthAnswers) - numberDifficulty);
-    question.correctAnswer = correctDesencript;
-    return question
-  }*/
-
 export {
   EncriptCorrectAnswers
 }
