@@ -4,8 +4,6 @@ function errorMessageGame(error) {
       return ('You must enter a name');
     case (error.match(/name_1 dup key/) || {}).input:
       return ('The name already exists');
-    case (error.match(/invalid name/) || {}).input:
-      return ('Invalid name');
     case (error.match(/there must be a correct rating/) || {}).input:
       return ('There must be a correct rating');
     case (error.match(/must have a creator/) || {}).input:

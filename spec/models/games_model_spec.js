@@ -14,7 +14,6 @@ describe('GamesModel', () => {
   var gameWithoutName;
   var gameNameEmpty;
   var gameDupName;
-  var gameInvalidName;
   var gameNegativeRating;
   var gameInvalidRating;
   var gameWithoutCreator;
@@ -50,14 +49,12 @@ describe('GamesModel', () => {
     gameMoreQuestions = gameAttrs;
   });
 
-  factory.attrsMany('game', 15, [{
+  factory.attrsMany('game', 14, [{
     name: null
   }, {
     name: '       '
   }, {
     name: 'Quizzy'
-  }, {
-    name: 'tennis@2010'
   }, {
     rating: -2
   }, {
@@ -111,18 +108,17 @@ describe('GamesModel', () => {
     gameWithoutName = gameAttrsArray[0];
     gameNameEmpty = gameAttrsArray[1];
     gameDupName = gameAttrsArray[2];
-    gameInvalidName = gameAttrsArray[3];
-    gameNegativeRating = gameAttrsArray[4];
-    gameInvalidRating = gameAttrsArray[5];
-    gameWithoutCreator = gameAttrsArray[6];
-    gameWithoutQuestions = gameAttrsArray[7];
-    gameRankingWithoutUser = gameAttrsArray[8];
-    gameRankingWithoutPoints = gameAttrsArray[9];
-    gameInvalidDate = gameAttrsArray[10];
-    game3 = gameAttrsArray[11];
-    game4 = gameAttrsArray[12];
-    gameWith6answers = gameAttrsArray[13];
-    gameWith2answers = gameAttrsArray[14];
+    gameNegativeRating = gameAttrsArray[3];
+    gameInvalidRating = gameAttrsArray[4];
+    gameWithoutCreator = gameAttrsArray[5];
+    gameWithoutQuestions = gameAttrsArray[6];
+    gameRankingWithoutUser = gameAttrsArray[7];
+    gameRankingWithoutPoints = gameAttrsArray[8];
+    gameInvalidDate = gameAttrsArray[9];
+    game3 = gameAttrsArray[10];
+    game4 = gameAttrsArray[11];
+    gameWith6answers = gameAttrsArray[12];
+    gameWith2answers = gameAttrsArray[13];
   })
 
   describe('Without name', () => {
@@ -156,18 +152,6 @@ describe('GamesModel', () => {
         Game.count({}).exec((err, count) => {
           expect(count).to.eq(2);   
           done();
-        });
-      });
-    });
-  });
-
-  describe('Invalid name', () => {
-    it('returns correct error and does not create a game', (done) => {
-      Game.create(gameInvalidName, (err, game) => {
-        expect(err).to.match(/invalid name/);
-        Game.count({}).exec((err, count) => {
-          expect(count).to.eq(2);   
-          done();  
         });
       });
     });
