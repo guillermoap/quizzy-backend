@@ -321,8 +321,7 @@ describe('GameController', () => {
         request(app).post('/games')
           .send(params)
           .end((err, res) => {
-            console.log(res)
-            id = res.match.id;
+            id = res.body.match.id;
           });
         request(app).get('/games/${ id }')
           .end((err, res) => {
