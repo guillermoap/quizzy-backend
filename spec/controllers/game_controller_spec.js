@@ -263,6 +263,77 @@ describe('GameController', () => {
     });
   });
 
+  describe('Encript', () => {
+    context('correct encrypting', () => {
+      let params;
+      factory.attrs('game')
+        .then(attrs => {
+          params = {
+            game: {
+              name: 'prueba',
+              creator: 'jose',
+              questions: [{
+                text: 'quest1',
+                difficulty: 'Medium',
+                correctAnswer: 1,
+                answers: [{
+                  answer: 'no'
+                }, {
+                  answer: 'si'
+                }]                
+              }, {
+                text: 'quest 2',
+                difficulty: 'Easy',
+                correctAnswer: 4,
+                answers: [{
+                  answer: 'no'
+                }, {
+                  answer: 'no'
+                }, {
+                  answer: 'no'
+                }, {
+                  answer: 'no'
+                }, {
+                  answer: 'si'
+                }, {
+                  answer: 'no'
+                }]
+              }, {
+                text: 'quest--3',
+                difficulty: 'Hard',
+                correctAnswer: 0,
+                answers: [{
+                  answer: 'si'
+                }, {
+                  answer: 'no'
+                }, {
+                  answer: 'no'
+                }, {
+                  answer: 'no'
+                }]                
+              } ]
+            }
+          };
+        })
+
+      it('returns correct number of correctAnswers', (done) => {
+        let id;
+        request(app).post('/games')
+          .send(params)
+          .end((err, res) => {
+            id = res.match.id;
+          });
+        request(app).get('/games/${ id }')
+          .end((err, res) => {
+            expect(res.body.match.game.question[0].correctAnswer).to.eq(234);
+            expect(res.body.match.game.question[1].correctAnswer).to.eq(126);
+            expect(res.body.match.game.question[2].correctAnswer).to.eq(448);
+            done();
+        });
+      });
+    });
+  });
+
   describe('Errors', () => {
     context('more one error', () => {
       var game_1;
