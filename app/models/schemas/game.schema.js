@@ -7,11 +7,7 @@ const gameSchema = new Schema({
     unique: [true, 'this name already exists'],
     lowercase: [true, 'duplicate name'],
     trim: true,
-    required: [true, 'you must enter a name'],
-    validate: {
-      validator: function(name) { return /^(\w|-|\s)+$/.test(name) },
-      message: 'invalid name'          
-    }
+    required: [true, 'you must enter a name']
   },
   description: String,
   rating: {
