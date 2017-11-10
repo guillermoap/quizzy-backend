@@ -323,7 +323,7 @@ describe('GameController', () => {
           console.log(res.body.game.id)
           request(app).get('/games')
           .end((err, res1) => {
-            console.log(res1.body.games[2].id)
+            console.log(res1.body.games[2])
             expect(res1.body.game.questions[0].correctAnswer).to.eq(234);
             expect(res1.body.game.questions[1].correctAnswer).to.eq(126);
             expect(res1.body.game.questions[2].correctAnswer).to.eq(448);
