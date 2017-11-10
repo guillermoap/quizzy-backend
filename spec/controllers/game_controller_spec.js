@@ -320,7 +320,7 @@ describe('GameController', () => {
         request(app).post('/games')
         .send(params)
         .end((err, res) => {
-          consol.log(res.body)
+          console.log(res.body)
           request(app).get('/games/${ res.body.game.id; }')
           .end((err, res1) => {
             console.log(res1.body)
