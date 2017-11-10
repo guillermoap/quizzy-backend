@@ -321,13 +321,13 @@ describe('GameController', () => {
         request(app).post('/games')
           .send(params)
           .end((err, res) => {
-            id = res.body.match.id;
+            id = res.body.game.id;
           });
         request(app).get('/games/${ id }')
           .end((err, res) => {
-            expect(res.body.match.game.question[0].correctAnswer).to.eq(234);
-            expect(res.body.match.game.question[1].correctAnswer).to.eq(126);
-            expect(res.body.match.game.question[2].correctAnswer).to.eq(448);
+            expect(res.body.game.question[0].correctAnswer).to.eq(234);
+            expect(res.body.game.question[1].correctAnswer).to.eq(126);
+            expect(res.body.game.question[2].correctAnswer).to.eq(448);
             done();
         });
       });
