@@ -318,16 +318,16 @@ describe('GameController', () => {
 
       it('returns correct number of correctAnswers', (done) => {
         request(app).post('/games')
-          .send(params)
-          .end((err, res) => {
-            request(app).get('/games/${ res.body.game.id; }')
-            .end((err, res) => {
-              console.log(res.body.game)
-              expect(res.body.game.questions[0].correctAnswer).to.eq(234);
-              expect(res.body.game.questions[1].correctAnswer).to.eq(126);
-              expect(res.body.game.questions[2].correctAnswer).to.eq(448);
-              done();
-            });
+        .send(params)
+        .end((err, res) => {
+          request(app).get('/games/${ res.body.game.id; }')
+          .end((err, res1) => {
+            console.log(res1.body.game)
+            expect(res1.body.game.questions[0].correctAnswer).to.eq(234);
+            expect(res1.body.game.questions[1].correctAnswer).to.eq(126);
+            expect(res1.body.game.questions[2].correctAnswer).to.eq(448);
+            done();
+          });
         });
       });
     });
