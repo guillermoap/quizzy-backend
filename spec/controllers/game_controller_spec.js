@@ -321,9 +321,9 @@ describe('GameController', () => {
         request(app).post('/games')
           .send(params)
           .end((err, res) => {
-            console.log(res.body)
             id = res.body.game.id;
           });
+        console.log(id)
         request(app).get('/games/${ game.id }')
           .end((err, res) => {
             expect(res.body.game.questions[0].correctAnswer).to.eq(234);
