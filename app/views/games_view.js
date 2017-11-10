@@ -1,3 +1,5 @@
+import { EncriptCorrectAnswers } from '../functions/game_functions';
+
 function gameIndex(games) {
   return {
     games: games.map((game) => gameShow(game))
@@ -13,7 +15,7 @@ function gameShow(game) {
       rating: game.rating,
       timesPlayed: game.timesPlayed,
       creator: game.creator,
-      questions: game.questions,
+      questions: EncriptCorrectAnswers(game.questions),
       tags: game.tags,
       ranking: game.ranking,
       creationDate: game.creationDate,
