@@ -1,3 +1,5 @@
+import { gameShow } from './games_view';
+
 function matchIndex(matches) {
   return {
     matches: matches.map(match => ({
@@ -8,7 +10,7 @@ function matchIndex(matches) {
       players: match.players,
       owner: match.owner,
       endingDate: match.endingDate,
-      game: match.game,
+      game: gameShow(match.game).game,
       result: match.result
     }))
   }
@@ -24,7 +26,7 @@ function matchShow(match) {
       players: match.players,
       owner: match.owner,
       endingDate: match.endingDate,
-      game: match.game,
+      game: gameShow(match.game).game,
       result: match.result
     }
   }
