@@ -22,6 +22,7 @@
     "express": "^4.15.4",
     "express-ws": "^3.0.0",
     "factory-girl": "^4.3.0",
+    "locks": "^0.2.2",
     "moment": "^2.18.1",
     "mongoose": "^4.11.7",
     "morgan": "^1.8.2",

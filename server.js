@@ -17,7 +17,7 @@ mongoose.connect(`mongodb://${config.database.host}/${config.database.db}`);
 // Initialize http server
 const app = express();
 // Initialize Ws server
-const eWs = expressWs(app)
+export const eWs = expressWs(app);
 
 // Prettify JSON
 app.set('json spaces', 3);
