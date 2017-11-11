@@ -32,7 +32,23 @@ function matchShow(match) {
   }
 }
 
+function matchLanding(matches) {
+  return {
+    matches: matches.map(match => ({
+      id: match._id,
+      url: match.url,
+      isRealTime: match.isRealTime,
+      owner: match.owner,
+      game: {
+        image: match.game.image,
+        name: match.game.name,
+      }
+    }))
+  }
+}
+
 export {
   matchIndex,
-  matchShow
+  matchShow,
+  matchLanding
 }
