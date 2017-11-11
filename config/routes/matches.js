@@ -8,12 +8,16 @@ import {
   show,
   create,
   update,
-  destroy
+  destroy,
+  landing
 } from '../../app/controllers/matches_controller';
 
 const router = Router();
 
 router.use(bodyParser.json({ limit: '10mb' }));
+
+router.route('/landing')
+  .get(landing)
 
 router.route('/')
   .get(index)
@@ -25,5 +29,6 @@ router.route('/:url')
 router.route('/:id')
   .put(update)
   .delete(destroy)
+
 
 export default router;
