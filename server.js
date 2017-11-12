@@ -46,9 +46,6 @@ app.ws('/realusers', (ws, req) => {
     let ms = JSON.parse(msg);
     connected.push(ms);
     ws.broadcast(JSON.stringify(connected));
-    /*if (ms[1].localeCompare('start') == 0) {
-
-    }*/
   })
   ws.on('close', () => {
     connected = [];
