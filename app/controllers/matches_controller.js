@@ -1,7 +1,8 @@
 import Match from '../models/match';
 import {
   matchIndex,
-  matchShow
+  matchShow,
+  matchLanding
 } from '../views/matches_view';
 import { errorMessageMatch } from '../errors/match_errors';
 import { rankingInsert } from '../functions/matches_functions';
@@ -63,7 +64,7 @@ export const create = (req, res, next) => {
 }
 
 export const update = (req, res, next) => {
-  if (req.body.match !== undefined) {  
+  if (req.body.match !== undefined) {
     Match.findByIdAndUpdate(req.params.id, {
       $set: req.body.match
     }, {
@@ -96,7 +97,7 @@ export const update = (req, res, next) => {
     })
   } else{
     return res.status(404).json({})
-  } 
+  }
 }
 
 export const destroy = (req, res, next) => {
@@ -110,3 +111,9 @@ export const destroy = (req, res, next) => {
     return res.status(204).json({});
   });
 }
+
+export const landing = (req, res, next) => {
+  Match.find().lean().exec((err, matches) => {
+    res.json(matchLanding(matches));
+  });
+};
