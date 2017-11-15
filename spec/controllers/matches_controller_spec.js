@@ -54,6 +54,28 @@ describe('MatchesController', () => {
     });
   });
 
+  describe('Landing', () => {
+    it('returns 200', (done) => {
+      request(app).get('/matches/landing')
+        .end((err, res) => {
+          expect(res).to.have.status(200);
+          done();
+        });
+    });
+
+    it('returns the right json object', (done) => {
+      request(app).get('/matches/landing')
+        .end((err, res) => {
+          expect(res.body)
+            .to.have.keys('matches');
+          expect(res.body.matches[0])
+            .to.have.keys('id', 'url', 'isRealTime',
+              'owner', 'game');
+          done();
+        });
+    });
+  });
+
   describe('show', () => {
     it('returns 200', (done) => {
       request(app).get(`/matches/${match.url}`)
@@ -138,6 +160,31 @@ describe('MatchesController', () => {
 
     it('Show ranking returns 422', (done) => {
       request(app).get(`/matches/020202?v=ranking`)
+        .end((err, res) => {
+          expect(res).to.have.status(422);
+          done();
+        });
+    });
+
+    it('Show isRealTime returns 200', (done) => {
+      request(app).get(`/matches/${match.id}?v=isReal`)
+        .end((err, res) => {
+          expect(res).to.have.status(200);
+          done();
+        });
+    });
+
+    it('Show isRealTime', (done) => {
+      request(app).get(`/matches/${match.id}?v=isReal`)
+        .end((err, res) => {
+          expect(res.body)
+            .to.eq(false||true);
+          done();
+        });
+    });
+
+    it('Show isRealTime returns 422', (done) => {
+      request(app).get(`/matches/020202?v=isReal`)
         .end((err, res) => {
           expect(res).to.have.status(422);
           done();

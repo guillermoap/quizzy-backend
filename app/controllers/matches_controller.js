@@ -25,6 +25,17 @@ export const show = (req, res, next) => {
         return res.json(match.game.ranking);
       }
     })
+  } else if (req.query.v === 'isReal'){
+    Match.findById(req.params.url, (err, match) => {
+      if (err) {
+        return res.status(422)
+          .json({
+            error: errorMessageMatch(err.message)
+          });
+      } else {
+        return res.json(match.isRealTime);
+      }
+    })
   } else {
     Match.findById(req.params.url, (err, match) => {
       if (err) {
