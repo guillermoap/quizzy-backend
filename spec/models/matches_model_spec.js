@@ -20,7 +20,7 @@ describe('MatchesModel', () => {
   var matchWithoutGame;
   var matchResultWithoutUser;
   var matchResultWithoutPoints;
-  var matchInvalidTotalPlayers;
+  var matchWithoutStarted;
 
   beforeEach(function(done) {
     factory.createMany('match', 2, [{
@@ -64,7 +64,7 @@ describe('MatchesModel', () => {
   }, {
     result: [{ user: 'sebas' }]
   }, {
-    totalPlayers: 1
+    started: null
   }])
   .then(matchAttrsArray => {
     matchWithoutUrl = matchAttrsArray[0];
@@ -78,7 +78,7 @@ describe('MatchesModel', () => {
     match4 = matchAttrsArray[8];
     matchResultWithoutUser = matchAttrsArray[9];
     matchResultWithoutPoints = matchAttrsArray[10];
-    matchInvalidTotalPlayers = matchAttrsArray[11];
+    matchWithoutStarted = matchAttrsArray[11];
   })
 
   describe('Without url', () => {
@@ -213,10 +213,10 @@ describe('MatchesModel', () => {
     });
   });
 
-  describe('Negative totalPlayers', () => {
+  describe('without Started', () => {
     it('returns correct error and does not create a game', (done) => {
-      Match.create(matchInvalidTotalPlayers, (err, match) => {
-        expect(err).to.match(/there must be at least two players/);
+      Match.create(matchWithoutStarted, (err, match) => {
+        expect(err).to.match(/you must enter a state/);
         Match.count({}).exec((err, count) => {
           expect(count).to.eq(2);   
           done();

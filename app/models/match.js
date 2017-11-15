@@ -13,17 +13,13 @@ var matchSchema = new Schema ({
       message: 'invalid url'
     }
   },
+  started: {
+    type: Boolean,
+    required: [true, 'you must enter a state']
+  },
   isRealTime: {
     type: Boolean,
     required: [true, 'you must enter a type of match']
-  },
-  totalPlayers: {
-    type: Number,
-    validate: {
-      validator: function(totalPlayers) { return totalPlayers > 1 },
-      message: 'there must be at least two players'
-    },
-    default: 3
   },
   owner: {
     type: String,
