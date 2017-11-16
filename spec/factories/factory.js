@@ -56,6 +56,7 @@ factory.define('match', Match, {
   url: () => faker.name.firstName().replace("'",'-') +
              faker.random.number(1000) +
              faker.name.lastName().replace("'",'-'),
+  started: () => faker.random.boolean(),
   isRealTime: () => faker.random.boolean(),
   owner: () => faker.fake('{{name.firstName}} {{name.lastName}}'),
   endingDate: () => faker.date.future(),

@@ -13,7 +13,7 @@ function encript(question) {
     numberDifficulty = 20;
   } else if (question.difficulty === 'Medium') {
     numberDifficulty = 40;
-  } else if (question.difficulty === 'Hard') {
+  } else {
     numberDifficulty = 60;
   };
   let lengthText = question.text.length;

@@ -47,8 +47,30 @@ describe('MatchesController', () => {
       request(app).get('/matches')
         .end((err, res) => {
           expect(res.body.matches[0])
-            .to.have.keys('id', 'url', 'isRealTime', 'totalPlayers',
+            .to.have.keys('id', 'url', 'isRealTime', 'started',
               'owner', 'endingDate', 'game', 'result');
+          done();
+        });
+    });
+  });
+
+  describe('Landing', () => {
+    it('returns 200', (done) => {
+      request(app).get('/matches/landing')
+        .end((err, res) => {
+          expect(res).to.have.status(200);
+          done();
+        });
+    });
+
+    it('returns the right json object', (done) => {
+      request(app).get('/matches/landing')
+        .end((err, res) => {
+          expect(res.body)
+            .to.have.keys('matches');
+          expect(res.body.matches[0])
+            .to.have.keys('id', 'url', 'isRealTime',
+              'owner', 'game');
           done();
         });
     });
@@ -67,7 +89,7 @@ describe('MatchesController', () => {
       request(app).get(`/matches/${match.url}`)
         .end((err, res) => {
           expect(res.body.match)
-            .to.have.keys('id', 'url', 'isRealTime', 'totalPlayers',
+            .to.have.keys('id', 'url', 'isRealTime', 'started',
               'owner', 'endingDate', 'game', 'result');
           done();
         });
@@ -77,7 +99,7 @@ describe('MatchesController', () => {
       request(app).get(`/matches/${match.url}?var=ranking`)
         .end((err, res) => {
           expect(res.body.match)
-            .to.have.keys('id', 'url', 'isRealTime', 'totalPlayers',
+            .to.have.keys('id', 'url', 'isRealTime', 'started',
               'owner', 'endingDate', 'game', 'result');
           done();
         });
@@ -95,7 +117,7 @@ describe('MatchesController', () => {
       request(app).get(`/matches/${match.id}`)
         .end((err, res) => {
           expect(res.body.match)
-            .to.have.keys('id', 'url', 'isRealTime', 'totalPlayers',
+            .to.have.keys('id', 'url', 'isRealTime', 'started',
               'owner', 'endingDate', 'game', 'result');
           done();
         });
@@ -105,7 +127,7 @@ describe('MatchesController', () => {
       request(app).get(`/matches/${match.id}?cosa`)
         .end((err, res) => {
           expect(res.body.match)
-            .to.have.keys('id', 'url', 'isRealTime', 'totalPlayers',
+            .to.have.keys('id', 'url', 'isRealTime', 'started',
               'owner', 'endingDate', 'game', 'result');
           done();
         });
@@ -138,6 +160,22 @@ describe('MatchesController', () => {
 
     it('Show ranking returns 422', (done) => {
       request(app).get(`/matches/020202?v=ranking`)
+        .end((err, res) => {
+          expect(res).to.have.status(422);
+          done();
+        });
+    });
+
+    it('Show isRealTime returns 200', (done) => {
+      request(app).get(`/matches/${match.id}?v=isReal`)
+        .end((err, res) => {
+          expect(res).to.have.status(200);
+          done();
+        });
+    });
+
+    it('Show isRealTime returns 422', (done) => {
+      request(app).get(`/matches/020202?v=isReal`)
         .end((err, res) => {
           expect(res).to.have.status(422);
           done();
@@ -388,7 +426,7 @@ describe('MatchesController', () => {
       {
         url: null, 
         isRealTime: null,
-        totalPlayers: 0,
+        started: null,
         owner: null, 
         result: [
           { points: 3 }, 
@@ -399,7 +437,7 @@ describe('MatchesController', () => {
       }, {
         url: 's e b a s', 
         isRealTime: null,
-        totalPlayers: 0,
+        started: null,
         owner: null, 
         result: [
           { points: 3 }, 
@@ -409,7 +447,7 @@ describe('MatchesController', () => {
         game: null
       }, { 
         isRealTime: null,
-        totalPlayers: 0,
+        started: null,
         owner: null, 
         result: [
           { points: 3 }, 
@@ -448,7 +486,7 @@ describe('MatchesController', () => {
       }, {
         url: 'testURL'
       }, { 
-        totalPlayers: 0, 
+        started: null, 
         owner: null, 
         result: [
           { points: 3 }, 
@@ -502,7 +540,7 @@ describe('MatchesController', () => {
         request(app).post('/matches')
           .send(match_11)
           .end((err, res) => {
-            expect(res.body.error).to.eq('There must be at least two players');
+            expect(res.body.error).to.eq('you must enter a state');
             done();
           });
       });
