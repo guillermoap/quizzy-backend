@@ -124,7 +124,7 @@ export const destroy = (req, res, next) => {
 }
 
 export const landing = (req, res, next) => {
-  Match.find().lean().exec((err, matches) => {
+  Match.find({ isRealTime: false }).lean().exec((err, matches) => {
     res.json(matchLanding(matches));
   });
 };
