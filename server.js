@@ -8,6 +8,9 @@ import matches from './config/routes/matches.js';
 import cors from 'cors';
 import expressWs from 'express-ws'
 
+import { answerQuestionController, ANSWER_QUESTION} from './app/ws/matches_socket';
+
+
 var env = process.env.NODE_ENV || 'development';
 var config = configuration[env];
 
@@ -18,7 +21,6 @@ mongoose.connect(`mongodb://${config.database.host}/${config.database.db}`);
 const app = express();
 // Initialize Ws server
 export const eWs = expressWs(app);
-
 // Prettify JSON
 app.set('json spaces', 3);
 
@@ -38,6 +40,8 @@ app.use('/matches', matches);
 
 //WebSockets server
 const aWss = eWs.getWss('/realusers');
+export const answerQuestionServer = eWs.getWss(ANSWER_QUESTION);
+
 var connected = [];
 
 app.ws('/realusers', (ws, req) => {
@@ -58,6 +62,8 @@ app.ws('/realusers', (ws, req) => {
     });
   };
 })
+
+app.ws(ANSWER_QUESTION, answerQuestionController);
 
 const server = app.listen(config.server.port, config.server.host, () => {
   const { address, port } = server.address();

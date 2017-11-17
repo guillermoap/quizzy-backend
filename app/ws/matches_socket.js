@@ -1,6 +1,4 @@
-import answerQuestionServer from '../../config/routes/ws';
 import locks from 'locks';
-import Match from '../models/match';
 
 let store = new Map();
 
@@ -25,11 +23,12 @@ const ANSWERED_SIGNAL = 1;
 const NEXT_SIGNAL = 2;
 const END_MATCH_SIGNAL = 3;
 
+export const ANSWER_QUESTION = '/answer-question/real-time';
 
-
-export const answer_question_controller = (ws, req) => {
+export const answerQuestionController = (ws, req) => {
 
   //broadcast
+  // TODO: Change to multicast
   ws.broadcast = msg => {
     answerQuestionServer.clients.forEach(client => {
       client.send(msg);
@@ -49,7 +48,8 @@ export const answer_question_controller = (ws, req) => {
           ranking: [],
           winner: null,
           answered: 0,
-          correctAnswer: action.correctAnswer
+          correctAnswer: action.correctAnswer,
+          ws: []
         };
         store.set(action.url, state );
       }
@@ -59,14 +59,14 @@ export const answer_question_controller = (ws, req) => {
           if (action.type === READY_ACTION) {
             state = {
               ...state,
-              players: state.players.concat([ action.player ])
+              players: state.players.concat([ action.player ]),
               ranking: state.ranking.concat([ 0 ])
             };
             if (state.players.length >= state.players.totalPlayers) {
               state.status = ANSWERING_STATE;
             }
             store.set(state.url, state);
-            ws.broadcast({ type: START_SIGNAL, players: state.players });
+            ws.broadcast(JSON.stringify({ type: START_SIGNAL, players: state.players }));
           }
           return;
         case ANSWERING_STATE:
@@ -81,7 +81,7 @@ export const answer_question_controller = (ws, req) => {
                     if(item.user === action.player) {
                       return {
                         user: action.player,
-                        points:  item.points + 1000 // change later for something more elaborated
+                        points:  item.points + 1000 // TODO: change later for something more elaborated
                       }
                     }
                   })
@@ -89,15 +89,16 @@ export const answer_question_controller = (ws, req) => {
               }
               if (state.answered >= state.players.length) {
                 state.status = ANSWERED_STATE;
-                ws.broadcast({type: ANSWERED_SIGNAL, winner: state.winner});
+                ws.broadcast(JSON.stringify({ type: ANSWERED_SIGNAL, winner: state.winner }));
               }
             break;
             case TIMEOUT_ACTION:
               state = {
                 ...state,
-                STATUS: ANSWERED_STATE
+                status: ANSWERED_STATE
               };
-            break;
+              ws.broadcast(JSON.stringify({ type: ANSWERED_SIGNAL, winner: state.winner }));
+              break;
           }
           store.set(state.url, state);
           return;
@@ -111,14 +112,14 @@ export const answer_question_controller = (ws, req) => {
                 correctAnswer: action.correctAnswer
 
               };
-              ws.broadcast({ type: NEXT_SIGNAL });
+              ws.broadcast(JSON.stringify({ type: NEXT_SIGNAL }));
               break;
             case END_MATCH_ACTION:
               state = {
                 ...state,
                 status: FINISHED_STATE,
               };
-              ws.broadcast({ type: END_MATCH_SIGNAL, ranking: state.ranking });
+              ws.broadcast(JSON.stringify({ type: END_MATCH_SIGNAL, ranking: state.ranking }));
               // persist!!!!
               break;
           }
