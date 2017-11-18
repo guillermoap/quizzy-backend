@@ -408,6 +408,63 @@ describe('MatchesController', () => {
     });
   })
 
+  describe('set Started', () => {
+    it('set true', (done) => {
+      request(app).get(`/matches/testurl2`)
+      .end((err, res) => {
+        var id = res.body.match.id;
+        request(app).put(`/matches/${id}`)
+        .send( { started: true } )
+        .end((err, res) => {
+          expect(res).to.have.status(200);
+          request(app).get(`/matches/${id}`)
+          .end((err, res) => {
+            expect(res.body.match.started).to.eq(true);
+            done();
+          });
+        });
+      });
+    });
+
+    it('set false', (done) => {
+      request(app).get(`/matches/testurl2`)
+      .end((err, res) => {
+        var id = res.body.match.id;
+        request(app).put(`/matches/${id}`)
+        .send( { started: false } )
+        .end((err, res) => {
+          expect(res).to.have.status(200);
+          request(app).get(`/matches/${id}`)
+          .end((err, res) => {
+            expect(res.body.match.started).to.eq(false);
+            done();
+          });
+        });
+      });
+    });
+
+    it('Match do not exist', (done) => {
+      request(app).put(`/matches/0000000`)
+      .send( { started: true } )
+      .end((err, res) => {
+        expect(res).to.have.status(422);
+        done();
+      });
+    });
+
+    it('Bad request', (done) => {
+      request(app).get(`/matches/testurl2`)
+      .end((err, res) => {
+        request(app).put(`/matches/${res.body.match.id}`)
+        .send()
+        .end((err, res) => {
+          expect(res).to.have.status(404);
+          done();
+        });
+      });
+    });
+  });
+  
   describe('Errors', () => {
     context('more one error', () => {
       var match_1;

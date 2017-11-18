@@ -106,6 +106,23 @@ export const update = (req, res, next) => {
         return res.json(matchUpdate.game.ranking);
       }
     })
+  } else if (req.body.started !== undefined) {
+      Match.findById(req.params.id, (err, match) => {
+      if (err) {
+        return res.status(422)
+          .json({
+            error: errorMessageMatch(err.message)
+          });
+      } else {
+        match.started = req.body.started;
+        Match.update({ _id: req.params.id }, {
+          $set: match
+        }, {
+          new: true
+        }).exec()
+        return res.json({});
+      }
+    })
   } else{
     return res.status(404).json({})
   }
