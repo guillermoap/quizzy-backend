@@ -12,8 +12,8 @@ import Game from '../../app/models/game';
 chai.use(chaiHttp);
 
 describe('MatchesController', () => {
-  var match;
-  var match2;
+  let match;
+  let match2;
 
   beforeEach(function(done) {
     factory.createMany('match', 2, [{
@@ -408,19 +408,76 @@ describe('MatchesController', () => {
     });
   })
 
+  describe('set Started', () => {
+    it('set true', (done) => {
+      request(app).get(`/matches/testurl2`)
+      .end((err, res) => {
+        let id = res.body.match.id;
+        request(app).put(`/matches/${id}`)
+        .send( { started: true } )
+        .end((err, res) => {
+          expect(res).to.have.status(200);
+          request(app).get(`/matches/${id}`)
+          .end((err, res) => {
+            expect(res.body.match.started).to.eq(true);
+            done();
+          });
+        });
+      });
+    });
+
+    it('set false', (done) => {
+      request(app).get(`/matches/testurl2`)
+      .end((err, res) => {
+        let id = res.body.match.id;
+        request(app).put(`/matches/${id}`)
+        .send( { started: false } )
+        .end((err, res) => {
+          expect(res).to.have.status(200);
+          request(app).get(`/matches/${id}`)
+          .end((err, res) => {
+            expect(res.body.match.started).to.eq(false);
+            done();
+          });
+        });
+      });
+    });
+
+    it('Match do not exist', (done) => {
+      request(app).put(`/matches/0000000`)
+      .send( { started: true } )
+      .end((err, res) => {
+        expect(res).to.have.status(422);
+        done();
+      });
+    });
+
+    it('Bad request', (done) => {
+      request(app).get(`/matches/testurl2`)
+      .end((err, res) => {
+        request(app).put(`/matches/${res.body.match.id}`)
+        .send()
+        .end((err, res) => {
+          expect(res).to.have.status(404);
+          done();
+        });
+      });
+    });
+  });
+  
   describe('Errors', () => {
     context('more one error', () => {
-      var match_1;
-      var match_2;
-      var match_3;
-      var match_4;
-      var match_5;
-      var match_6;
-      var match_7;
-      var match_8;
-      var match_9;
-      var match_10;
-      var match_11;
+      let match_1;
+      let match_2;
+      let match_3;
+      let match_4;
+      let match_5;
+      let match_6;
+      let match_7;
+      let match_8;
+      let match_9;
+      let match_10;
+      let match_11;
       
       factory.attrsMany('match', 11, [
       {
