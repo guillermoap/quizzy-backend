@@ -43,10 +43,6 @@ export const show = (req, res, next) => {
           }
           res.json(match1.isRealTime);
         });
-        /*return res.status(422)
-          .json({
-            error: errorMessageMatch(err.message)
-          });*/
       } else {
         return res.json(match.isRealTime);
       }
