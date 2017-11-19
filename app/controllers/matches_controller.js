@@ -28,10 +28,21 @@ export const show = (req, res, next) => {
   } else if (req.query.v === 'isReal'){
     Match.findById(req.params.url, (err, match) => {
       if (err) {
-        return res.status(422)
-          .json({
-            error: errorMessageMatch(err.message)
-          });
+        Match.findOne({
+          'url': req.params.url.toLowerCase().trim()
+        }).lean().exec((err, match1) => {
+          if (err) {
+            return res.status(422)
+              .json({
+                error: errorMessageMatch(err.message)
+              });
+          }
+          if (match1 === null) {
+            return res.status(404)
+              .json();
+          }
+          res.json(match1.isRealTime);
+        });
       } else {
         return res.json(match.isRealTime);
       }

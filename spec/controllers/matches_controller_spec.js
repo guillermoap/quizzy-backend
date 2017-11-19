@@ -174,10 +174,10 @@ describe('MatchesController', () => {
         });
     });
 
-    it('Show isRealTime returns 422', (done) => {
+    it('Show isRealTime returns 404', (done) => {
       request(app).get(`/matches/020202?v=isReal`)
         .end((err, res) => {
-          expect(res).to.have.status(422);
+          expect(res).to.have.status(404);
           done();
         });
     });
