@@ -49,7 +49,7 @@ app.ws('/realusers', (ws, req) => {
   })
   ws.on('close', () => {
     connected = [];
-    ws.broadcast('hola');
+    setTimeout(function(){ ws.broadcast('hola'); }, 2000);
   })
 
   ws.broadcast = function broadcast(msg) {
