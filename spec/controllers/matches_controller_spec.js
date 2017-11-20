@@ -64,13 +64,23 @@ describe('MatchesController', () => {
     });
 
     it('returns the right json object', (done) => {
+      var cant = 0;
+      if (!match.isRealTime) {
+        cant = cant + 1;
+      }
+      if (!match2.isRealTime) {
+        cant = cant + 1;
+      }
       request(app).get('/matches/landing')
         .end((err, res) => {
           expect(res.body)
             .to.have.keys('matches');
-          expect(res.body.matches[0])
-            .to.have.keys('id', 'url', 'isRealTime',
-              'owner', 'game');
+          expect(res.body.matches.length).to.eq(cant);
+          if (cant !== 0) {
+            expect(res.body.matches[0])
+              .to.have.keys('id', 'url', 'isRealTime',
+                'owner', 'game');
+          }
           done();
         });
     });
