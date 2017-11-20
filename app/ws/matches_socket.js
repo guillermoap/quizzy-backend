@@ -29,11 +29,7 @@ export const answerQuestionController = (ws, req) => {
 
   //broadcast
   // TODO: Change to multicast
-  ws.broadcast = msg => {
-    answerQuestionServer.clients.forEach(client => {
-      client.send(msg);
-    });
-  };
+
 
   ws.on('message', (msg) => {
     info_mutex.lock(() => {
@@ -56,22 +52,34 @@ export const answerQuestionController = (ws, req) => {
 
       switch (state.status) {
         case WAITING_STATE:
+          console.log(WAITING_STATE);
           if (action.type === READY_ACTION) {
+            console.log(READY_ACTION);
             state = {
               ...state,
               players: state.players.concat([ action.player ]),
               ranking: state.ranking.concat([ 0 ])
+              ws: state.ws.concat([ ws ])
             };
             if (state.players.length >= state.players.totalPlayers) {
               state.status = ANSWERING_STATE;
             }
             store.set(state.url, state);
+            // multicast actually
+            ws.broadcast = msg => {
+              state.ws.forEach(client => {
+                client.send(msg);
+              });
+            };
+
             ws.broadcast(JSON.stringify({ type: START_SIGNAL, players: state.players }));
           }
           return;
         case ANSWERING_STATE:
+          console.log(ANSWERING_STATE);
           switch (action.type) {
             case ANSWERED_ACTION:
+              console.log(ANSWERED_ACTION);
               if (!state.winner && action.answer === state.correctAnswer) {
                 state = {
                   ...state,
@@ -93,6 +101,7 @@ export const answerQuestionController = (ws, req) => {
               }
             break;
             case TIMEOUT_ACTION:
+            console.log(TIMEOUT_ACTION);
               state = {
                 ...state,
                 status: ANSWERED_STATE
@@ -103,6 +112,7 @@ export const answerQuestionController = (ws, req) => {
           store.set(state.url, state);
           return;
         case ANSWERED_STATE:
+          console.log(ANSWERED_STATE);
           switch (action.type) {
             case NEXT_ACTION:
               state = {
