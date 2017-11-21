@@ -33,6 +33,8 @@ export const answerQuestionController = (ws, req) => {
 
   ws.on('message', (msg) => {
     info_mutex.lock(() => {
+      console.log('lock acquired.');
+      console.log(msg);
       const action = JSON.parse(msg);
       let state  = store.get(action.url);
       if (!state) {
@@ -52,18 +54,30 @@ export const answerQuestionController = (ws, req) => {
 
       switch (state.status) {
         case WAITING_STATE:
-          console.log(WAITING_STATE);
+          console.log('WAITING_STATE');
           if (action.type === READY_ACTION) {
-            console.log(READY_ACTION);
+            console.log('READY_ACTION');
+            console.log(JSON.stringify({
+              players: state.players,
+              ranking: state.ranking,
+              url: state.url
+            }));
             state = {
               ...state,
               players: state.players.concat([ action.player ]),
-              ranking: state.ranking.concat([ 0 ])
+              ranking: state.ranking.concat([ 0 ]),
               ws: state.ws.concat([ ws ])
             };
-            if (state.players.length >= state.players.totalPlayers) {
+            if (state.players.length >= state.totalPlayers) {
+              console.log('WAITING_STATE -> ANSWERING_STATE');
               state.status = ANSWERING_STATE;
             }
+
+            console.log(JSON.stringify({
+              players: state.players,
+              ranking: state.ranking,
+              url: state.url
+            }));
             store.set(state.url, state);
             // multicast actually
             ws.broadcast = msg => {
@@ -74,12 +88,12 @@ export const answerQuestionController = (ws, req) => {
 
             ws.broadcast(JSON.stringify({ type: START_SIGNAL, players: state.players }));
           }
-          return;
+          break;
         case ANSWERING_STATE:
-          console.log(ANSWERING_STATE);
+          console.log('ANSWERING_STATE');
           switch (action.type) {
             case ANSWERED_ACTION:
-              console.log(ANSWERED_ACTION);
+              console.log('ANSWERED_ACTION');
               if (!state.winner && action.answer === state.correctAnswer) {
                 state = {
                   ...state,
@@ -95,13 +109,14 @@ export const answerQuestionController = (ws, req) => {
                   })
                 };
               }
+              console.log('ANSWERED_ACTION ready!');
               if (state.answered >= state.players.length) {
                 state.status = ANSWERED_STATE;
                 ws.broadcast(JSON.stringify({ type: ANSWERED_SIGNAL, winner: state.winner }));
               }
             break;
             case TIMEOUT_ACTION:
-            console.log(TIMEOUT_ACTION);
+            console.log('TIMEOUT_ACTION');
               state = {
                 ...state,
                 status: ANSWERED_STATE
@@ -110,9 +125,9 @@ export const answerQuestionController = (ws, req) => {
               break;
           }
           store.set(state.url, state);
-          return;
+          break;
         case ANSWERED_STATE:
-          console.log(ANSWERED_STATE);
+          console.log('ANSWERED_STATE');
           switch (action.type) {
             case NEXT_ACTION:
               state = {
@@ -134,8 +149,10 @@ export const answerQuestionController = (ws, req) => {
               break;
           }
           store.set(state.url, state);
-          return;
+          break;
       }
+      info_mutex.unlock();
     });
   });
+    console.log('lock released.');
 }
