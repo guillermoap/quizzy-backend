@@ -21,6 +21,9 @@ export const show = (req, res, next) => {
           .json({
             error: errorMessageMatch(err.message)
           });
+      } else if (match == null) {
+        return res.status(404)
+          .json();
       } else {
         return res.json(match.game.ranking);
       }
@@ -37,12 +40,15 @@ export const show = (req, res, next) => {
                 error: errorMessageMatch(err.message)
               });
           }
-          if (match1 === null) {
+          if (match1 == null) {
             return res.status(404)
               .json();
           }
           res.json(match1.isRealTime);
         });
+      } else if (match == null) {
+        return res.status(404)
+          .json();
       } else {
         return res.json(match.isRealTime);
       }
@@ -59,12 +65,15 @@ export const show = (req, res, next) => {
                 error: errorMessageMatch(err.message)
               });
           }
-          if (match1 === null) {
+          if (match1 == null) {
             return res.status(404)
               .json();
           }
           res.json(matchShow(match1));
         });
+      } else if (match == null) {
+        return res.status(404)
+          .json();
       } else {
         return (res.json(matchShow(match)))
       }
@@ -86,7 +95,7 @@ export const create = (req, res, next) => {
 }
 
 export const update = (req, res, next) => {
-  if (req.body.match !== undefined) {
+  if (req.body.match != null) {
     Match.findByIdAndUpdate(req.params.id, {
       $set: req.body.match
     }, {
@@ -100,7 +109,7 @@ export const update = (req, res, next) => {
       }
       return res.json(matchShow(match));
     });
-  } else if (req.body.user !== undefined && req.body.points !== undefined) {
+  } else if (req.body.user != null && req.body.points != null) {
       Match.findById(req.params.id, (err, match) => {
       if (err) {
         return res.status(422)
@@ -117,7 +126,7 @@ export const update = (req, res, next) => {
         return res.json(matchUpdate.game.ranking);
       }
     })
-  } else if (req.body.started !== undefined) {
+  } else if (req.body.started != null) {
       Match.findById(req.params.id, (err, match) => {
       if (err) {
         return res.status(422)
